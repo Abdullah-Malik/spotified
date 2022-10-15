@@ -1,0 +1,27 @@
+{
+  "name": "spotify-web-api",
+  "version": "1.0.0",
+  "description": "Strongly typed Spotify Web API client for Node.js",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Abdullah-Malik/twitter-bot.git"
+  },
+  "keywords": [
+    "spotify",
+    "api",
+    "client"
+  ],
+  "author": "Abdullah Malik",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Abdullah-Malik/twitter-bot/issues"
+  },
+  "homepage": "https://github.com/Abdullah-Malik/twitter-bot#readme",
+  "dependencies": {
+    "typescript": "^4.8.4"
+  }
+}
