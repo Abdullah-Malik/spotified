@@ -16,7 +16,7 @@
   "settings": {
     "import/resolver": {
       "node": {
-        "extensions": [".js", ".jsx", ".ts", ".tsx", ".json"]
+        "extensions": [".ts", ".js", ".json"]
       }
     },
     "react": {
@@ -43,6 +43,7 @@
       }
     ],
     "prefer-destructuring": ["warn", { "object": true, "array": false }],
-    "@typescript-eslint/no-explicit-any": "off"
+    "@typescript-eslint/no-explicit-any": "off",
+    "no-underscore-dangle": "off"
   }
 }
