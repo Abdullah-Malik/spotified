@@ -31,9 +31,7 @@ export interface OAuth2RequestTokenResult {
   state: string;
 }
 
-export interface OAuth2PCKERequestTokenResult {
-  url: string;
-  state: string;
+export interface OAuth2PCKERequestTokenResult extends OAuth2RequestTokenResult {
   codeVerifier: string;
   codeChallenge: string;
 }
@@ -45,13 +43,9 @@ export interface OAuth2AccessTokenArgs {
   code: string;
 }
 
-export interface OAuth2PKCEAccessTokenArgs {
-  /** The same URI given to generate link at previous step. */
-  redirectUri: string;
+export interface OAuth2PKCEAccessTokenArgs extends OAuth2AccessTokenArgs {
   /** The code obtained in link generation step. */
   codeVerifier: string;
-  /** The code given by Twitter in query string, after redirection to your callback URL. */
-  code: string;
 }
 
 export interface OAuth2AccessTokenResult {
