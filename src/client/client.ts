@@ -9,10 +9,12 @@ import {
   OAuth2RequestArgs,
   OAuth2RequestTokenResult,
 } from '../types';
-import { User } from '../endpoints';
+import { User, Artist } from '../endpoints';
 
 export default class Spotified extends SpotifiedClientBase {
   protected _user?: User;
+
+  protected _artist?: Artist;
 
   public get user() {
     if (this._user) {
@@ -20,6 +22,14 @@ export default class Spotified extends SpotifiedClientBase {
     }
     this._user = new User(this);
     return this._user;
+  }
+
+  public get artist() {
+    if (this._artist) {
+      return this._artist;
+    }
+    this._artist = new Artist(this);
+    return this._artist;
   }
 
   private authHeaders = {
