@@ -1,6 +1,6 @@
 import { ClientToken } from '../types';
 import ClientRequestMaker from '../client-mixins/request-maker';
-import { RequestArgs } from '../types/request-maker';
+import { RequestArgs } from '../types/request-maker.types';
 
 export default abstract class SpotifiedClientBase {
   protected _requestMaker: ClientRequestMaker;
@@ -13,11 +13,11 @@ export default abstract class SpotifiedClientBase {
     }
   }
 
-  protected async get<T>(url: string, data?: Record<string, any>, requestArgs?: RequestArgs): Promise<T> {
+  protected async get<T>(url: string, params?: Record<string, any>, requestArgs?: RequestArgs): Promise<T> {
     const options = {
       method: 'get',
       url,
-      data,
+      params,
       ...requestArgs,
     };
 

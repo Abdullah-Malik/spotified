@@ -9,17 +9,17 @@ import {
   OAuth2RequestArgs,
   OAuth2RequestTokenResult,
 } from '../types';
-import { Users } from '../endpoints';
+import { User } from '../endpoints';
 
 export default class Spotified extends SpotifiedClientBase {
-  protected _users?: Users;
+  protected _user?: User;
 
-  public get users() {
-    if (this._users) {
-      return this._users;
+  public get user() {
+    if (this._user) {
+      return this._user;
     }
-    this._users = new Users(this);
-    return this._users;
+    this._user = new User(this);
+    return this._user;
   }
 
   private authHeaders = {

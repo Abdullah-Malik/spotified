@@ -1,4 +1,4 @@
 /* eslint-disable import/prefer-default-export */
-import Users from './users';
+import User from './user';
 
-export { Users };
+export { User };
