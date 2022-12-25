@@ -1,34 +1,67 @@
-import { OAuth2Init } from '../types';
-import ClientRequestMaker, { send } from '../client-mixins/request-maker.mixin';
+import { ClientToken } from '../types';
+import ClientRequestMaker from '../client-mixins/request-maker';
+import { RequestArgs } from '../types/request-maker';
 
-export default abstract class SpotifyClientBase {
+export default abstract class SpotifiedClientBase {
   protected _requestMaker: ClientRequestMaker;
 
-  constructor(oauth2Init: OAuth2Init);
-
-  public constructor(token: OAuth2Init) {
-    this._requestMaker = new ClientRequestMaker(token);
+  public constructor(token: ClientToken | SpotifiedClientBase) {
+    if (token instanceof SpotifiedClientBase) {
+      this._requestMaker = token._requestMaker;
+    } else {
+      this._requestMaker = new ClientRequestMaker(token as ClientToken);
+    }
   }
 
-  public async post(url: string, body?: any) {
+  protected async get<T>(url: string, data?: Record<string, any>, requestArgs?: RequestArgs): Promise<T> {
+    const options = {
+      method: 'get',
+      url,
+      data,
+      ...requestArgs,
+    };
+
+    const res = await this._requestMaker.send<T>(options);
+
+    return res.data;
+  }
+
+  protected async post<T>(url: string, data?: Record<string, any>, requestArgs?: RequestArgs): Promise<T> {
     const options = {
       method: 'post',
       url,
-      data: {
-        code: body.code,
-        redirect_uri: body.redirect_uri,
-        code_verifier: body.code_verifier,
-        grant_type: 'authorization_code',
-      },
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-        'Authorization': `Basic ${Buffer.from(
-          `${this._requestMaker.clientId}:${this._requestMaker.clientSecret}`
-        ).toString('base64')}`,
-      },
+      data,
+      ...requestArgs,
     };
-    const res = await send(options);
 
-    return res;
+    const res = await this._requestMaker.send<T>(options);
+
+    return res.data;
+  }
+
+  protected async put<T>(url: string, data?: Record<string, any>, requestArgs?: RequestArgs): Promise<T> {
+    const options = {
+      method: 'put',
+      url,
+      data,
+      ...requestArgs,
+    };
+
+    const res = await this._requestMaker.send<T>(options);
+
+    return res.data;
+  }
+
+  protected async delete<T>(url: string, data?: Record<string, any>, requestArgs?: RequestArgs): Promise<T> {
+    const options = {
+      method: 'delete',
+      url,
+      data,
+      ...requestArgs,
+    };
+
+    const res = await this._requestMaker.send<T>(options);
+
+    return res.data;
   }
 }

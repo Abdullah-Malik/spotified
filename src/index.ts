@@ -1,5 +1,6 @@
-import spotified from './client';
+import Spotified from './client';
 
 export * from './client';
 export * from './types';
-export default spotified;
+
+export default Spotified;
