@@ -1,4 +1,4 @@
-import Spotified from './client';
+import { Spotified } from './client';
 
 export * from './client';
 export * from './types';

@@ -1,5 +1,5 @@
 import SpotifiedSubClient from '../client/client.subclient';
-import { UserProfile } from '../types/user.types';
+import { UserProfile } from '../types';
 
 export default class User extends SpotifiedSubClient {
   getCurrentUserProfile() {

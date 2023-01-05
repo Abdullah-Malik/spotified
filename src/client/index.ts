@@ -1,5 +1,7 @@
-import spotified from './client';
+import Spotified from './client';
 
 export * from './client';
 export * from './client.base';
-export default spotified;
+export * from './client.subclient';
+
+export { Spotified };
