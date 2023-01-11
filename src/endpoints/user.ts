@@ -9,4 +9,8 @@ export default class User extends SpotifiedSubClient {
   getUserProfile(userId: string) {
     return this.get<UserProfile>(`/users/${userId}`);
   }
+
+  followPlaylist(playlistId: string, options?: { public: boolean }) {
+    return this.put(`/playlists/${playlistId}/followers`, options);
+  }
 }

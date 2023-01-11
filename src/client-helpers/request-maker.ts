@@ -1,4 +1,5 @@
-import axios, { AxiosResponse } from 'axios';
+import axios, { AxiosResponse, isAxiosError } from 'axios';
+import ApiResponseError from '../errors';
 import { OAuth2Init, BearerToken, isBearerToken, isOAuth2Init } from '../types';
 
 const SPOTIFY_API_URL = 'https://api.spotify.com/v1';
@@ -39,7 +40,22 @@ export default class ClientRequestMaker {
   }
 
   async send<T = any>(requestParams: any): Promise<Promise<AxiosResponse<T>>> {
-    const res = await this.axiosInstance.request<T>(requestParams);
-    return res;
+    try {
+      const res = await this.axiosInstance.request<T>(requestParams);
+      return res;
+    } catch (err) {
+      if (isAxiosError(err)) {
+        // TODO: Rate limit should be fetched from err object
+        throw new ApiResponseError(`Request failed with code ${err.code}`, {
+          code: err.response?.status,
+          request: err.request,
+          response: err.response,
+          headers: err.response?.headers,
+          data: err.response?.data,
+          rateLimit: '',
+        });
+      }
+      throw new Error('Some other error');
+    }
   }
 }

@@ -1,5 +1,5 @@
 import { ClientToken, RequestArgs } from '../types';
-import ClientRequestMaker from '../client-mixins/request-maker';
+import ClientRequestMaker from '../client-helpers/request-maker';
 
 export default abstract class SpotifiedClientBase {
   protected _requestMaker: ClientRequestMaker;

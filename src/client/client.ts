@@ -1,6 +1,6 @@
 import { stringify } from 'querystring';
 import SpotifiedClientBase from './client.base';
-import { OAuth2Helper } from '../client-mixins/oauth2.helper';
+import { OAuth2Helper } from '../client-helpers/oauth2.helper';
 import {
   OAuth2AccessTokenArgs,
   OAuth2AccessTokenResult,
