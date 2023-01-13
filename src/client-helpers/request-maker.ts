@@ -1,5 +1,5 @@
 import axios, { AxiosResponse, isAxiosError } from 'axios';
-import ApiResponseError from '../errors';
+import { ApiResponseError } from '../errors';
 import { OAuth2Init, BearerToken, isBearerToken, isOAuth2Init } from '../types';
 
 const SPOTIFY_API_URL = 'https://api.spotify.com/v1';

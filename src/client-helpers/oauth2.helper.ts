@@ -2,7 +2,7 @@ import * as crypto from 'crypto';
 
 // Code in this file has been copied from https://github.com/PLhery/node-twitter-api-v2
 
-export default class OAuth2Helper {
+export class OAuth2Helper {
   static getCodeVerifier() {
     return this.generateRandomString(128);
   }
@@ -29,3 +29,5 @@ export default class OAuth2Helper {
     return string.replace(/=/g, '').replace(/\+/g, '-').replace(/\//g, '_');
   }
 }
+
+export default OAuth2Helper;

@@ -1,11 +1,7 @@
 import { ApiResponseErrorProps } from '../types';
 
-export default class ApiResponseError extends Error implements ApiResponseErrorProps {
+export class ApiResponseError extends Error implements ApiResponseErrorProps {
   code?: number;
-
-  request: any;
-
-  response: any;
 
   headers: any;
 
@@ -13,14 +9,20 @@ export default class ApiResponseError extends Error implements ApiResponseErrorP
 
   rateLimit?: any;
 
-  // TODO: Make this const
-  type = 'response';
+  type = 'response' as const;
+
+  protected _request: any;
+
+  protected _response: any;
 
   public constructor(message: string, options: ApiResponseErrorProps) {
     super(message);
+
+    Error.captureStackTrace(this, this.constructor);
+    Object.defineProperty(this, '_request', { value: options.request });
+    Object.defineProperty(this, '_response', { value: options.response });
+
     this.code = options.code;
-    this.request = options.request;
-    this.response = options.response;
     this.headers = options.headers;
     this.data = options.data;
     this.rateLimit = options.rateLimit;
@@ -28,6 +30,14 @@ export default class ApiResponseError extends Error implements ApiResponseErrorP
 
   get rateLimitError() {
     return this.code === 420 || this.code === 429;
+  }
+
+  get request(): any {
+    return this._request;
+  }
+
+  get response(): any {
+    return this._response;
   }
 
   // TODO: methods to add: isAuthError, get Response, get Request
@@ -41,3 +51,5 @@ export default class ApiResponseError extends Error implements ApiResponseErrorP
     };
   }
 }
+
+export default ApiResponseError;

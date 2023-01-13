@@ -1,7 +1,7 @@
-import SpotifiedSubClient from '../client/client.subclient';
-import { CurrentUserProfile, UserProfile } from '../types/user.types';
+import { SpotifiedSubClient } from '../client/client.subclient';
+import { CurrentUserProfile, UserProfile } from '../types';
 
-export default class User extends SpotifiedSubClient {
+export class User extends SpotifiedSubClient {
   getCurrentUserProfile() {
     return this.get<CurrentUserProfile>('/me');
   }
@@ -14,3 +14,5 @@ export default class User extends SpotifiedSubClient {
     return this.put(`/playlists/${playlistId}/followers`, options);
   }
 }
+
+export default User;

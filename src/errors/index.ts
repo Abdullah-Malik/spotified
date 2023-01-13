@@ -1,3 +1,1 @@
-import ApiResponseError from './api-response-errors';
-
-export default ApiResponseError;
+export * from './api-response-error';
