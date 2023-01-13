@@ -1,7 +1,5 @@
 export interface UserProfile {
-  country: string;
   display_name: string;
-  email: string;
   explicit_content: {
     filter_enabled: boolean;
     filter_locked: boolean;
@@ -23,4 +21,9 @@ export interface UserProfile {
   product: string;
   type: string;
   uri: string;
+}
+
+export interface CurrentUserProfile extends UserProfile {
+  country: string;
+  email: string;
 }

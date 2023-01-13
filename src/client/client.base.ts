@@ -1,7 +1,7 @@
 import { ClientToken, RequestArgs } from '../types';
-import ClientRequestMaker from '../client-mixins/request-maker';
+import ClientRequestMaker from '../client-helpers/request-maker';
 
-export default abstract class SpotifiedClientBase {
+export abstract class SpotifiedClientBase {
   protected _requestMaker: ClientRequestMaker;
 
   public constructor(token: ClientToken | SpotifiedClientBase) {
@@ -64,3 +64,5 @@ export default abstract class SpotifiedClientBase {
     return res.data;
   }
 }
+
+export default SpotifiedClientBase;
