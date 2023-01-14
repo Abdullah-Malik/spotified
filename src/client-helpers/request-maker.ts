@@ -45,15 +45,16 @@ export default class ClientRequestMaker {
       return res;
     } catch (err) {
       if (isAxiosError(err)) {
-        // TODO: Rate limit should be fetched from err object
-        throw new ApiResponseError(`Request failed with code ${err.code}`, {
-          code: err.response?.status,
-          request: err.request,
-          response: err.response,
-          headers: err.response?.headers,
-          data: err.response?.data,
-          rateLimit: '',
-        });
+        throw new ApiResponseError(
+          `Request failed with code ${err.response?.status} - Invalid Request: ${err.response?.data.error.message}`,
+          {
+            code: err.response?.status,
+            request: err.request,
+            response: err.response,
+            headers: err.response?.headers,
+            data: err.response?.data,
+          }
+        );
       }
       throw new Error('Some other error');
     }

@@ -1,9 +1,9 @@
-import { ApiResponseErrorProps } from '../types';
+import { ApiResponseErrorProps, ResponseHeaders, Response } from '../types';
 
 export class ApiResponseError extends Error implements ApiResponseErrorProps {
   code?: number;
 
-  headers: any;
+  headers?: ResponseHeaders;
 
   data: any;
 
@@ -13,7 +13,7 @@ export class ApiResponseError extends Error implements ApiResponseErrorProps {
 
   protected _request: any;
 
-  protected _response: any;
+  protected _response?: Response;
 
   public constructor(message: string, options: ApiResponseErrorProps) {
     super(message);
@@ -25,7 +25,6 @@ export class ApiResponseError extends Error implements ApiResponseErrorProps {
     this.code = options.code;
     this.headers = options.headers;
     this.data = options.data;
-    this.rateLimit = options.rateLimit;
   }
 
   get rateLimitError() {
@@ -36,11 +35,10 @@ export class ApiResponseError extends Error implements ApiResponseErrorProps {
     return this._request;
   }
 
-  get response(): any {
+  get response(): Response | undefined {
     return this._response;
   }
 
-  // TODO: methods to add: isAuthError, get Response, get Request
   toJSON() {
     return {
       type: this.type,
