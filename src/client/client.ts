@@ -1,6 +1,6 @@
 import { stringify } from 'querystring';
-import SpotifiedClientBase from './client.base';
-import { OAuth2Helper } from '../client-mixins/oauth2.helper';
+import { SpotifiedClientBase } from './client.base';
+import { OAuth2Helper } from '../client-helpers/oauth2.helper';
 import {
   OAuth2AccessTokenArgs,
   OAuth2AccessTokenResult,
@@ -11,7 +11,7 @@ import {
 } from '../types';
 import { User, Artist } from '../endpoints';
 
-export default class Spotified extends SpotifiedClientBase {
+export class Spotified extends SpotifiedClientBase {
   protected _user?: User;
 
   protected _artist?: Artist;
@@ -114,3 +114,5 @@ export default class Spotified extends SpotifiedClientBase {
     this._requestMaker.setBearerToken(bearerToken);
   }
 }
+
+export default Spotified;

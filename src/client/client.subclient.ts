@@ -1,6 +1,6 @@
-import SpotifiedClientBase from './client.base';
+import { SpotifiedClientBase } from './client.base';
 
-export default abstract class SpotifiedSubClient extends SpotifiedClientBase {
+export abstract class SpotifiedSubClient extends SpotifiedClientBase {
   constructor(instance: SpotifiedClientBase) {
     if (!(instance instanceof SpotifiedClientBase)) {
       throw new Error('You must instance SubClient instance from existing Spotified instance.');
@@ -8,3 +8,5 @@ export default abstract class SpotifiedSubClient extends SpotifiedClientBase {
     super(instance);
   }
 }
+
+export default SpotifiedClientBase;

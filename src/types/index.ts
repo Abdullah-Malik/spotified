@@ -4,3 +4,4 @@ export * from './shared.types';
 export * from './artist.types';
 export * from './user.types';
 export * from './request-maker.types';
+export * from './errors.types';
