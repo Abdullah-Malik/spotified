@@ -1,6 +1,6 @@
-import axios, { AxiosResponse, isAxiosError } from 'axios';
+import axios from 'axios';
 import { ApiResponseError } from '../errors';
-import { OAuth2Init, BearerToken, isBearerToken, isOAuth2Init } from '../types';
+import { OAuth2Init, BearerToken, isBearerToken, isOAuth2Init, isResponseError, Response } from '../types';
 
 const SPOTIFY_API_URL = 'https://api.spotify.com/v1';
 
@@ -39,12 +39,12 @@ export default class ClientRequestMaker {
     this.setAuthorizationHeader();
   }
 
-  async send<T = any>(requestParams: any): Promise<Promise<AxiosResponse<T>>> {
+  async send<T = any>(requestParams: any): Promise<Promise<Response<T>>> {
     try {
       const res = await this.axiosInstance.request<T>(requestParams);
       return res;
     } catch (err) {
-      if (isAxiosError(err)) {
+      if (isResponseError(err)) {
         throw new ApiResponseError(
           `Request failed with code ${err.response?.status} - Invalid Request: ${err.response?.data.error.message}`,
           {

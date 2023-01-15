@@ -1,8 +1,8 @@
-import type { AxiosResponseHeaders, AxiosResponse, RawAxiosResponseHeaders } from 'axios';
+import type { AxiosResponseHeaders, RawAxiosResponseHeaders, AxiosError } from 'axios';
+import { isAxiosError } from 'axios';
+import { Response } from './response.types';
 
 export type ResponseHeaders = AxiosResponseHeaders | RawAxiosResponseHeaders;
-
-export type Response = AxiosResponse;
 
 export interface ApiResponseErrorProps {
   code?: number;
@@ -10,4 +10,10 @@ export interface ApiResponseErrorProps {
   response?: Response;
   headers?: ResponseHeaders;
   data: any;
+}
+
+export type ResponseError<T = unknown, D = any> = AxiosError<T, D>;
+
+export function isResponseError<T = any, D = any>(payload: any): payload is ResponseError<T, D> {
+  return isAxiosError(payload);
 }
