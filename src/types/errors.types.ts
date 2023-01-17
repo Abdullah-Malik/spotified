@@ -12,8 +12,19 @@ export interface ApiResponseErrorProps {
   data: any;
 }
 
+export interface ApiRequestErrorProps {
+  request: any;
+  requestError: any;
+}
+
 export type ResponseError<T = unknown, D = any> = AxiosError<T, D>;
 
+export type RequestError<T = unknown, D = any> = AxiosError<T, D>;
+
 export function isResponseError<T = any, D = any>(payload: any): payload is ResponseError<T, D> {
-  return isAxiosError(payload);
+  return isAxiosError(payload) && !!payload.response;
+}
+
+export function isRequestError<T = any, D = any>(payload: any): payload is RequestError<T, D> {
+  return isAxiosError(payload) && !payload.response;
 }
