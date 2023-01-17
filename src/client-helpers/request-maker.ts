@@ -1,6 +1,14 @@
 import axios from 'axios';
-import { ApiResponseError } from '../errors';
-import { OAuth2Init, BearerToken, isBearerToken, isOAuth2Init, isResponseError, Response } from '../types';
+import { ApiResponseError, ApiRequestError } from '../errors';
+import {
+  OAuth2Init,
+  BearerToken,
+  isBearerToken,
+  isOAuth2Init,
+  isResponseError,
+  Response,
+  isRequestError,
+} from '../types';
 
 const SPOTIFY_API_URL = 'https://api.spotify.com/v1';
 
@@ -55,6 +63,11 @@ export default class ClientRequestMaker {
             data: err.response?.data,
           }
         );
+      } else if (isRequestError(err)) {
+        throw new ApiRequestError(`Request failed with code ${err.code}`, {
+          request: err.request,
+          requestError: err.cause,
+        });
       }
       throw new Error('Some other error');
     }
