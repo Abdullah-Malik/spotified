@@ -1,22 +1,10 @@
 import axios from 'axios';
 import { ApiResponseError, ApiRequestError } from '../errors';
-import {
-  OAuth2Init,
-  BearerToken,
-  isBearerToken,
-  isOAuth2Init,
-  isResponseError,
-  Response,
-  isRequestError,
-} from '../types';
+import { BearerToken, isResponseError, Response, isRequestError } from '../types';
 
 const SPOTIFY_API_URL = 'https://api.spotify.com/v1';
 
 export default class ClientRequestMaker {
-  public clientId?: string;
-
-  public clientSecret?: string;
-
   public bearerToken?: string;
 
   private axiosInstance = axios.create({
@@ -28,14 +16,9 @@ export default class ClientRequestMaker {
     },
   });
 
-  constructor(token: OAuth2Init | BearerToken) {
-    if (isBearerToken(token)) {
-      this.bearerToken = token.bearerToken;
-      this.setAuthorizationHeader();
-    } else if (isOAuth2Init(token)) {
-      this.clientId = token.clientId;
-      this.clientSecret = token.clientSecret;
-    }
+  constructor(token?: BearerToken) {
+    this.bearerToken = token?.bearerToken;
+    this.setAuthorizationHeader();
   }
 
   private setAuthorizationHeader() {
