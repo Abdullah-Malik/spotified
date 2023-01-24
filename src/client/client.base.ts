@@ -4,11 +4,17 @@ import { ClientToken, isOAuth2Init, RequestArgs } from '../types';
 export abstract class SpotifiedClientBase {
   protected _requestMaker!: ClientRequestMaker;
 
-  public constructor(token: ClientToken | SpotifiedClientBase) {
+  protected clientId?: string;
+
+  protected clientSecret?: string;
+
+  constructor(token: ClientToken | SpotifiedClientBase) {
     if (token instanceof SpotifiedClientBase) {
       this._requestMaker = token._requestMaker;
     } else if (isOAuth2Init(token)) {
-      this._requestMaker = new ClientRequestMaker(token);
+      this.clientId = token.clientId;
+      this.clientSecret = token.clientSecret;
+      this._requestMaker = new ClientRequestMaker();
     }
   }
 

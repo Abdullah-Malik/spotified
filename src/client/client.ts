@@ -34,9 +34,7 @@ export class Spotified extends SpotifiedClientBase {
 
   private authHeaders = {
     'Content-Type': 'application/x-www-form-urlencoded',
-    'Authorization': `Basic ${Buffer.from(`${this._requestMaker.clientId}:${this._requestMaker.clientSecret}`).toString(
-      'base64'
-    )}`,
+    'Authorization': `Basic ${Buffer.from(`${this.clientId}:${this.clientSecret}`).toString('base64')}`,
   };
 
   generateAuthLink(redirectUri: string, options: Partial<OAuth2RequestArgs> = {}): OAuth2RequestTokenResult {
@@ -45,7 +43,7 @@ export class Spotified extends SpotifiedClientBase {
     const scope = Array.isArray(rawScope) ? rawScope.join(' ') : rawScope;
     const url = `https://accounts.spotify.com/authorize?${stringify({
       response_type: 'code',
-      client_id: this._requestMaker.clientId,
+      client_id: this.clientId,
       scope,
       redirect_uri: redirectUri,
       state,
@@ -80,8 +78,8 @@ export class Spotified extends SpotifiedClientBase {
         code,
         redirect_uri: redirectUri,
         grant_type: 'authorization_code',
-        client_id: this._requestMaker.clientId,
-        client_secret: this._requestMaker.clientSecret,
+        client_id: this.clientId,
+        client_secret: this.clientSecret,
       },
       {
         headers: this.authHeaders,
@@ -99,8 +97,39 @@ export class Spotified extends SpotifiedClientBase {
         code_verifier: codeVerifier,
         redirect_uri: redirectUri,
         grant_type: 'authorization_code',
-        client_id: this._requestMaker.clientId,
-        client_secret: this._requestMaker.clientSecret,
+        client_id: this.clientId,
+        client_secret: this.clientSecret,
+      },
+      {
+        headers: this.authHeaders,
+      }
+    );
+
+    return accessTokenResult;
+  }
+
+  async refreshOAuth2Token(refreshToken: string) {
+    const accessTokenResult = await this.post<OAuth2AccessTokenResult>(
+      'https://accounts.spotify.com/api/token',
+      {
+        grant_type: 'refresh_token',
+        refresh_token: refreshToken,
+      },
+      {
+        headers: this.authHeaders,
+      }
+    );
+
+    return accessTokenResult;
+  }
+
+  async refreshPKCEOAuth2Token(refreshToken: string) {
+    const accessTokenResult = await this.post<OAuth2AccessTokenResult>(
+      'https://accounts.spotify.com/api/token',
+      {
+        grant_type: 'refresh_token',
+        refresh_token: refreshToken,
+        client_id: this.clientId,
       },
       {
         headers: this.authHeaders,
