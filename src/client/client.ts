@@ -98,10 +98,7 @@ export class Spotified extends SpotifiedReadWriteBaseClient {
         client_secret: this.clientSecret,
       },
       {
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-          'Authorization': `Basic ${Buffer.from(`${this.clientId}:${this.clientSecret}`).toString('base64')}`,
-        },
+        headers: this.authHeaders,
       }
     );
 
