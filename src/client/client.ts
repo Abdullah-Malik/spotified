@@ -1,7 +1,9 @@
 import { stringify } from 'querystring';
-import { SpotifiedClientBase } from './client.base';
+import { SpotifiedReadWriteBaseClient } from './client.write.base';
 import { OAuth2Helper } from '../client-helpers/oauth2.helper';
 import {
+  ClientToken,
+  isOAuth2Init,
   OAuth2AccessTokenArgs,
   OAuth2AccessTokenResult,
   OAuth2PCKERequestTokenResult,
@@ -10,17 +12,36 @@ import {
   OAuth2RequestTokenResult,
 } from '../types';
 import { User, Artist } from '../endpoints';
+import ClientRequestMaker from '../client-helpers/request-maker';
 
-export class Spotified extends SpotifiedClientBase {
+export class Spotified extends SpotifiedReadWriteBaseClient {
+  protected clientId?: string;
+
+  protected clientSecret?: string;
+
+  private authHeaders?: Record<string, string>;
+
   protected _user?: User;
 
   protected _artist?: Artist;
+
+  constructor(token: ClientToken) {
+    super(new ClientRequestMaker());
+    if (isOAuth2Init(token)) {
+      this.clientId = token.clientId;
+      this.clientSecret = token.clientSecret;
+      this.authHeaders = {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Authorization': `Basic ${Buffer.from(`${this.clientId}:${this.clientSecret}`).toString('base64')}`,
+      };
+    }
+  }
 
   public get user() {
     if (this._user) {
       return this._user;
     }
-    this._user = new User(this);
+    this._user = new User(this._requestMaker);
     return this._user;
   }
 
@@ -28,14 +49,9 @@ export class Spotified extends SpotifiedClientBase {
     if (this._artist) {
       return this._artist;
     }
-    this._artist = new Artist(this);
+    this._artist = new Artist(this._requestMaker);
     return this._artist;
   }
-
-  private authHeaders = {
-    'Content-Type': 'application/x-www-form-urlencoded',
-    'Authorization': `Basic ${Buffer.from(`${this.clientId}:${this.clientSecret}`).toString('base64')}`,
-  };
 
   generateAuthLink(redirectUri: string, options: Partial<OAuth2RequestArgs> = {}): OAuth2RequestTokenResult {
     const state = options.state ?? OAuth2Helper.generateRandomString(32);
@@ -82,7 +98,10 @@ export class Spotified extends SpotifiedClientBase {
         client_secret: this.clientSecret,
       },
       {
-        headers: this.authHeaders,
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Authorization': `Basic ${Buffer.from(`${this.clientId}:${this.clientSecret}`).toString('base64')}`,
+        },
       }
     );
 
