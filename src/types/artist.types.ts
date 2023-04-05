@@ -1,21 +1,23 @@
-export interface ArtistProfile {
-  external_urls: {
-    spotify: string;
-  };
+import { SimplifiedAlbum } from './album.types';
+import { PageResult } from './paginator.types';
+import { ExternalUrls, Image } from './shared.types';
+
+export interface SimplifiedArtist {
+  external_urls: ExternalUrls;
+  href: string;
+  id: string;
+  name: string;
+  type: string;
+  uri: string;
+}
+export interface ArtistProfile extends SimplifiedArtist {
   followers: {
     href: string;
     total: number;
   };
   genres: string[];
-  href: string;
-  id: string;
-  images: {
-    url: string;
-    height: number;
-    width: number;
-  }[];
-  name: string;
+  images: Image[];
   popularity: number;
-  type: string;
-  uri: string;
 }
+
+export type ArtistsAlbumPageResult = PageResult<SimplifiedAlbum>;

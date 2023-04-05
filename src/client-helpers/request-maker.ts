@@ -30,14 +30,16 @@ export default class ClientRequestMaker {
     this.setAuthorizationHeader();
   }
 
-  async send<T = any>(requestParams: any): Promise<Promise<Response<T>>> {
+  async send<T = any>(requestParams: any): Promise<Response<T>> {
     try {
       const res = await this.axiosInstance.request<T>(requestParams);
       return res;
     } catch (err) {
       if (isResponseError(err)) {
         throw new ApiResponseError(
-          `Request failed with code ${err.response?.status} - Invalid Request: ${err.response?.data.error.message}`,
+          `Request failed with code ${err.response?.status} - Invalid Request: ${
+            err.response?.data?.error?.message || err.response?.data?.error
+          }`,
           {
             code: err.response?.status,
             request: err.request,
