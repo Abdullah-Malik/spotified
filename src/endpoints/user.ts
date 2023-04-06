@@ -1,7 +1,7 @@
-import { SpotifiedReadWriteBaseClient } from '../client/client.write.base';
+import { ReadWriteBaseClient } from '../client/ReadWriteBaseClient';
 import { CurrentUserProfile, UserProfile } from '../types';
 
-export class User extends SpotifiedReadWriteBaseClient {
+export class User extends ReadWriteBaseClient {
   getCurrentUserProfile() {
     return this.get<CurrentUserProfile>('/me');
   }

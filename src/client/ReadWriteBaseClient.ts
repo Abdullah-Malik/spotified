@@ -1,7 +1,7 @@
 import { RequestArgs } from '../types';
-import SpotifiedReadOnlyBaseClient from './client.read.base';
+import ReadOnlyBaseClient from './ReadOnlyBaseClient';
 
-export abstract class SpotifiedReadWriteBaseClient extends SpotifiedReadOnlyBaseClient {
+export abstract class ReadWriteBaseClient extends ReadOnlyBaseClient {
   protected async post<T>(url: string, data?: Record<string, any>, requestArgs?: Partial<RequestArgs>): Promise<T> {
     const options = {
       method: 'post',
@@ -42,4 +42,4 @@ export abstract class SpotifiedReadWriteBaseClient extends SpotifiedReadOnlyBase
   }
 }
 
-export default SpotifiedReadWriteBaseClient;
+export default ReadWriteBaseClient;

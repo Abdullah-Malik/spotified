@@ -4,7 +4,7 @@ import { BearerToken, isResponseError, Response, isRequestError } from '../types
 
 const SPOTIFY_API_URL = 'https://api.spotify.com/v1';
 
-export default class ClientRequestMaker {
+export default class RequestMaker {
   public bearerToken?: string;
 
   private axiosInstance = axios.create({

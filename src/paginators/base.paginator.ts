@@ -1,8 +1,8 @@
-import { SpotifiedReadOnlyBaseClient } from '../client/client.read.base';
-import ClientRequestMaker from '../client-helpers/request-maker';
+import { ReadOnlyBaseClient } from '../client/ReadOnlyBaseClient';
+import RequestMaker from '../client-helpers/RequestMaker';
 import { RequestQuery, SpotifyResponse } from '../types';
 
-export abstract class BasePaginator<Item, ApiResponse, ApiParams extends object> extends SpotifiedReadOnlyBaseClient {
+export abstract class BasePaginator<Item, ApiResponse, ApiParams extends object> extends ReadOnlyBaseClient {
   protected apiResponse: ApiResponse | undefined;
 
   protected _data: Item[];
@@ -17,7 +17,7 @@ export abstract class BasePaginator<Item, ApiResponse, ApiParams extends object>
     endpoint,
   }: {
     endpoint: string;
-    requestMaker: ClientRequestMaker;
+    requestMaker: RequestMaker;
     queryParams: Partial<ApiParams>;
   }) {
     super(requestMaker);
