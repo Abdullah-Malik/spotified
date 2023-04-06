@@ -1,9 +1,9 @@
-import { SpotifiedReadWriteBaseClient } from '../client/client.write.base';
+import { ReadWriteBaseClient } from '../client/ReadWriteBaseClient';
 import { ArtistProfile, ArtistsAlbumPageResult } from '../types';
 import { SpotifiedPaginator } from '../paginators';
 import { SimplifiedAlbum } from '../types/album.types';
 
-export class Artist extends SpotifiedReadWriteBaseClient {
+export class Artist extends ReadWriteBaseClient {
   getArtist(id: string) {
     return this.get<ArtistProfile>(`/artists/${id}`);
   }

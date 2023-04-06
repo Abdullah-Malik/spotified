@@ -1,10 +1,10 @@
-import ClientRequestMaker from '../client-helpers/request-maker';
+import RequestMaker from '../client-helpers/RequestMaker';
 import { RequestArgs, SpotifyResponse } from '../types';
 
-export abstract class SpotifiedReadOnlyBaseClient {
-  protected _requestMaker: ClientRequestMaker;
+export abstract class ReadOnlyBaseClient {
+  protected _requestMaker: RequestMaker;
 
-  constructor(requestMaker: ClientRequestMaker) {
+  constructor(requestMaker: RequestMaker) {
     this._requestMaker = requestMaker;
   }
 
@@ -34,4 +34,4 @@ export abstract class SpotifiedReadOnlyBaseClient {
   }
 }
 
-export default SpotifiedReadOnlyBaseClient;
+export default ReadOnlyBaseClient;

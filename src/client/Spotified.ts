@@ -1,6 +1,6 @@
 import { stringify } from 'querystring';
-import { SpotifiedReadWriteBaseClient } from './client.write.base';
-import { OAuth2Helper } from '../client-helpers/oauth2.helper';
+import { ReadWriteBaseClient } from './ReadWriteBaseClient';
+import { OAuth2Helper } from '../client-helpers/OAuth2Helper';
 import {
   ClientToken,
   isOAuth2Init,
@@ -12,9 +12,9 @@ import {
   OAuth2RequestTokenResult,
 } from '../types';
 import { User, Artist } from '../endpoints';
-import ClientRequestMaker from '../client-helpers/request-maker';
+import RequestMaker from '../client-helpers/RequestMaker';
 
-export class Spotified extends SpotifiedReadWriteBaseClient {
+export class Spotified extends ReadWriteBaseClient {
   protected clientId?: string;
 
   protected clientSecret?: string;
@@ -26,7 +26,7 @@ export class Spotified extends SpotifiedReadWriteBaseClient {
   protected _artist?: Artist;
 
   constructor(token: ClientToken) {
-    super(new ClientRequestMaker());
+    super(new RequestMaker());
     if (isOAuth2Init(token)) {
       this.clientId = token.clientId;
       this.clientSecret = token.clientSecret;
