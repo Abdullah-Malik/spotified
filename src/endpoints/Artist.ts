@@ -1,5 +1,5 @@
 import { ReadWriteBaseClient } from '../client/ReadWriteBaseClient';
-import { ArtistProfile, ArtistsAlbumPageResult } from '../types';
+import { Artist as ArtistProfile, ArtistsAlbumPageResult } from '../types';
 import { SpotifiedPaginator } from '../paginators';
 import { SimplifiedAlbum } from '../types/album.types';
 
