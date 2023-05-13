@@ -6,7 +6,8 @@ import {
   GetTrackParams,
   Track as TrackDetail,
   Tracks as TracksDetail,
-} from '../types/track.types';
+} from '../types';
+import { encodeStringArrayToURI } from '../utils';
 
 export class Track extends ReadWriteBaseClient {
   /**
@@ -22,7 +23,7 @@ export class Track extends ReadWriteBaseClient {
    * https://developer.spotify.com/documentation/web-api/reference/get-several-tracks
    */
   getTracks(ids: string[], optionalParams?: GetTrackParams) {
-    return this.get<TracksDetail>(`/tracks?ids=${encodeURI(ids.join(','))}`, optionalParams);
+    return this.get<TracksDetail>(`/tracks?ids=${encodeStringArrayToURI(ids)}`, optionalParams);
   }
 
   /**
@@ -30,7 +31,7 @@ export class Track extends ReadWriteBaseClient {
    * https://developer.spotify.com/documentation/web-api/reference/get-users-saved-tracks
    */
   saveTracksforCurrentUser(ids: string[]) {
-    return this.put(`/me/tracks?ids=${encodeURI(ids.join(','))}`);
+    return this.put(`/me/tracks?ids=${encodeStringArrayToURI(ids)}`);
   }
 
   /**
@@ -38,7 +39,7 @@ export class Track extends ReadWriteBaseClient {
    * https://developer.spotify.com/documentation/web-api/reference/remove-tracks-user
    */
   removeUsersSavedTracks(ids: string[]) {
-    return this.delete(`/me/tracks?ids=${encodeURI(ids.join(','))}`);
+    return this.delete(`/me/tracks?ids=${encodeStringArrayToURI(ids)}`);
   }
 
   /**
@@ -46,7 +47,7 @@ export class Track extends ReadWriteBaseClient {
    * https://developer.spotify.com/documentation/web-api/reference/check-users-saved-tracks
    */
   checkUsersSavedTracks(ids: string[]) {
-    return this.get<Array<boolean>>(`/me/tracks/contains?ids=${encodeURI(ids.join(','))}`);
+    return this.get<Array<boolean>>(`/me/tracks/contains?ids=${encodeStringArrayToURI(ids)}`);
   }
 
   /**
@@ -62,7 +63,7 @@ export class Track extends ReadWriteBaseClient {
    * https://developer.spotify.com/documentation/web-api/reference/get-several-audio-features
    */
   getMultipleTracksAudioFeatures(ids: string[]) {
-    return this.get<AudioFeaturesArray>(`/audio-features?ids=${encodeURI(ids.join(','))}`);
+    return this.get<AudioFeaturesArray>(`/audio-features?ids=${encodeStringArrayToURI(ids)}`);
   }
 
   /**
