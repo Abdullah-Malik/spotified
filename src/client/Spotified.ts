@@ -11,7 +11,7 @@ import {
   OAuth2RequestArgs,
   OAuth2RequestTokenResult,
 } from '../types';
-import { User, Artist, Track } from '../endpoints';
+import { User, Artist, Track, Player } from '../endpoints';
 import RequestMaker from '../client-helpers/RequestMaker';
 
 const API_TOKEN_URL = 'https://accounts.spotify.com/api/token';
@@ -28,6 +28,8 @@ export class Spotified extends ReadWriteBaseClient {
   protected _artist?: Artist;
 
   protected _track?: Track;
+
+  protected _player?: Player;
 
   constructor(token: ClientToken) {
     super(new RequestMaker());
@@ -63,6 +65,14 @@ export class Spotified extends ReadWriteBaseClient {
     }
     this._track = new Track(this._requestMaker);
     return this._track;
+  }
+
+  public get player() {
+    if (this._player) {
+      return this._player;
+    }
+    this._player = new Player(this._requestMaker);
+    return this._player;
   }
 
   generateAuthLink(redirectUri: string, options: Partial<OAuth2RequestArgs> = {}): OAuth2RequestTokenResult {
