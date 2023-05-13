@@ -7,3 +7,6 @@ export * from './request-maker.types';
 export * from './errors.types';
 export * from './response.types';
 export * from './paginator.types';
+export * from './album.types';
+export * from './track.types';
+export * from './player.types';
