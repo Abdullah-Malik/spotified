@@ -8,19 +8,16 @@ This class provides methods to interact with the Spotify Web API and retrieve in
 
 This method is used to get information about a single track in the Spotify catalog, identified by its unique Spotify ID.
 
-#### Endpoint 
+**Endpoint** [/tracks/{id}](https://developer.spotify.com/documentation/web-api/reference/get-track)
 
-[/tracks/{id}](https://developer.spotify.com/documentation/web-api/reference/get-track)
-#### Parameters
+**Parameters**
 
 - `id` (required): A string representing the unique Spotify ID for the track.
 - `optionalParams` (optional): An object containing optional parameters to be included in the request. This can include market, additional market values, and request timeout.
 
-#### Returns
+**Return** `TrackDetail`
 
-A promise that resolves to a `TrackDetail` object, which contains detailed information about the track requested.
-
-#### Example
+**Example**
 
 ```typescript
 const track = await client.track.getTrack('trackId');
