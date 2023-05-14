@@ -8,8 +8,9 @@ This class provides methods to interact with the Spotify Web API and retrieve in
 
 This method is used to get information about a single track in the Spotify catalog, identified by its unique Spotify ID.
 
-#### Endpoint /tracks/{id}
+#### Endpoint 
 
+[/tracks/{id}](https://developer.spotify.com/documentation/web-api/reference/get-track)
 #### Parameters
 
 - `id` (required): A string representing the unique Spotify ID for the track.
