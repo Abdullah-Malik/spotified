@@ -121,7 +121,7 @@ export interface Segment {
   timbre?: number[];
 }
 
-export interface TrackDetail {
+export interface TrackAudioAnalysisDetail {
   num_samples?: number;
   duration?: number;
   sample_md5?: string;
@@ -152,7 +152,7 @@ export interface TrackDetail {
 
 export interface AudioAnalysis {
   meta?: Meta;
-  track?: Track;
+  track?: TrackAudioAnalysisDetail;
   bars?: TimeConfidenceInfo[];
   beats?: TimeConfidenceInfo[];
   sections?: Section[];
@@ -160,12 +160,9 @@ export interface AudioAnalysis {
   tatums?: TimeConfidenceInfo[];
 }
 
-export interface SpotifyRecommendationQueryParams {
+export interface RecommendationOptionalParams {
   limit?: number;
   market?: string;
-  seed_artists?: string;
-  seed_genres?: string;
-  seed_tracks?: string;
   min_acousticness?: number;
   max_acousticness?: number;
   target_acousticness?: number;
@@ -210,6 +207,11 @@ export interface SpotifyRecommendationQueryParams {
   target_valence?: number;
 }
 
+export interface RecommendationSeedParams {
+  seed_artists: string;
+  seed_genres: string;
+  seed_tracks: string;
+}
 interface RecommendationSeeds {
   afterFilteringSize: number;
   afterRelinkingSize: number;

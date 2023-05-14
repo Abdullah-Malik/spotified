@@ -8,6 +8,8 @@ This class provides methods to interact with the Spotify Web API and retrieve in
 
 This method is used to get information about a single track in the Spotify catalog, identified by its unique Spotify ID.
 
+#### Endpoint /tracks/{id}
+
 #### Parameters
 
 - `id` (required): A string representing the unique Spotify ID for the track.
@@ -20,13 +22,8 @@ A promise that resolves to a `TrackDetail` object, which contains detailed infor
 #### Example
 
 ```typescript
-const token = 'your_access_token_here';
-const spotify = new Spotified(token);
-const trackId = 'spotify_track_id'; // Replace with a valid Spotify track ID
-
-spotify.track.getTrack(trackId)
-  .then((track) => console.log(track))
-  .catch((err) => console.error(err));
+const track = await client.track.getTrack('trackId');
+console.log(track);
 ```
 
 ### getTracks(ids: string[], optionalParams?: GetTrackParams)

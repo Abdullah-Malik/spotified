@@ -4,10 +4,13 @@ import {
   AudioFeatures,
   AudioFeaturesArray,
   GetTrackParams,
+  RecommendationOptionalParams,
+  RecommendationSeedParams,
+  Recommendations,
   Track as TrackDetail,
   Tracks as TracksDetail,
 } from '../types';
-import { encodeStringArrayToURI } from '../utils';
+import { encodeStringArrayToURI, generateQueryParametersString } from '../utils';
 
 export class Track extends ReadWriteBaseClient {
   /**
@@ -73,6 +76,17 @@ export class Track extends ReadWriteBaseClient {
    */
   getTracksAudioAnalysis(id: string) {
     return this.get<AudioAnalysis>(`audio-analysis/${id}`);
+  }
+
+  /**
+   * Recommendations are generated based on the available information for a given seed entity
+   * and matched against similar artists and tracks
+   * https://developer.spotify.com/documentation/web-api/reference/get-recommendations
+   */
+  getRecommendations(seedParams: RecommendationSeedParams, optionalParams: RecommendationOptionalParams) {
+    return this.get<Recommendations>(
+      `/recommendations${generateQueryParametersString({ ...seedParams, ...optionalParams })}`
+    );
   }
 }
 
