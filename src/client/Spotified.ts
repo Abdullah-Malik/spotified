@@ -11,7 +11,7 @@ import {
   OAuth2RequestArgs,
   OAuth2RequestTokenResult,
 } from '../types';
-import { User, Artist } from '../endpoints';
+import { User, Artist, Track, Player, Market, Genre } from '../endpoints';
 import RequestMaker from '../client-helpers/RequestMaker';
 
 export class Spotified extends ReadWriteBaseClient {
@@ -24,6 +24,14 @@ export class Spotified extends ReadWriteBaseClient {
   protected _user?: User;
 
   protected _artist?: Artist;
+
+  protected _track?: Track;
+
+  protected _player?: Player;
+
+  protected _market?: Market;
+
+  protected _genre?: Genre;
 
   constructor(token: ClientToken) {
     super(new RequestMaker());
@@ -51,6 +59,38 @@ export class Spotified extends ReadWriteBaseClient {
     }
     this._artist = new Artist(this._requestMaker);
     return this._artist;
+  }
+
+  public get track() {
+    if (this._track) {
+      return this._track;
+    }
+    this._track = new Track(this._requestMaker);
+    return this._track;
+  }
+
+  public get player() {
+    if (this._player) {
+      return this._player;
+    }
+    this._player = new Player(this._requestMaker);
+    return this._player;
+  }
+
+  public get market() {
+    if (this._market) {
+      return this._market;
+    }
+    this._market = new Market(this._requestMaker);
+    return this._market;
+  }
+
+  public get genre() {
+    if (this._genre) {
+      return this._genre;
+    }
+    this._genre = new Genre(this._requestMaker);
+    return this._genre;
   }
 
   generateAuthLink(redirectUri: string, options: Partial<OAuth2RequestArgs> = {}): OAuth2RequestTokenResult {

@@ -9,7 +9,6 @@ export class SpotifiedPaginator<
   protected updatePaginatorProperties(apiResponse: ApiResponse) {
     this._data.push(...apiResponse.items);
     this.nextPageURL = apiResponse.next;
-    // console.log(this._data);
   }
 }
 
