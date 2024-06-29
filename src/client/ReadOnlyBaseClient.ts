@@ -1,5 +1,5 @@
 import RequestMaker from '../client-helpers/RequestMaker';
-import { RequestArgs, SpotifyResponse } from '../types';
+import { RequestArgs, SpotifiedResponse } from '../types';
 
 export abstract class ReadOnlyBaseClient {
   protected _requestMaker: RequestMaker;
@@ -14,13 +14,13 @@ export abstract class ReadOnlyBaseClient {
     url: string,
     params?: Record<string, any>,
     requestArgs?: Partial<RequestArgs>
-  ): Promise<SpotifyResponse<T>>;
+  ): Promise<SpotifiedResponse<T>>;
 
   protected async get<T>(
     url: string,
     params?: Record<string, any>,
     { fullResponse, ...rest }: Partial<RequestArgs> = {}
-  ): Promise<T | SpotifyResponse<T>> {
+  ): Promise<T | SpotifiedResponse<T>> {
     const options = {
       method: 'get',
       url,
