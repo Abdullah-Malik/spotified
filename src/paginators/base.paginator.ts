@@ -1,6 +1,6 @@
 import { ReadOnlyBaseClient } from '../client/ReadOnlyBaseClient';
 import RequestMaker from '../client-helpers/RequestMaker';
-import { RequestQuery, SpotifyResponse } from '../types';
+import { RequestQuery, SpotifiedResponse } from '../types';
 
 export abstract class BasePaginator<Item, ApiResponse, ApiParams extends object> extends ReadOnlyBaseClient {
   protected apiResponse: ApiResponse | undefined;
@@ -34,7 +34,7 @@ export abstract class BasePaginator<Item, ApiResponse, ApiParams extends object>
     });
   }
 
-  protected makeNewInstanceFromResult(result: SpotifyResponse<ApiResponse>, queryParams: Partial<ApiParams>): this {
+  protected makeNewInstanceFromResult(result: SpotifiedResponse<ApiResponse>, queryParams: Partial<ApiParams>): this {
     // Construct a subclass
     return new (this.constructor as any)({
       realData: result.data,

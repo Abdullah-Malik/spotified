@@ -1,60 +1,73 @@
-import axios from 'axios';
-import { ApiResponseError, ApiRequestError } from '../errors';
-import { BearerToken, isResponseError, Response, isRequestError } from '../types';
+import { SpotifyApiError, NetworkError } from '../errors';
+import { BearerToken, SpotifiedResponse } from '../types';
 
 const SPOTIFY_API_URL = 'https://api.spotify.com/v1';
 
 export default class RequestMaker {
   public bearerToken?: string;
 
-  private axiosInstance = axios.create({
-    baseURL: SPOTIFY_API_URL,
-    headers: {
-      common: {
-        'Content-Type': 'application/json',
-      },
-    },
-  });
-
   constructor(token?: BearerToken) {
     this.bearerToken = token?.bearerToken;
-    this.setAuthorizationHeader();
-  }
-
-  private setAuthorizationHeader() {
-    this.axiosInstance.defaults.headers.common.Authorization = `Bearer ${this.bearerToken}`;
   }
 
   setBearerToken(bearerToken: string) {
     this.bearerToken = bearerToken;
-    this.setAuthorizationHeader();
   }
 
-  async send<T = any>(requestParams: any): Promise<Response<T>> {
+  async send<T = any>(requestParams: any): Promise<SpotifiedResponse<T>> {
+    const defaultHeaders: Record<string, string | undefined> = {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${this.bearerToken}`,
+    };
+
+    if (requestParams.headers && requestParams.headers['Content-Type']) {
+      delete defaultHeaders['Content-Type'];
+    }
+    if (requestParams.headers && requestParams.headers.Authorization) {
+      delete defaultHeaders.Authorization;
+    }
+
+    const finalHeaders = { ...defaultHeaders, ...requestParams.headers };
+
     try {
-      const res = await this.axiosInstance.request<T>(requestParams);
-      return res;
-    } catch (err) {
-      if (isResponseError(err)) {
-        throw new ApiResponseError(
-          `Request failed with code ${err.response?.status} - Invalid Request: ${
-            err.response?.data?.error?.message || err.response?.data?.error
-          }`,
-          {
-            code: err.response?.status,
-            request: err.request,
-            response: err.response,
-            headers: err.response?.headers,
-            data: err.response?.data,
-          }
+      const res = await fetch(`${SPOTIFY_API_URL}${requestParams.url}`, {
+        method: requestParams.method,
+        headers: finalHeaders,
+        body: JSON.stringify(requestParams.data),
+      });
+
+      if (!res.ok) {
+        let errorData: any = {};
+        try {
+          errorData = await res.json();
+        } catch (parseError) {
+          errorData.message = 'Failed to parse error response';
+        }
+
+        const retryAfter = res.headers.get('Retry-After');
+
+        throw new SpotifyApiError(
+          res.status,
+          res.statusText,
+          requestParams.url,
+          requestParams,
+          errorData,
+          retryAfter ? parseInt(retryAfter, 10) : undefined
         );
-      } else if (isRequestError(err)) {
-        throw new ApiRequestError(`Request failed with code ${err.code}`, {
-          request: err.request,
-          requestError: err.cause,
-        });
       }
-      throw new Error('Some other error');
+
+      const data = await res.json();
+      const { headers } = res;
+      return { data, headers } as SpotifiedResponse<T>;
+    } catch (err) {
+      if (err instanceof SpotifyApiError) {
+        throw err;
+      } else if (err instanceof TypeError && err.message === 'Failed to fetch') {
+        throw new NetworkError('Failed to connect to Spotify API', requestParams.url, requestParams);
+      } else {
+        // Unexpected Error
+        throw new Error('Unexpected error during request');
+      }
     }
   }
 }

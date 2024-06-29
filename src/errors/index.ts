@@ -1,2 +1,2 @@
-export * from './ApiResponseError';
-export * from './ApiRequestError';
+export * from './SpotifyApiError';
+export * from './NetworkError';
