@@ -26,7 +26,7 @@ describe('ReadWriteBaseClient', () => {
     it('should call RequestMaker.send with correct parameters', async () => {
       mockRequestMaker.send.mockResolvedValue({ data: mockResponse, headers: mockHeaders });
 
-      await client.post(mockUrl, mockData);
+      await client['post'](mockUrl, mockData);
 
       expect(mockRequestMaker.send).toHaveBeenCalledWith({
         method: 'post',
@@ -38,7 +38,7 @@ describe('ReadWriteBaseClient', () => {
     it('should return the data from the response', async () => {
       mockRequestMaker.send.mockResolvedValue({ data: mockResponse, headers: mockHeaders });
 
-      const result = await client.post<typeof mockResponse>(mockUrl, mockData);
+      const result = await client['post']<typeof mockResponse>(mockUrl, mockData);
 
       expect(result).toEqual(mockResponse);
     });
@@ -49,7 +49,7 @@ describe('ReadWriteBaseClient', () => {
       const additionalArgs: Partial<RequestArgs> = {
         headers: { 'Custom-Header': 'Value' },
       };
-      await client.post(mockUrl, mockData, additionalArgs);
+      await client['post'](mockUrl, mockData, additionalArgs);
 
       expect(mockRequestMaker.send).toHaveBeenCalledWith({
         method: 'post',
@@ -64,7 +64,7 @@ describe('ReadWriteBaseClient', () => {
     it('should call RequestMaker.send with correct parameters', async () => {
       mockRequestMaker.send.mockResolvedValue({ data: mockResponse, headers: mockHeaders });
 
-      await client.put(mockUrl, mockData);
+      await client['put'](mockUrl, mockData);
 
       expect(mockRequestMaker.send).toHaveBeenCalledWith({
         method: 'put',
@@ -76,7 +76,7 @@ describe('ReadWriteBaseClient', () => {
     it('should return the data from the response', async () => {
       mockRequestMaker.send.mockResolvedValue({ data: mockResponse, headers: mockHeaders });
 
-      const result = await client.put<typeof mockResponse>(mockUrl, mockData);
+      const result = await client['put']<typeof mockResponse>(mockUrl, mockData);
 
       expect(result).toEqual(mockResponse);
     });
@@ -87,7 +87,7 @@ describe('ReadWriteBaseClient', () => {
       const additionalArgs: Partial<RequestArgs> = {
         headers: { 'Custom-Header': 'Value' },
       };
-      await client.put(mockUrl, mockData, additionalArgs);
+      await client['put'](mockUrl, mockData, additionalArgs);
 
       expect(mockRequestMaker.send).toHaveBeenCalledWith({
         method: 'put',
@@ -102,7 +102,7 @@ describe('ReadWriteBaseClient', () => {
     it('should call RequestMaker.send with correct parameters', async () => {
       mockRequestMaker.send.mockResolvedValue({ data: mockResponse, headers: mockHeaders });
 
-      await client.delete(mockUrl, mockData);
+      await client['delete'](mockUrl, mockData);
 
       expect(mockRequestMaker.send).toHaveBeenCalledWith({
         method: 'delete',
@@ -114,7 +114,7 @@ describe('ReadWriteBaseClient', () => {
     it('should return the data from the response', async () => {
       mockRequestMaker.send.mockResolvedValue({ data: mockResponse, headers: mockHeaders });
 
-      const result = await client.delete<typeof mockResponse>(mockUrl, mockData);
+      const result = await client['delete']<typeof mockResponse>(mockUrl, mockData);
 
       expect(result).toEqual(mockResponse);
     });
@@ -125,7 +125,7 @@ describe('ReadWriteBaseClient', () => {
       const additionalArgs: Partial<RequestArgs> = {
         headers: { 'Custom-Header': 'Value' },
       };
-      await client.delete(mockUrl, mockData, additionalArgs);
+      await client['delete'](mockUrl, mockData, additionalArgs);
 
       expect(mockRequestMaker.send).toHaveBeenCalledWith({
         method: 'delete',

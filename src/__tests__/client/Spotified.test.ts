@@ -18,7 +18,7 @@ describe('Spotified', () => {
 
   beforeEach(() => {
     spotified = new Spotified({ clientId: mockClientId, clientSecret: mockClientSecret });
-    spotified.post = jest.fn();
+    spotified['post'] = jest.fn();
   });
 
   afterEach(() => {
@@ -27,9 +27,9 @@ describe('Spotified', () => {
 
   describe('constructor', () => {
     it('should initialize with OAuth2 credentials', () => {
-      expect(spotified.clientId).toBe(mockClientId);
-      expect(spotified.clientSecret).toBe(mockClientSecret);
-      expect(spotified.authHeaders).toBeDefined();
+      expect(spotified['clientId']).toBe(mockClientId);
+      expect(spotified['clientSecret']).toBe(mockClientSecret);
+      expect(spotified['authHeaders']).toBeDefined();
     });
   });
 
@@ -102,11 +102,11 @@ describe('Spotified', () => {
       const mockRedirectUri = 'http://example.com/callback';
       const mockResponse = { access_token: 'mock-access-token' };
 
-      (spotified.post as jest.Mock).mockResolvedValue(mockResponse);
+      (spotified['post'] as jest.Mock).mockResolvedValue(mockResponse);
 
       const result = await spotified.getAccessToken({ code: mockCode, redirectUri: mockRedirectUri });
 
-      expect(spotified.post).toHaveBeenCalledWith(
+      expect(spotified['post']).toHaveBeenCalledWith(
         'https://accounts.spotify.com/api/token',
         expect.objectContaining({
           code: mockCode,
@@ -128,7 +128,7 @@ describe('Spotified', () => {
       const mockRedirectUri = 'http://example.com/callback';
       const mockResponse = { access_token: 'mock-access-token' };
 
-      (spotified.post as jest.Mock).mockResolvedValue(mockResponse);
+      (spotified['post'] as jest.Mock).mockResolvedValue(mockResponse);
 
       const result = await spotified.getPKCEAccessToken({
         code: mockCode,
@@ -136,7 +136,7 @@ describe('Spotified', () => {
         redirectUri: mockRedirectUri,
       });
 
-      expect(spotified.post).toHaveBeenCalledWith(
+      expect(spotified['post']).toHaveBeenCalledWith(
         'https://accounts.spotify.com/api/token',
         expect.objectContaining({
           code: mockCode,
@@ -157,11 +157,11 @@ describe('Spotified', () => {
       const mockRefreshToken = 'mock-refresh-token';
       const mockResponse = { access_token: 'new-mock-access-token' };
 
-      (spotified.post as jest.Mock).mockResolvedValue(mockResponse);
+      (spotified['post'] as jest.Mock).mockResolvedValue(mockResponse);
 
       const result = await spotified.refreshOAuth2Token(mockRefreshToken);
 
-      expect(spotified.post).toHaveBeenCalledWith(
+      expect(spotified['post']).toHaveBeenCalledWith(
         'https://accounts.spotify.com/api/token',
         expect.objectContaining({
           grant_type: 'refresh_token',
@@ -178,11 +178,11 @@ describe('Spotified', () => {
       const mockRefreshToken = 'mock-refresh-token';
       const mockResponse = { access_token: 'new-mock-access-token' };
 
-      (spotified.post as jest.Mock).mockResolvedValue(mockResponse);
+      (spotified['post'] as jest.Mock).mockResolvedValue(mockResponse);
 
       const result = await spotified.refreshPKCEOAuth2Token(mockRefreshToken);
 
-      expect(spotified.post).toHaveBeenCalledWith(
+      expect(spotified['post']).toHaveBeenCalledWith(
         'https://accounts.spotify.com/api/token',
         expect.objectContaining({
           grant_type: 'refresh_token',
@@ -199,7 +199,7 @@ describe('Spotified', () => {
     it('should set the bearer token on the RequestMaker', () => {
       const mockToken = 'mock-token';
       spotified.setBearerToken(mockToken);
-      expect(spotified._requestMaker.setBearerToken).toHaveBeenCalledWith(mockToken);
+      expect(spotified['_requestMaker'].setBearerToken).toHaveBeenCalledWith(mockToken);
     });
   });
 });
