@@ -45,5 +45,13 @@
     "prefer-destructuring": ["warn", { "object": true, "array": false }],
     "@typescript-eslint/no-explicit-any": "off",
     "no-underscore-dangle": "off"
-  }
+  },
+  "overrides": [
+    {
+      "files": ["**/*.test.ts"],
+      "rules": {
+        "dot-notation": "off"
+      }
+    }
+  ]
 }
