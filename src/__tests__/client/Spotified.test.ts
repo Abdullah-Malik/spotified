@@ -13,7 +13,7 @@ describe('Spotified', () => {
   const mockClientSecret = 'mock-client-secret';
   const mockAuthHeaders = {
     'Content-Type': 'application/x-www-form-urlencoded',
-    'Authorization': `Basic ${Buffer.from(`${mockClientId}:${mockClientSecret}`).toString('base64')}`,
+    'Authorization': `sefwfvcad_fwe_e3r123`,
   };
 
   beforeEach(() => {
