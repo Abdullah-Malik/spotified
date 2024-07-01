@@ -1,0 +1,27 @@
+name: Unit Tests
+
+on:
+  push:
+    branches:
+      - '*'
+  create:
+    branches:
+      - '*'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Use Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18' # You can adjust this to your project's Node.js version
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Run tests
+      run: npm run test
