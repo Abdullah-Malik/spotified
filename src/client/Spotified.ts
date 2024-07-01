@@ -14,12 +14,14 @@ import {
 import { User, Artist } from '../endpoints';
 import RequestMaker from '../client-helpers/RequestMaker';
 
+const API_TOKEN_URL = 'https://accounts.spotify.com/api/token';
+
 export class Spotified extends ReadWriteBaseClient {
   protected clientId?: string;
 
   protected clientSecret?: string;
 
-  private authHeaders?: Record<string, string>;
+  protected authHeaders?: Record<string, string>;
 
   protected _user?: User;
 
@@ -89,7 +91,7 @@ export class Spotified extends ReadWriteBaseClient {
 
   async getAccessToken({ code, redirectUri }: OAuth2AccessTokenArgs) {
     const accessTokenResult = await this.post<OAuth2AccessTokenResult>(
-      'https://accounts.spotify.com/api/token',
+      API_TOKEN_URL,
       {
         code,
         redirect_uri: redirectUri,
@@ -107,7 +109,7 @@ export class Spotified extends ReadWriteBaseClient {
 
   async getPKCEAccessToken({ code, codeVerifier, redirectUri }: OAuth2PKCEAccessTokenArgs) {
     const accessTokenResult = await this.post<OAuth2AccessTokenResult>(
-      'https://accounts.spotify.com/api/token',
+      API_TOKEN_URL,
       {
         code,
         code_verifier: codeVerifier,
@@ -126,7 +128,7 @@ export class Spotified extends ReadWriteBaseClient {
 
   async refreshOAuth2Token(refreshToken: string) {
     const accessTokenResult = await this.post<OAuth2AccessTokenResult>(
-      'https://accounts.spotify.com/api/token',
+      API_TOKEN_URL,
       {
         grant_type: 'refresh_token',
         refresh_token: refreshToken,
@@ -141,7 +143,7 @@ export class Spotified extends ReadWriteBaseClient {
 
   async refreshPKCEOAuth2Token(refreshToken: string) {
     const accessTokenResult = await this.post<OAuth2AccessTokenResult>(
-      'https://accounts.spotify.com/api/token',
+      API_TOKEN_URL,
       {
         grant_type: 'refresh_token',
         refresh_token: refreshToken,
