@@ -27,7 +27,7 @@ describe('ReadOnlyBaseClient', () => {
     it('should call RequestMaker.send with correct parameters', async () => {
       mockRequestMaker.send.mockResolvedValue({ data: mockData, headers: mockHeaders });
 
-      await client.get(mockUrl, mockParams);
+      await client['get'](mockUrl, mockParams);
 
       expect(mockRequestMaker.send).toHaveBeenCalledWith({
         method: 'get',
@@ -39,7 +39,7 @@ describe('ReadOnlyBaseClient', () => {
     it('should return only data when fullResponse is not set', async () => {
       mockRequestMaker.send.mockResolvedValue({ data: mockData, headers: mockHeaders });
 
-      const result = await client.get<typeof mockData>(mockUrl);
+      const result = await client['get']<typeof mockData>(mockUrl);
 
       expect(result).toEqual(mockData);
     });
@@ -48,7 +48,7 @@ describe('ReadOnlyBaseClient', () => {
       mockRequestMaker.send.mockResolvedValue({ data: mockData, headers: mockHeaders });
 
       const requestArgs: Partial<RequestArgs> = { fullResponse: true };
-      const result = await client.get<typeof mockData>(mockUrl, undefined, requestArgs);
+      const result = await client['get']<typeof mockData>(mockUrl, undefined, requestArgs);
 
       expect(result).toEqual({ data: mockData, headers: mockHeaders });
     });
@@ -60,7 +60,7 @@ describe('ReadOnlyBaseClient', () => {
         headers: { 'Custom-Header': 'Value' },
         fullResponse: false,
       };
-      await client.get(mockUrl, mockParams, additionalArgs);
+      await client['get'](mockUrl, mockParams, additionalArgs);
 
       expect(mockRequestMaker.send).toHaveBeenCalledWith({
         method: 'get',
@@ -74,14 +74,14 @@ describe('ReadOnlyBaseClient', () => {
       const mockError = new Error('Request failed');
       mockRequestMaker.send.mockRejectedValue(mockError);
 
-      await expect(client.get(mockUrl)).rejects.toThrow('Request failed');
+      await expect(client['get'](mockUrl)).rejects.toThrow('Request failed');
     });
 
     it('should return DataResponse when fullResponse is false', async () => {
       const mockDataResponse: DataResponse<typeof mockData> = { data: mockData };
       mockRequestMaker.send.mockResolvedValue({ data: mockData, headers: mockHeaders });
 
-      const result = await client.get<typeof mockData>(mockUrl);
+      const result = await client['get']<typeof mockData>(mockUrl);
 
       expect(result).toEqual(mockDataResponse.data);
     });
@@ -91,7 +91,7 @@ describe('ReadOnlyBaseClient', () => {
       mockRequestMaker.send.mockResolvedValue(mockSpotifiedResponse);
 
       const requestArgs: Partial<RequestArgs> = { fullResponse: true };
-      const result = await client.get<typeof mockData>(mockUrl, undefined, requestArgs);
+      const result = await client['get']<typeof mockData>(mockUrl, undefined, requestArgs);
 
       expect(result).toEqual(mockSpotifiedResponse);
     });
