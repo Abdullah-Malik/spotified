@@ -4,7 +4,7 @@ import { BearerToken, SpotifiedResponse } from '../types';
 const SPOTIFY_API_URL = 'https://api.spotify.com/v1';
 
 export default class RequestMaker {
-  public bearerToken?: string;
+  protected bearerToken?: string;
 
   constructor(token?: BearerToken) {
     this.bearerToken = token?.bearerToken;
@@ -30,7 +30,9 @@ export default class RequestMaker {
     const finalHeaders = { ...defaultHeaders, ...requestParams.headers };
 
     try {
-      const res = await fetch(`${SPOTIFY_API_URL}${requestParams.url}`, {
+      const url = requestParams.url.startsWith('http') ? requestParams.url : `${SPOTIFY_API_URL}${requestParams.url}`;
+
+      const res = await fetch(url, {
         method: requestParams.method,
         headers: finalHeaders,
         body: JSON.stringify(requestParams.data),
