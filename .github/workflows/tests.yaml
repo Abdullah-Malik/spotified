@@ -3,10 +3,7 @@ name: Unit Tests
 on:
   push:
     branches:
-      - '*'
-  create:
-    branches:
-      - '*'
+      - '**'
 
 jobs:
   test:
