@@ -32,7 +32,6 @@
   },
   "homepage": "https://github.com/Abdullah-Malik/spotified#readme",
   "dependencies": {
-    "axios": "^1.2.1",
     "crypto-js": "^4.1.1"
   },
   "devDependencies": {
@@ -50,9 +49,28 @@
     "fetch-mock": "^10.0.7",
     "husky": "^8.0.0",
     "jest": "^29.7.0",
-    "jest-fetch-mock": "^3.0.3",
     "lint-staged": "^13.1.0",
     "prettier": "^2.8.1",
     "ts-jest": "^29.1.2"
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "node",
+    "roots": [
+      "<rootDir>/src"
+    ],
+    "transform": {
+      "^.+\\.tsx?$": "ts-jest"
+    },
+    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.tsx?$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json",
+      "node"
+    ],
+    "collectCoverage": true
   }
 }

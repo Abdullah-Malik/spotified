@@ -1,15 +1,16 @@
-name: Unit Tests
+name: Tests and Build
 
 on:
   push:
     branches:
-      - '*'
+      - '**'
+      - main
   create:
     branches:
-      - '*'
+      - '**'
 
 jobs:
-  test:
+  build_and_test:
     runs-on: ubuntu-latest
 
     steps:
@@ -22,6 +23,9 @@ jobs:
 
     - name: Install dependencies
       run: npm ci
+
+    - name: Build the project
+      run: npm run build
 
     - name: Run tests
       run: npm run test
