@@ -31,9 +31,6 @@
     "url": "https://github.com/Abdullah-Malik/spotified/issues"
   },
   "homepage": "https://github.com/Abdullah-Malik/spotified#readme",
-  "dependencies": {
-    "crypto-js": "^4.1.1"
-  },
   "devDependencies": {
     "@types/jest": "^29.5.12",
     "@types/node": "^18.19.39",
