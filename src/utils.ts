@@ -1,15 +1,17 @@
-export function encodeStringArrayToURI(ids: string[]) {
-  return encodeURI(ids.join(','));
+export function joinIdsArrayToString(ids: string[]) {
+  return ids.join(',');
 }
 
-export function generateQueryParametersString(params: Record<string, string | number | boolean | undefined>) {
-  let queryParametersString = '';
-  Object.keys(params).forEach((key) => {
-    if (params[key] !== undefined) {
-      queryParametersString += `${queryParametersString.length ? '&' : '?'}${key}=${params[key]}`;
+export function generateQueryParametersString(params: Record<string, string | number | boolean | undefined>): string {
+  const queryParams = new URLSearchParams();
+
+  Object.entries(params).forEach(([key, value]) => {
+    if (value !== undefined) {
+      queryParams.append(key, String(value));
     }
   });
-  return queryParametersString;
+
+  return queryParams.toString() ? `?${queryParams.toString()}` : '';
 }
 
-export default encodeStringArrayToURI;
+export default joinIdsArrayToString;
