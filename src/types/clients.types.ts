@@ -14,5 +14,5 @@ export function isBearerToken(token: ClientToken): token is BearerToken {
 }
 
 export function isOAuth2Init(token: ClientToken): token is OAuth2Init {
-  return 'clientId' in token && 'clientSecret' in token;
+  return 'clientId' in token;
 }
