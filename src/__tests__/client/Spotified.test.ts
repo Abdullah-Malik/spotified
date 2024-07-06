@@ -7,6 +7,8 @@ jest.mock('../../client-helpers/RequestMaker');
 jest.mock('../../endpoints/User');
 jest.mock('../../endpoints/Artist');
 
+const AUTHORIZE_URL = 'https://accounts.spotify.com/authorize';
+
 describe('Spotified', () => {
   let spotified: Spotified;
   const mockClientId = 'mock-client-id';
@@ -63,19 +65,70 @@ describe('Spotified', () => {
     });
   });
 
-  describe('generateAuthLink', () => {
-    it('should generate a correct auth link', () => {
-      const mockState = 'mock-state';
-      (OAuth2Helper.generateRandomString as jest.Mock).mockReturnValue(mockState);
+  describe('generateAuthURL', () => {
+    const mockRedirectUri = 'http://example.com/callback';
 
-      const redirectUri = 'http://example.com/callback';
-      const result = spotified.generateAuthLink(redirectUri);
+    beforeEach(() => {
+      (OAuth2Helper.generateRandomString as jest.Mock).mockReturnValue('mock-state');
+    });
 
-      expect(result.url).toContain('https://accounts.spotify.com/authorize');
+    it('should generate the correct authorization URL with default options', () => {
+      const result = spotified.generateAuthURL(mockRedirectUri);
+
+      expect(result.url).toContain(`${AUTHORIZE_URL}`);
+      expect(result.url).toContain('response_type=code');
       expect(result.url).toContain(`client_id=${mockClientId}`);
-      expect(result.url).toContain(`redirect_uri=${encodeURIComponent(redirectUri)}`);
-      expect(result.state).toBe(mockState);
-      expect(OAuth2Helper.generateRandomString).toHaveBeenCalledWith(32);
+      expect(result.url).toContain(`redirect_uri=${encodeURIComponent(mockRedirectUri)}`);
+      expect(result.url).toContain('state=mock-state');
+      expect(result.url).not.toContain('scope');
+      expect(result.state).toBe('mock-state');
+    });
+
+    it('should generate the correct authorization URL with custom options', () => {
+      const options = {
+        scope: ['user-read-private', 'user-read-email'],
+      };
+
+      const result = spotified.generateAuthURL(mockRedirectUri, options);
+
+      expect(result.url).toContain(`${AUTHORIZE_URL}`);
+      expect(result.url).toContain('response_type=code');
+      expect(result.url).toContain(`client_id=${mockClientId}`);
+      expect(result.url).toContain(`redirect_uri=${encodeURIComponent(mockRedirectUri)}`);
+      expect(result.url).toContain('state=mock-state');
+      expect(result.url).toContain('scope=user-read-private%20user-read-email');
+      expect(result.state).toBe('mock-state');
+    });
+
+    it('should generate the correct authorization URL with custom state', () => {
+      const options = {
+        state: 'custom-state',
+      };
+
+      const result = spotified.generateAuthURL(mockRedirectUri, options);
+
+      expect(result.url).toContain(`${AUTHORIZE_URL}`);
+      expect(result.url).toContain('response_type=code');
+      expect(result.url).toContain(`client_id=${mockClientId}`);
+      expect(result.url).toContain(`redirect_uri=${encodeURIComponent(mockRedirectUri)}`);
+      expect(result.url).toContain('state=custom-state');
+      expect(result.state).toBe('custom-state');
+    });
+
+    it('should handle undefined scope', () => {
+      const options = {
+        scope: undefined,
+      };
+
+      const result = spotified.generateAuthURL(mockRedirectUri, options);
+
+      expect(result.url).toContain(`${AUTHORIZE_URL}`);
+      expect(result.url).toContain('response_type=code');
+      expect(result.url).toContain(`client_id=${mockClientId}`);
+      expect(result.url).toContain(`redirect_uri=${encodeURIComponent(mockRedirectUri)}`);
+      expect(result.url).toContain('state=mock-state');
+      expect(result.url).not.toContain('scope');
+      expect(result.state).toBe('mock-state');
     });
   });
 
@@ -87,12 +140,152 @@ describe('Spotified', () => {
       (OAuth2Helper.getCodeVerifier as jest.Mock).mockReturnValue(mockCodeVerifier);
       (OAuth2Helper.getCodeChallengeFromVerifier as jest.Mock).mockReturnValue(mockCodeChallenge);
 
-      const result = spotified.generatePKCEAuthLink(redirectUri);
+      const result = spotified.generatePKCEAuthURL(redirectUri);
       expect(result.url).toContain('https://accounts.spotify.com/authorize');
       expect(result.url).toContain(`code_challenge=${mockCodeChallenge}`);
       expect(result.url).toContain('code_challenge_method=S256');
       expect(result.codeVerifier).toBe(mockCodeVerifier);
       expect(result.codeChallenge).toBe(mockCodeChallenge);
+    });
+  });
+
+  describe('generatePKCEAuthURL', () => {
+    const mockRedirectUri = 'http://example.com/callback';
+    const mockCodeVerifier = 'mock-code-verifier';
+    const mockCodeChallenge = 'mock-code-challenge';
+
+    beforeEach(() => {
+      (OAuth2Helper.generateRandomString as jest.Mock).mockReturnValue('mock-state');
+      (OAuth2Helper.getCodeVerifier as jest.Mock).mockReturnValue(mockCodeVerifier);
+      (OAuth2Helper.getCodeChallengeFromVerifier as jest.Mock).mockReturnValue(mockCodeChallenge);
+    });
+
+    it('should generate the correct PKCE authorization URL with default options', () => {
+      const result = spotified.generatePKCEAuthURL(mockRedirectUri);
+
+      expect(result.url).toContain(`${AUTHORIZE_URL}`);
+      expect(result.url).toContain('response_type=code');
+      expect(result.url).toContain(`client_id=${mockClientId}`);
+      expect(result.url).toContain(`redirect_uri=${encodeURIComponent(mockRedirectUri)}`);
+      expect(result.url).toContain('state=mock-state');
+      expect(result.url).toContain(`code_challenge=${encodeURIComponent(mockCodeChallenge)}`);
+      expect(result.url).toContain('code_challenge_method=S256');
+      expect(result.state).toBe('mock-state');
+      expect(result.codeVerifier).toBe(mockCodeVerifier);
+      expect(result.codeChallenge).toBe(mockCodeChallenge);
+    });
+
+    it('should generate the correct PKCE authorization URL with custom options', () => {
+      const options = {
+        scope: ['user-read-private', 'user-read-email'],
+      };
+
+      const result = spotified.generatePKCEAuthURL(mockRedirectUri, options);
+
+      expect(result.url).toContain(`${AUTHORIZE_URL}`);
+      expect(result.url).toContain('response_type=code');
+      expect(result.url).toContain(`client_id=${mockClientId}`);
+      expect(result.url).toContain(`redirect_uri=${encodeURIComponent(mockRedirectUri)}`);
+      expect(result.url).toContain('state=mock-state');
+      expect(result.url).toContain(`code_challenge=${encodeURIComponent(mockCodeChallenge)}`);
+      expect(result.url).toContain('code_challenge_method=S256');
+      expect(result.url).toContain('scope=user-read-private%20user-read-email');
+      expect(result.state).toBe('mock-state');
+      expect(result.codeVerifier).toBe(mockCodeVerifier);
+      expect(result.codeChallenge).toBe(mockCodeChallenge);
+    });
+
+    it('should generate the correct PKCE authorization URL with custom state', () => {
+      const options = {
+        state: 'custom-state',
+      };
+
+      const result = spotified.generatePKCEAuthURL(mockRedirectUri, options);
+
+      expect(result.url).toContain(`${AUTHORIZE_URL}`);
+      expect(result.url).toContain('response_type=code');
+      expect(result.url).toContain(`client_id=${mockClientId}`);
+      expect(result.url).toContain(`redirect_uri=${encodeURIComponent(mockRedirectUri)}`);
+      expect(result.url).toContain('state=custom-state');
+      expect(result.url).toContain(`code_challenge=${encodeURIComponent(mockCodeChallenge)}`);
+      expect(result.url).toContain('code_challenge_method=S256');
+      expect(result.state).toBe('custom-state');
+      expect(result.codeVerifier).toBe(mockCodeVerifier);
+      expect(result.codeChallenge).toBe(mockCodeChallenge);
+    });
+
+    it('should handle undefined scope', () => {
+      const options = {
+        scope: undefined,
+      };
+
+      const result = spotified.generatePKCEAuthURL(mockRedirectUri, options);
+
+      expect(result.url).toContain(`${AUTHORIZE_URL}`);
+      expect(result.url).toContain('response_type=code');
+      expect(result.url).toContain(`client_id=${mockClientId}`);
+      expect(result.url).toContain(`redirect_uri=${encodeURIComponent(mockRedirectUri)}`);
+      expect(result.url).toContain('state=mock-state');
+      expect(result.url).toContain(`code_challenge=${encodeURIComponent(mockCodeChallenge)}`);
+      expect(result.url).toContain('code_challenge_method=S256');
+      expect(result.url).not.toContain('scope');
+      expect(result.state).toBe('mock-state');
+      expect(result.codeVerifier).toBe(mockCodeVerifier);
+      expect(result.codeChallenge).toBe(mockCodeChallenge);
+    });
+  });
+
+  describe('generateImplicitGrantAuthURL', () => {
+    const mockRedirectUri = 'http://example.com/callback';
+
+    beforeEach(() => {
+      (OAuth2Helper.generateRandomString as jest.Mock).mockReturnValue('mock-state');
+    });
+
+    it('should generate the correct implicit grant authorization URL with default options', () => {
+      const result = spotified.generateImplicitGrantAuthURL(mockRedirectUri);
+
+      expect(result.url).toContain(`${AUTHORIZE_URL}`);
+      expect(result.url).toContain('response_type=token');
+      expect(result.url).toContain(`client_id=${mockClientId}`);
+      expect(result.url).toContain(`redirect_uri=${encodeURIComponent(mockRedirectUri)}`);
+      expect(result.url).toContain('state=mock-state');
+      expect(result.url).not.toContain('scope');
+      expect(result.url).not.toContain('show_dialog');
+      expect(result.state).toBe('mock-state');
+    });
+
+    it('should generate the correct implicit grant authorization URL with custom options', () => {
+      const options = {
+        scope: ['user-read-private', 'user-read-email'],
+        showDialog: true,
+      };
+
+      const result = spotified.generateImplicitGrantAuthURL(mockRedirectUri, options);
+
+      expect(result.url).toContain(`${AUTHORIZE_URL}`);
+      expect(result.url).toContain('response_type=token');
+      expect(result.url).toContain(`client_id=${mockClientId}`);
+      expect(result.url).toContain(`redirect_uri=${encodeURIComponent(mockRedirectUri)}`);
+      expect(result.url).toContain('state=mock-state');
+      expect(result.url).toContain('scope=user-read-private%20user-read-email');
+      expect(result.url).toContain('show_dialog=true');
+      expect(result.state).toBe('mock-state');
+    });
+
+    it('should generate the correct implicit grant authorization URL with custom state', () => {
+      const options = {
+        state: 'custom-state',
+      };
+
+      const result = spotified.generateImplicitGrantAuthURL(mockRedirectUri, options);
+
+      expect(result.url).toContain(`${AUTHORIZE_URL}`);
+      expect(result.url).toContain('response_type=token');
+      expect(result.url).toContain(`client_id=${mockClientId}`);
+      expect(result.url).toContain(`redirect_uri=${encodeURIComponent(mockRedirectUri)}`);
+      expect(result.url).toContain('state=custom-state');
+      expect(result.state).toBe('custom-state');
     });
   });
 
