@@ -26,15 +26,23 @@ export interface OAuth2RequestArgs {
   state?: string;
 }
 
-export interface OAuth2RequestTokenResult {
+export interface AuthURLData {
   url: string;
   state: string;
 }
 
-export interface OAuth2PCKERequestTokenResult extends OAuth2RequestTokenResult {
+export interface ImplicitGrantRequestArgs {
+  state?: string;
+  scope?: TypeOrArrayOf<SOAuth2Scope> | TypeOrArrayOf<string>;
+  showDialog?: boolean;
+}
+
+export interface PCKEAuthURLData extends AuthURLData {
   codeVerifier: string;
   codeChallenge: string;
 }
+
+export type ImplicitGrantURLData = AuthURLData;
 
 export interface OAuth2AccessTokenArgs {
   /** The same URI given to generate link at previous step. */
@@ -48,7 +56,7 @@ export interface OAuth2PKCEAccessTokenArgs extends OAuth2AccessTokenArgs {
   codeVerifier: string;
 }
 
-export interface OAuth2AccessTokenResult {
+export interface OAuth2AccessTokenResponse {
   token_type: 'bearer';
   expires_in: number;
   access_token: string;

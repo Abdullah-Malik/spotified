@@ -5,15 +5,18 @@ import {
   ClientToken,
   isOAuth2Init,
   OAuth2AccessTokenArgs,
-  OAuth2AccessTokenResult,
-  OAuth2PCKERequestTokenResult,
+  OAuth2AccessTokenResponse,
+  PCKEAuthURLData,
   OAuth2PKCEAccessTokenArgs,
   OAuth2RequestArgs,
-  OAuth2RequestTokenResult,
+  AuthURLData,
+  ImplicitGrantRequestArgs,
+  ImplicitGrantURLData,
 } from '../types';
 import { User, Artist, Track, Player, Market, Genre } from '../endpoints';
 import RequestMaker from '../client-helpers/RequestMaker';
 
+const AUTHORIZE_URL = 'https://accounts.spotify.com/authorize';
 const API_TOKEN_URL = 'https://accounts.spotify.com/api/token';
 
 export class Spotified extends ReadWriteBaseClient {
@@ -95,17 +98,22 @@ export class Spotified extends ReadWriteBaseClient {
     return this._genre;
   }
 
-  generateAuthLink(redirectUri: string, options: Partial<OAuth2RequestArgs> = {}): OAuth2RequestTokenResult {
+  generateAuthURL(redirectUri: string, options: Partial<OAuth2RequestArgs> = {}): AuthURLData {
     const state = options.state ?? OAuth2Helper.generateRandomString(32);
-    const rawScope = options.scope ?? '';
-    const scope = Array.isArray(rawScope) ? rawScope.join(' ') : rawScope;
-    const url = `https://accounts.spotify.com/authorize?${stringify({
+    const scope = options.scope ?? '';
+
+    const params: Record<string, string> = {
       response_type: 'code',
-      client_id: this.clientId,
-      scope,
+      client_id: this.clientId as string,
       redirect_uri: redirectUri,
       state,
-    })}`;
+    };
+
+    if (scope) {
+      params.scope = Array.isArray(scope) ? scope.join(' ') : scope;
+    }
+
+    const url = `${AUTHORIZE_URL}?${stringify(params)}`;
 
     return {
       url,
@@ -113,8 +121,8 @@ export class Spotified extends ReadWriteBaseClient {
     };
   }
 
-  generatePKCEAuthLink(redirectUri: string, options: Partial<OAuth2RequestArgs> = {}): OAuth2PCKERequestTokenResult {
-    const res = this.generateAuthLink(redirectUri, { ...options });
+  generatePKCEAuthURL(redirectUri: string, options: Partial<OAuth2RequestArgs> = {}): PCKEAuthURLData {
+    const res = this.generateAuthURL(redirectUri, { ...options });
     const { state } = res;
 
     const codeVerifier = OAuth2Helper.getCodeVerifier();
@@ -129,8 +137,39 @@ export class Spotified extends ReadWriteBaseClient {
     };
   }
 
+  generateImplicitGrantAuthURL(
+    redirectUri: string,
+    options: Partial<ImplicitGrantRequestArgs> = {}
+  ): ImplicitGrantURLData {
+    const state = options.state ?? OAuth2Helper.generateRandomString(32);
+    const scope = options.scope ?? '';
+    const showDialog = options.showDialog ?? false;
+
+    const params: Record<string, string> = {
+      response_type: 'token',
+      client_id: this.clientId as string,
+      redirect_uri: redirectUri,
+      state,
+    };
+
+    if (scope) {
+      params.scope = Array.isArray(scope) ? scope.join(' ') : scope;
+    }
+
+    if (showDialog) {
+      params.show_dialog = showDialog.toString();
+    }
+
+    const url = `${AUTHORIZE_URL}?${stringify(params)}`;
+
+    return {
+      url,
+      state,
+    };
+  }
+
   async getAccessToken({ code, redirectUri }: OAuth2AccessTokenArgs) {
-    const accessTokenResult = await this.post<OAuth2AccessTokenResult>(
+    const accessTokenResult = await this.post<OAuth2AccessTokenResponse>(
       API_TOKEN_URL,
       {
         code,
@@ -148,7 +187,7 @@ export class Spotified extends ReadWriteBaseClient {
   }
 
   async getPKCEAccessToken({ code, codeVerifier, redirectUri }: OAuth2PKCEAccessTokenArgs) {
-    const accessTokenResult = await this.post<OAuth2AccessTokenResult>(
+    const accessTokenResult = await this.post<OAuth2AccessTokenResponse>(
       API_TOKEN_URL,
       {
         code,
@@ -167,7 +206,7 @@ export class Spotified extends ReadWriteBaseClient {
   }
 
   async refreshOAuth2Token(refreshToken: string) {
-    const accessTokenResult = await this.post<OAuth2AccessTokenResult>(
+    const accessTokenResult = await this.post<OAuth2AccessTokenResponse>(
       API_TOKEN_URL,
       {
         grant_type: 'refresh_token',
@@ -182,7 +221,7 @@ export class Spotified extends ReadWriteBaseClient {
   }
 
   async refreshPKCEOAuth2Token(refreshToken: string) {
-    const accessTokenResult = await this.post<OAuth2AccessTokenResult>(
+    const accessTokenResult = await this.post<OAuth2AccessTokenResponse>(
       API_TOKEN_URL,
       {
         grant_type: 'refresh_token',
