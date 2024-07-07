@@ -1,6 +1,6 @@
-import { Spotified } from '../../client/Spotified';
-import { OAuth2Helper } from '../../client-helpers/OAuth2Helper';
-import { User, Artist } from '../../endpoints';
+import { Spotified } from '../../src/client/Spotified';
+import { OAuth2Helper } from '../../src/client-helpers/OAuth2Helper';
+import { User, Artist } from '../../src/endpoints';
 
 jest.mock('../../client-helpers/OAuth2Helper');
 jest.mock('../../client-helpers/RequestMaker');

@@ -1,6 +1,6 @@
-import { ReadOnlyBaseClient } from '../../client/ReadOnlyBaseClient';
-import RequestMaker from '../../client-helpers/RequestMaker';
-import { SpotifiedResponse, RequestArgs, DataResponse } from '../../types';
+import { ReadOnlyBaseClient } from '../../src/client/ReadOnlyBaseClient';
+import RequestMaker from '../../src/client-helpers/RequestMaker';
+import { SpotifiedResponse, RequestArgs, DataResponse } from '../../src/types';
 
 // Mock the RequestMaker class
 jest.mock('../../client-helpers/RequestMaker');
