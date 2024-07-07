@@ -2,10 +2,10 @@ import { Spotified } from '../../src/client/Spotified';
 import { OAuth2Helper } from '../../src/client-helpers/OAuth2Helper';
 import { User, Artist } from '../../src/endpoints';
 
-jest.mock('../../client-helpers/OAuth2Helper');
-jest.mock('../../client-helpers/RequestMaker');
-jest.mock('../../endpoints/User');
-jest.mock('../../endpoints/Artist');
+jest.mock('../../src/client-helpers/OAuth2Helper');
+jest.mock('../../src/client-helpers/RequestMaker');
+jest.mock('../../src/endpoints/User');
+jest.mock('../../src/endpoints/Artist');
 
 const AUTHORIZE_URL = 'https://accounts.spotify.com/authorize';
 
