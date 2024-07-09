@@ -1,8 +1,8 @@
-import { ReadWriteBaseClient } from '../../client/ReadWriteBaseClient';
-import RequestMaker from '../../client-helpers/RequestMaker';
-import { RequestArgs } from '../../types';
+import { ReadWriteBaseClient } from '../../src/client/ReadWriteBaseClient';
+import RequestMaker from '../../src/client-helpers/RequestMaker';
+import { RequestArgs } from '../../src/types';
 
-jest.mock('../../client-helpers/RequestMaker');
+jest.mock('../../src/client-helpers/RequestMaker');
 
 describe('ReadWriteBaseClient', () => {
   let client: ReadWriteBaseClient;

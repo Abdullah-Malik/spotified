@@ -1,5 +1,5 @@
 import * as crypto from 'crypto';
-import { OAuth2Helper } from '../../client-helpers/OAuth2Helper';
+import { OAuth2Helper } from '../../src/client-helpers/OAuth2Helper';
 
 describe('OAuth2Helper', () => {
   describe('getCodeVerifier', () => {
