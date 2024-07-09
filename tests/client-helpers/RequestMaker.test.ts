@@ -1,6 +1,6 @@
 import fetchMock from 'fetch-mock';
-import RequestMaker from '../../client-helpers/RequestMaker';
-import { NetworkError, SpotifyApiError } from '../../errors';
+import RequestMaker from '../../src/client-helpers/RequestMaker';
+import { NetworkError, SpotifyApiError } from '../../src/errors';
 
 const SPOTIFY_API_URL = 'https://api.spotify.com/v1';
 
