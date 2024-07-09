@@ -31,3 +31,8 @@ export interface Followers {
 export interface Restrictions {
   reason?: string;
 }
+
+export interface PaginationParams {
+  limit?: number;
+  offset?: number;
+}
