@@ -4,11 +4,13 @@ import {
   AudioFeatures,
   AudioFeaturesArray,
   GetTrackParams,
+  OptionalUserSavedTrackParams,
   RecommendationOptionalParams,
   RecommendationSeedParams,
   Recommendations,
   Track as TrackDetail,
   Tracks as TracksDetail,
+  UserSavedTracks,
 } from '../types';
 import { joinIdsArrayToString, generateQueryParametersString } from '../utils';
 
@@ -32,6 +34,14 @@ export class Track extends ReadWriteBaseClient {
   /**
    * Get a list of the songs saved in the current Spotify user's 'Your Music' library
    * https://developer.spotify.com/documentation/web-api/reference/get-users-saved-tracks
+   */
+  getUsersSavedTracks(optionalParams?: OptionalUserSavedTrackParams) {
+    return this.get<UserSavedTracks>(`/tracks${generateQueryParametersString({ ...optionalParams })}`);
+  }
+
+  /**
+   * Save one or more tracks to the current user's 'Your Music' library.
+   * https://developer.spotify.com/documentation/web-api/reference/save-tracks-user
    */
   saveTracksforCurrentUser(ids: string[]) {
     return this.put(`/me/tracks?ids=${joinIdsArrayToString(ids)}`);
