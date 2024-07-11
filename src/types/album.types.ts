@@ -10,10 +10,10 @@ export interface SimplifiedAlbum {
   album_type: string;
   artists: SimplifiedArtist[];
   available_markets: string[];
-  copyrights?: Copyright[]; // not exist in simplified form, but is present in the main album
-  external_ids?: ExternalIds; // not exist in simplified form, but is present in the main album
+  copyrights?: Copyright[];
+  external_ids?: ExternalIds;
   external_urls: ExternalUrls;
-  genres?: string[]; // not exist in simplified form, but is present in the main album
+  genres?: string[];
   href: string;
   id: string;
   images: Image[];
