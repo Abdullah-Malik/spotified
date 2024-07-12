@@ -63,3 +63,9 @@ export interface OAuth2AccessTokenResponse {
   scope: string;
   refresh_token?: string;
 }
+
+export interface ClientCredentialsFlowResponse {
+  access_token: string;
+  token_type: 'bearer';
+  expires_in: number;
+}
