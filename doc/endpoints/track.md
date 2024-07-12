@@ -8,19 +8,19 @@ This class provides methods to interact with the Spotify Web API and retrieve in
 
 This method is used to get information about a single track in the Spotify catalog, identified by its unique Spotify ID.
 
-**Endpoint**: [/tracks/{id}](https://developer.spotify.com/documentation/web-api/reference/get-track)
+#### Endpoint: [/tracks/{id}](https://developer.spotify.com/documentation/web-api/reference/get-track)
 
-**Parameters**:
+#### Parameters:
 
 - `id` (required): A string representing the unique Spotify ID for the track.
 - `optionalParams` (optional): An object containing optional parameters to be included in the request. This can include market, additional market values, and request timeout.
 
-**Return**: `TrackDetail`
+#### Return: `TrackDetail`
 
-**Example**
+#### Example
 
 ```typescript
-const track = await client.track.getTrack('trackId');
+const track = await spotified.track.getTrack('trackId');
 console.log(track);
 ```
 
@@ -40,13 +40,10 @@ A promise that resolves to a `TracksDetail` object, which contains detailed info
 #### Example
 
 ```typescript
-const token = 'your_access_token_here';
-const spotify = new Spotified(token);
-const trackIds = ['spotify_track_id_1', 'spotify_track_id_2', 'spotify_track_id_3']; // Replace with valid Spotify track IDs
+const trackIds = ['7ouMYWpwJ422jRcDASZB7P','4VqPOruhp5EdPBeR92t6lQ','2takcwOaAZWiXQijPHIx7B'];
 
-spotify.track.getTracks(trackIds)
-  .then((tracks) => console.log(tracks))
-  .catch((err) => console.error(err));
+const tracks = await spotified.track.getTracks(trackIds);
+console.log(tracks);
 ```
 
 ### saveTracksforCurrentUser(ids: string[])
@@ -64,13 +61,10 @@ A promise that resolves with no value if the operation is successful.
 #### Example
 
 ```typescript
-const token = 'your_access_token_here';
-const spotify = new Spotified(token);
-const trackIds = ['spotify_track_id_1', 'spotify_track_id_2', 'spotify_track_id_3']; // Replace with valid Spotify track IDs
+const trackIds = ['7ouMYWpwJ422jRcDASZB7P','4VqPOruhp5EdPBeR92t6lQ','2takcwOaAZWiXQijPHIx7B'];
 
-spotify.track.saveTracksforCurrentUser(trackIds)
-  .then(() => console.log('Tracks saved successfully'))
-  .catch((err) => console.error(err));
+const response = await spotified.track.saveTracksforCurrentUser(trackIds)
+console.log(response)
 ```
 
 ### removeUsersSavedTracks(ids: string[])
@@ -88,13 +82,10 @@ A promise that resolves with no value if the operation is successful.
 #### Example
 
 ```typescript
-const token = 'your_access_token_here';
-const spotify = new Spotified(token);
-const trackIds = ['spotify_track_id_1', 'spotify_track_id_2', 'spotify_track_id_3']; // Replace with valid Spotify track IDs
+const trackIds = ['7ouMYWpwJ422jRcDASZB7P','4VqPOruhp5EdPBeR92t6lQ','2takcwOaAZWiXQijPHIx7B'];
 
-spotify.track.removeUsersSavedTracks(trackIds)
-  .then(() => console.log('Tracks removed successfully'))
-  .catch((err) => console.error(err));
+const response = await spotified.track.removeUsersSavedTracks(trackIds)
+console.log(response)
 ```
 
 ### checkUsersSavedTracks(ids: string[])
@@ -112,18 +103,13 @@ A promise that resolves with an array of boolean values indicating whether or no
 #### Example
 
 ```typescript
-const token = 'your_access_token_here';
-const spotify = new Spotified(token);
-const trackIds = ['spotify_track_id_1', 'spotify_track_id_2', 'spotify_track_id_3']; // Replace with valid Spotify track IDs
+const trackIds = ['7ouMYWpwJ422jRcDASZB7P','4VqPOruhp5EdPBeR92t6lQ','2takcwOaAZWiXQijPHIx7B'];
 
-spotify.track.checkUsersSavedTracks(trackIds)
-  .then((results) => {
-    results.forEach((isSaved, index) => {
-      const trackId = trackIds[index];
-      console.log(`Track ${trackId} is saved: ${isSaved}`);
-    });
-  })
-  .catch((err) => console.error(err));
+const results = await spotified.track.checkUsersSavedTracks(trackIds);
+results.forEach((isSaved, index) => {
+    const trackId = trackIds[index];
+    console.log(`Track ${trackId} is saved: ${isSaved}`);
+});
 ```
 
 ### getTracksAudioFeatures(id: string)
@@ -141,13 +127,10 @@ A promise that resolves with an object containing audio feature information for 
 #### Example
 
 ```typescript
-const token = 'your_access_token_here';
-const spotify = new Spotified(token);
-const trackId = 'spotify_track_id'; // Replace with a valid Spotify track ID
+const trackId = '7ouMYWpwJ422jRcDASZB7P'; 
 
-spotify.track.getTracksAudioFeatures(trackId)
-  .then((audioFeatures) => console.log(audioFeatures))
-  .catch((err) => console.error(err));
+const audioFeatures = await spotified.track.getTracksAudioFeatures(trackId)
+console.log(audioFeatures)
 ```
 
 ### getMultipleTracksAudioFeatures(ids: string[])
@@ -165,13 +148,10 @@ A promise that resolves with an array of objects, each containing audio feature 
 #### Example
 
 ```typescript
-const token = 'your_access_token_here';
-const spotify = new Spotified(token);
-const trackIds = ['spotify_track_id_1', 'spotify_track_id_2']; // Replace with valid Spotify track IDs
+const trackIds = ['7ouMYWpwJ422jRcDASZB7P','4VqPOruhp5EdPBeR92t6lQ','2takcwOaAZWiXQijPHIx7B'];
 
-spotify.track.getMultipleTracksAudioFeatures(trackIds)
-  .then((audioFeaturesArray) => console.log(audioFeaturesArray))
-  .catch((err) => console.error(err));
+const audioFeaturesArray = await spotified.track.getMultipleTracksAudioFeatures(trackIds)
+console.log(audioFeaturesArray)
 ```
 
 ### getTracksAudioAnalysis(id: string)
@@ -189,11 +169,8 @@ A promise that resolves with an object, containing audio analysis information fo
 #### Example
 
 ```typescript
-const token = 'your_access_token_here';
-const spotify = new Spotified(token);
-const trackId = 'spotify_track_id'; // Replace with valid Spotify track IDs
+const trackId = '7ouMYWpwJ422jRcDASZB7P'; 
 
-spotify.track.getTracksAudioAnalysis(trackId)
-  .then((audioAnalysis) => console.log(audioAnalysis))
-  .catch((err) => console.error(err));
+const audioAnalysis = await spotified.track.getTracksAudioAnalysis(trackId)
+console.log(audioAnalysis)
 ```
