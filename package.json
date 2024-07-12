@@ -8,7 +8,8 @@
     "build": "tsc",
     "start": "npm run build && node ./dist/index.js",
     "test": "jest",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "lint": "eslint ."
   },
   "lint-staged": {
     "*.ts": [
