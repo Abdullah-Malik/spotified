@@ -97,3 +97,18 @@ export interface ResumePlaybackParams {
   position_ms?: number;
   offset?: PositionOffset | URIOffset;
 }
+
+export interface GetRecentlyPlayedTracksOptionalParams {
+  limit?: number;
+  after?: number;
+  before?: number;
+}
+
+export interface RecentlyPlayedTracks {
+  href?: string;
+  limit?: number;
+  next?: string;
+  // cursors?: ;
+  total?: number;
+  // items?: ;
+}
