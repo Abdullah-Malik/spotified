@@ -117,7 +117,7 @@ export class Player extends ReadWriteBaseClient {
   }
 
   getRecentlyPlayedTracks(optionalParams: GetRecentlyPlayedTracksOptionalParams) {
-    return this.get<RecentlyPlayedTracks>(`/me/player/recently-played${generateQueryParametersString(...optionalParams)}`);
+    return this.get<RecentlyPlayedTracks>(`/me/player/recently-played${generateQueryParametersString({...optionalParams})}`);
   }
 
   /**
