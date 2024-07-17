@@ -3,11 +3,6 @@ import pluginJs from '@eslint/js';
 import tseslint from 'typescript-eslint';
 
 const baseConfig = {
-  env: {
-    browser: true,
-    es2021: true,
-    node: true
-  },
   extends: [
     'eslint:recommended',
     'airbnb',
