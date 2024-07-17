@@ -5,6 +5,7 @@ import {
   CurrentlyPlayingTrackParams,
   Devices,
   GetPlaybackStateParams,
+  GetRecentlyPlayedTracksOptionalParams,
   PlaybackState,
   RepeatState,
   ResumePlaybackParams,
@@ -112,6 +113,10 @@ export class Player extends ReadWriteBaseClient {
    */
   togglePlaybackShuffle(state: boolean, optionalParams: TogglePlaybackShuffleOptionalParams) {
     return this.put(`/me/player/shuffle${generateQueryParametersString({ state, ...optionalParams })}`);
+  }
+
+  getRecentlyPlayedTracks(optionalParams: GetRecentlyPlayedTracksOptionalParams) {
+    return this.get<RecentlyPlayedTracks>(`/me/player/recently-played${generateQueryParametersString(...optionalParams)}`);
   }
 
   /**
