@@ -13,14 +13,13 @@ This method is used to get information about a single track in the Spotify catal
 #### Parameters:
 
 - `id` (required): A string representing the unique Spotify ID for the track.
-- `optionalParams` (optional): An object containing optional parameters to be included in the request. This can include market, additional market values, and request timeout.
-
+- `optionalParams` (optional): An object containing optional parameters to be included in the request. This includes the information on market, which is a ISO 3166-1 alpha-2 country code.
 #### Return: `TrackDetail`
 
 #### Example
 
 ```typescript
-const track = await spotified.track.getTrack('trackId');
+const track = await spotified.track.getTrack('11dFghVXANMlKmJXsNCbNl');
 console.log(track);
 ```
 
@@ -31,7 +30,7 @@ This method is used to get information about multiple tracks in the Spotify cata
 #### Parameters
 
 - `ids` (required): An array of strings representing the unique Spotify IDs for the tracks.
-- `optionalParams` (optional): An object containing optional parameters to be included in the request. This can include market, additional market values, and request timeout.
+- `optionalParams` (optional): An object containing optional parameters to be included in the request. This includes the information on market, which is a ISO 3166-1 alpha-2 country code.
 
 #### Returns
 
@@ -41,8 +40,27 @@ A promise that resolves to a `TracksDetail` object, which contains detailed info
 
 ```typescript
 const trackIds = ['7ouMYWpwJ422jRcDASZB7P','4VqPOruhp5EdPBeR92t6lQ','2takcwOaAZWiXQijPHIx7B'];
-
 const tracks = await spotified.track.getTracks(trackIds);
+console.log(tracks);
+```
+
+### getUsersSavedTracks(optionalParams?: OptionalUserSavedTrackParam)
+
+This method is used to get information about multiple tracks saved in the current Spotify user's 'Your Music' library.
+
+#### Parameters
+
+- `optionalParams` (optional): An object containing optional parameters to be included in the request. This includes the information on market, which is a ISO 3166-1 alpha-2 country code, limit, ehich is the maximum number of items to return, and offset, the index of the firt item to return, with 0 being the default. 
+
+#### Returns
+
+A promise that resolves to a `UserSavedTracks` object, which contains detailed information about the tracks in user's 'Your Music' library.
+
+#### Example
+
+```typescript
+const trackIds = ['7ouMYWpwJ422jRcDASZB7P','4VqPOruhp5EdPBeR92t6lQ','2takcwOaAZWiXQijPHIx7B'];
+const tracks = await spotified.track.getUsersSavedTracks(trackIds);
 console.log(tracks);
 ```
 
@@ -62,9 +80,8 @@ A promise that resolves with no value if the operation is successful.
 
 ```typescript
 const trackIds = ['7ouMYWpwJ422jRcDASZB7P','4VqPOruhp5EdPBeR92t6lQ','2takcwOaAZWiXQijPHIx7B'];
-
-const response = await spotified.track.saveTracksforCurrentUser(trackIds)
-console.log(response)
+const response = await spotified.track.saveTracksforCurrentUser(trackIds);
+console.log(response);
 ```
 
 ### removeUsersSavedTracks(ids: string[])
@@ -84,8 +101,8 @@ A promise that resolves with no value if the operation is successful.
 ```typescript
 const trackIds = ['7ouMYWpwJ422jRcDASZB7P','4VqPOruhp5EdPBeR92t6lQ','2takcwOaAZWiXQijPHIx7B'];
 
-const response = await spotified.track.removeUsersSavedTracks(trackIds)
-console.log(response)
+const response = await spotified.track.removeUsersSavedTracks(trackIds);
+console.log(response);
 ```
 
 ### checkUsersSavedTracks(ids: string[])
@@ -104,7 +121,6 @@ A promise that resolves with an array of boolean values indicating whether or no
 
 ```typescript
 const trackIds = ['7ouMYWpwJ422jRcDASZB7P','4VqPOruhp5EdPBeR92t6lQ','2takcwOaAZWiXQijPHIx7B'];
-
 const results = await spotified.track.checkUsersSavedTracks(trackIds);
 results.forEach((isSaved, index) => {
     const trackId = trackIds[index];
@@ -128,9 +144,8 @@ A promise that resolves with an object containing audio feature information for 
 
 ```typescript
 const trackId = '7ouMYWpwJ422jRcDASZB7P'; 
-
-const audioFeatures = await spotified.track.getTracksAudioFeatures(trackId)
-console.log(audioFeatures)
+const audioFeatures = await spotified.track.getTracksAudioFeatures(trackId);
+console.log(audioFeatures);
 ```
 
 ### getMultipleTracksAudioFeatures(ids: string[])
@@ -149,9 +164,8 @@ A promise that resolves with an array of objects, each containing audio feature 
 
 ```typescript
 const trackIds = ['7ouMYWpwJ422jRcDASZB7P','4VqPOruhp5EdPBeR92t6lQ','2takcwOaAZWiXQijPHIx7B'];
-
-const audioFeaturesArray = await spotified.track.getMultipleTracksAudioFeatures(trackIds)
-console.log(audioFeaturesArray)
+const audioFeaturesArray = await spotified.track.getMultipleTracksAudioFeatures(trackIds);
+console.log(audioFeaturesArray);
 ```
 
 ### getTracksAudioAnalysis(id: string)
@@ -170,7 +184,27 @@ A promise that resolves with an object, containing audio analysis information fo
 
 ```typescript
 const trackId = '7ouMYWpwJ422jRcDASZB7P'; 
+const audioAnalysis = await spotified.track.getTracksAudioAnalysis(trackId);
+console.log(audioAnalysis);
+```
 
-const audioAnalysis = await spotified.track.getTracksAudioAnalysis(trackId)
-console.log(audioAnalysis)
+### getRecommendations(seedParams: RecommendationSeedParams, optionalParams: RecommendationOptionalParams)
+
+This method is used to get recommendations are generated based on the available information for a given seed entity and matched against similar artists and tracks.
+
+#### Parameters
+
+- `seedParams` (required): An object containing the seed parameters to be included in the object. This object includes the information about the seed_artists, which is a comma separated list of Spotify IDs for seed artists, seed_genres, a comma separated list of Spotify IDs for seed tracks, and seed_tracks, a comma separated list of Spotify IDs for a seed track. You can only provide 5 seed values in any combination of seed_artists, seed_genres, and seed_tracks.
+- `optionalParams` (optional): An object containing optional parameters to be included in the request. This includes strings like market and numbers like limit, min_acousticness, target_danceability, max_energy, etc.
+
+#### Returns
+
+A promise that resolves with an object, containing an array of objects called seeds, and an array of Track objects.
+
+#### Example
+
+```typescript
+const trackId = '7ouMYWpwJ422jRcDASZB7P'; 
+const audioAnalysis = await spotified.track.getTracksAudioAnalysis(trackId);
+console.log(audioAnalysis);
 ```
