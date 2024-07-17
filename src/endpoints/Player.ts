@@ -9,6 +9,7 @@ import {
   PlaybackState,
   RepeatState,
   ResumePlaybackParams,
+  RecentlyPlayedTracks,
   SeekToPositionOptionalParam,
   SetPlaybackVolumeOptionalParams,
   SetRepeatModeOptionalParams,
