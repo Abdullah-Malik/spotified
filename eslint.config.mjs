@@ -1,75 +1,70 @@
-import eslint from '@eslint/js';
-import * as tseslint from '@typescript-eslint/eslint-plugin';
-import tseslintParser from '@typescript-eslint/parser';
-import reactPlugin from 'eslint-plugin-react';
-import reactHooksPlugin from 'eslint-plugin-react-hooks';
-import prettierPlugin from 'eslint-plugin-prettier';
-import prettierConfig from 'eslint-config-prettier';
-import importPlugin from 'eslint-plugin-import';
-import jsxA11yPlugin from 'eslint-plugin-jsx-a11y';
+import globals from 'globals';
+import pluginJs from '@eslint/js';
+import tseslint from 'typescript-eslint';
+
+const baseConfig = {
+  env: {
+    browser: true,
+    es2021: true,
+    node: true
+  },
+  extends: [
+    'eslint:recommended',
+    'airbnb',
+    'airbnb/hooks',
+    'plugin:react/recommended',
+    'plugin:@typescript-eslint/recommended',
+    'plugin:@typescript-eslint/eslint-recommended',
+    'plugin:prettier/recommended'
+  ],
+  settings: {
+    'import/resolver': {
+      'node': {
+        'extensions': ['.ts', '.js', '.json']
+      }
+    },
+    'react': {
+      'pragma': 'React',
+      'version': 'detect'
+    }
+  },
+  parser: '@typescript-eslint/parser',
+  parserOptions: {
+    ecmaVersion: 'latest',
+    sourceType: 'module'
+  },
+  plugins: ['@typescript-eslint', 'prettier'],
+  rules: {
+    'max-len': [1, 120, 2],
+    'import/extensions': [
+      'error',
+      'ignorePackages',
+      {
+        'js': 'never',
+        'jsx': 'never',
+        'ts': 'never',
+        'tsx': 'never'
+      }
+    ],
+    'prefer-destructuring': ['warn', { 'object': true, 'array': false }],
+    '@typescript-eslint/no-explicit-any': 'off',
+    'no-underscore-dangle': 'off'
+  },
+  overrides: [
+    {
+      files: ['**/*.test.ts'],
+      rules: {
+        'dot-notation': 'off'
+      }
+    }
+  ]
+};
 
 export default [
-  eslint.configs.recommended,
+  { files: ['**/*.{js,mjs,cjs,ts}'] },
+  { files: ['**/*.js'], languageOptions: { sourceType: 'script' } },
+  { languageOptions: { globals: { ...globals.browser, ...globals.node } } },
+  pluginJs.configs.recommended,
   ...tseslint.configs.recommended,
-  {
-    languageOptions: {
-      ecmaVersion: 'latest',
-      sourceType: 'module',
-      parser: tseslintParser,
-      parserOptions: {
-        ecmaFeatures: {
-          jsx: true,
-        },
-      },
-    },
-    linterOptions: {
-      reportUnusedDisableDirectives: true,
-    },
-    settings: {
-      'import/resolver': {
-        node: {
-          extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
-        },
-      },
-      react: {
-        pragma: 'React',
-        version: 'detect',
-      },
-    },
-    plugins: {
-      '@typescript-eslint': tseslint,
-      react: reactPlugin,
-      'react-hooks': reactHooksPlugin,
-      prettier: prettierPlugin,
-      import: importPlugin,
-      'jsx-a11y': jsxA11yPlugin,
-    },
-    rules: {
-      'max-len': ['warn', { code: 120, tabWidth: 2 }],
-      'import/extensions': [
-        'error',
-        'ignorePackages',
-        {
-          js: 'never',
-          jsx: 'never',
-          ts: 'never',
-          tsx: 'never',
-        },
-      ],
-      'prefer-destructuring': ['warn', { object: true, array: false }],
-      '@typescript-eslint/no-explicit-any': 'off',
-      'no-underscore-dangle': 'off',
-      ...reactPlugin.configs.recommended.rules,
-      ...reactHooksPlugin.configs.recommended.rules,
-      ...prettierConfig.rules,
-      ...importPlugin.configs.recommended.rules,
-      ...jsxA11yPlugin.configs.recommended.rules,
-    },
-  },
-  {
-    files: ['**/*.test.ts'],
-    rules: {
-      'dot-notation': 'off',
-    },
-  }
+  baseConfig,
 ];
