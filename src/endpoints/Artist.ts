@@ -51,7 +51,7 @@ export class Artist extends ReadWriteBaseClient {
    * https://developer.spotify.com/documentation/web-api/reference/get-an-artists-related-artists
    */
   getRelatedArtists(id: string) {
-    return this.get<Artists>(`/artists/${id}/related-artists`)
+    return this.get<ArtistsProfile>(`/artists/${id}/related-artists`)
   }
 }
 
