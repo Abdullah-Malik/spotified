@@ -13,6 +13,10 @@ export class User extends ReadWriteBaseClient {
   followPlaylist(playlistId: string, options?: { public: boolean }) {
     return this.put(`/playlists/${playlistId}/followers`, options);
   }
+
+  unfollowPlaylist(playlistId: string) {
+    return this.delete(`/playlists/${playlistId}/followers`)
+  }
 }
 
 export default User;
