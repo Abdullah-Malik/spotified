@@ -14,7 +14,8 @@ This method is used to get information about a single track in the Spotify catal
 
 - `id` (required): A string representing the unique Spotify ID for the track.
 - `optionalParams` (optional): An object containing optional parameters to be included in the request. This includes the information on market, which is a ISO 3166-1 alpha-2 country code.
-#### Return: `TrackDetail`
+
+#### Return: `Track`
 
 #### Example
 
@@ -26,6 +27,8 @@ console.log(track);
 ### getTracks(ids: string[], optionalParams?: GetTrackParams)
 
 This method is used to get information about multiple tracks in the Spotify catalog, identified by their unique Spotify IDs.
+
+#### Endpoint: [/tracks](https://developer.spotify.com/documentation/web-api/reference/get-several-tracks)
 
 #### Parameters
 
@@ -48,9 +51,11 @@ console.log(tracks);
 
 This method is used to get information about multiple tracks saved in the current Spotify user's 'Your Music' library.
 
+#### Endpoint: [/me/tracks](https://developer.spotify.com/documentation/web-api/reference/get-users-saved-tracks)
+
 #### Parameters
 
-- `optionalParams` (optional): An object containing optional parameters to be included in the request. This includes the information on market, which is a ISO 3166-1 alpha-2 country code, limit, ehich is the maximum number of items to return, and offset, the index of the firt item to return, with 0 being the default. 
+- `optionalParams` (optional): An object containing optional parameters to be included in the request. This includes the information on market, which is a ISO 3166-1 alpha-2 country code, limit, which is the maximum number of items to return, and offset, the index of the first item to return, with 0 being the default. 
 
 #### Returns
 
@@ -67,6 +72,8 @@ console.log(tracks);
 ### saveTracksforCurrentUser(ids: string[])
 
 This method is used to save one or more tracks to the current Spotify user's 'Your Music' library.
+
+#### Endpoint: [/me/tracks](https://developer.spotify.com/documentation/web-api/reference/save-tracks-user)
 
 #### Parameters
 
@@ -88,6 +95,8 @@ console.log(response);
 
 This method is used to remove one or more tracks from the current Spotify user's 'Your Music' library.
 
+#### Endpoint: [/me/tracks](https://developer.spotify.com/documentation/web-api/reference/remove-tracks-user)
+
 #### Parameters
 
 - `ids` (required): An array of strings representing the unique Spotify IDs for the tracks to be removed.
@@ -100,7 +109,6 @@ A promise that resolves with no value if the operation is successful.
 
 ```typescript
 const trackIds = ['7ouMYWpwJ422jRcDASZB7P','4VqPOruhp5EdPBeR92t6lQ','2takcwOaAZWiXQijPHIx7B'];
-
 const response = await spotified.track.removeUsersSavedTracks(trackIds);
 console.log(response);
 ```
@@ -108,6 +116,8 @@ console.log(response);
 ### checkUsersSavedTracks(ids: string[])
 
 This method is used to check if one or more tracks are already saved in the current Spotify user's 'Your Music' library.
+
+#### Endpoint: [/me/tracks/contains](https://developer.spotify.com/documentation/web-api/reference/check-users-saved-tracks)
 
 #### Parameters
 
@@ -132,6 +142,8 @@ results.forEach((isSaved, index) => {
 
 This method is used to get audio feature information for a single track identified by its unique Spotify ID.
 
+#### Endpoint: [/audio-features](https://developer.spotify.com/documentation/web-api/reference/get-several-audio-features)
+
 #### Parameters
 
 - `id` (required): A string representing the unique Spotify ID for the track to be retrieved.
@@ -152,9 +164,11 @@ console.log(audioFeatures);
 
 This method is used to get audio feature information for multiple tracks based on their Spotify IDs.
 
+#### Endpoint: [/audio-features/{id}](https://developer.spotify.com/documentation/web-api/reference/get-audio-features)
+
 #### Parameters
 
-- `ids` (required): An array of strings representing the unique Spotify IDs for the tracks to be retrieved.
+- `ids` (required): An array of strings representing the unique Spotify IDs of the tracks for which audio analysis information is to be retrieved.
 
 #### Returns
 
@@ -171,6 +185,8 @@ console.log(audioFeaturesArray);
 ### getTracksAudioAnalysis(id: string)
 
 This method is used to get audio analysis for a single track based on its Spotify ID.
+
+#### Endpoint: [/audio-analysis/{id}](https://developer.spotify.com/documentation/web-api/reference/get-audio-analysis)
 
 #### Parameters
 
@@ -190,7 +206,9 @@ console.log(audioAnalysis);
 
 ### getRecommendations(seedParams: RecommendationSeedParams, optionalParams: RecommendationOptionalParams)
 
-This method is used to get recommendations are generated based on the available information for a given seed entity and matched against similar artists and tracks.
+This method is used to get recommendations that are generated based on the available information for a given seed entity and matched against similar artists and tracks.
+
+#### Endpoint: [/recommendations](https://developer.spotify.com/documentation/web-api/reference/get-recommendations)
 
 #### Parameters
 
