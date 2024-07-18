@@ -20,4 +20,8 @@ export interface Artist extends SimplifiedArtist {
   popularity?: number;
 }
 
+export interface Artists {
+  artists: Artist[];
+}
+
 export type ArtistsAlbumPageResult = PageResult<SimplifiedAlbum>;
