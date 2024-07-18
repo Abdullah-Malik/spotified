@@ -126,7 +126,7 @@ export interface RecentlyPlayedTracks {
   href?: string;
   limit?: number;
   next?: string;
-  cursors?: PlaybackCursorsParams;
+  cursors?: PlaybackCursorParams;
   total?: number;
   items?: PlayHistoryObject[];
 }
