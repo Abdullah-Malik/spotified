@@ -116,6 +116,10 @@ export class Player extends ReadWriteBaseClient {
     return this.put(`/me/player/shuffle${generateQueryParametersString({ state, ...optionalParams })}`);
   }
 
+  /**
+   * Get tracks from the current user's recently played tracks
+   * https://developer.spotify.com/documentation/web-api/reference/get-recently-played   
+   */
   getRecentlyPlayedTracks(optionalParams: GetRecentlyPlayedTracksOptionalParams) {
     return this.get<RecentlyPlayedTracks>(`/me/player/recently-played${generateQueryParametersString({...optionalParams})}`);
   }
