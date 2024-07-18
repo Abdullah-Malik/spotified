@@ -235,6 +235,75 @@ describe('Spotified', () => {
     });
   });
 
+  describe('generateClientCredentialsFlow', () => {
+    it('should make a POST request to get client credentials flow token with correct headers', async () => {
+      const mockResponse: ClientCredentialsFlowResponse = {
+        access_token: 'mock-access-token',
+        token_type: 'bearer',
+        expires_in: 3600
+      };
+  
+      (spotified['post'] as jest.Mock).mockResolvedValue(mockResponse);
+  
+      const result = await spotified.generateClientCredentialsFlow();
+  
+      expect(spotified['post']).toHaveBeenCalledWith(
+        'https://accounts.spotify.com/api/token',
+        {
+          grant_type: 'client_credentials'
+        },
+        { headers: mockAuthHeaders }
+      );
+      expect(result).toEqual(mockResponse);
+    });
+  
+    it('should handle errors during client credentials flow token request', async () => {
+      const mockError = new Error('API Error');
+  
+      (spotified['post'] as jest.Mock).mockRejectedValue(mockError);
+  
+      await expect(spotified.generateClientCredentialsFlow()).rejects.toThrow('API Error');
+    });
+  
+    it('should use the correct URL for client credentials flow token request', async () => {
+      const mockResponse: ClientCredentialsFlowResponse = {
+        access_token: 'mock-access-token',
+        token_type: 'bearer',
+        expires_in: 3600
+      };
+  
+      (spotified['post'] as jest.Mock).mockResolvedValue(mockResponse);
+  
+      await spotified.generateClientCredentialsFlow();
+  
+      expect(spotified['post']).toHaveBeenCalledWith(
+        'https://accounts.spotify.com/api/token',
+        expect.any(Object),
+        expect.any(Object)
+      );
+    });
+  
+    it('should include the correct grant_type in the request body', async () => {
+      const mockResponse: ClientCredentialsFlowResponse = {
+        access_token: 'mock-access-token',
+        token_type: 'bearer',
+        expires_in: 3600
+      };
+  
+      (spotified['post'] as jest.Mock).mockResolvedValue(mockResponse);
+  
+      await spotified.generateClientCredentialsFlow();
+  
+      expect(spotified['post']).toHaveBeenCalledWith(
+        expect.any(String),
+        expect.objectContaining({
+          grant_type: 'client_credentials'
+        }),
+        expect.any(Object)
+      );
+    });
+  });
+
   describe('generateImplicitGrantAuthURL', () => {
     const mockRedirectUri = 'http://example.com/callback';
 
