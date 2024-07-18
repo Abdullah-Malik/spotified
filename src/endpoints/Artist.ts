@@ -2,7 +2,7 @@ import { ReadWriteBaseClient } from '../client/ReadWriteBaseClient';
 import { 
   ArtistProfile,
   ArtistsAlbumPageResult,
-  Artists
+  Artists,
   Tracks as TracksDetail,
 } from '../types';
 import { joinIdsArrayToString } from '../utils';
@@ -42,7 +42,7 @@ export class Artist extends ReadWriteBaseClient {
    * Get Spotify catalog information about an artist's top tracks by country
    * https://developer.spotify.com/documentation/web-api/reference/get-an-artists-top-tracks
    */
-  getArtistTopTracks(id: string, market?: string) {
+  getArtistTopTracks(id: string) {//also needs an optional param of market here
       return this.get<TracksDetail>(`/artist/${id}/top-tracks`);//unsure how to join market with this ??
   }
 
