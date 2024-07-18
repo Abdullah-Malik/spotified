@@ -104,11 +104,29 @@ export interface GetRecentlyPlayedTracksOptionalParams {
   before?: number;
 }
 
+interface PlaybackCursorParams {
+  after?: string;
+  before?: string;
+}
+
+interface ContextParams {
+  type?: string;
+  href?: string;
+  external_urls: ExternalUrls;
+  uri?: string;
+}
+
+interface PlayHistoryObject {
+  track?: Track;
+  played_at?: string;
+  context?: ContextParams;
+}
+
 export interface RecentlyPlayedTracks {
   href?: string;
   limit?: number;
   next?: string;
-  // cursors?: ;
+  cursors?: PlaybackCursorsParams;
   total?: number;
-  // items?: ;
+  items?: PlayHistoryObject[];
 }
