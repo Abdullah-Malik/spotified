@@ -237,11 +237,7 @@ describe('Spotified', () => {
 
   describe('generateClientCredentialsFlow', () => {
     it('should make a POST request to get client credentials flow token with correct headers', async () => {
-      const mockResponse: ClientCredentialsFlowResponse = {
-        access_token: 'mock-access-token',
-        token_type: 'bearer',
-        expires_in: 3600
-      };
+      const mockResponse = {access_token: 'mock-access-token'}
   
       (spotified['post'] as jest.Mock).mockResolvedValue(mockResponse);
   
@@ -266,11 +262,7 @@ describe('Spotified', () => {
     });
   
     it('should use the correct URL for client credentials flow token request', async () => {
-      const mockResponse: ClientCredentialsFlowResponse = {
-        access_token: 'mock-access-token',
-        token_type: 'bearer',
-        expires_in: 3600
-      };
+      const mockResponse = {access_token: 'mock-access-token'}
   
       (spotified['post'] as jest.Mock).mockResolvedValue(mockResponse);
   
@@ -284,11 +276,7 @@ describe('Spotified', () => {
     });
   
     it('should include the correct grant_type in the request body', async () => {
-      const mockResponse: ClientCredentialsFlowResponse = {
-        access_token: 'mock-access-token',
-        token_type: 'bearer',
-        expires_in: 3600
-      };
+      const mockResponse = {access_token: 'mock-access-token'}
   
       (spotified['post'] as jest.Mock).mockResolvedValue(mockResponse);
   
