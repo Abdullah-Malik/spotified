@@ -1,8 +1,8 @@
 import { ReadWriteBaseClient } from '../client/ReadWriteBaseClient';
 import { 
-  ArtistProfile,
+  Artist as ArtistProfile,
   ArtistsAlbumPageResult,
-  Artists,
+  Artists as ArtistsProfile,
   Tracks as TracksDetail,
 } from '../types';
 import { joinIdsArrayToString } from '../utils';
@@ -23,7 +23,7 @@ export class Artist extends ReadWriteBaseClient {
    * https://developer.spotify.com/documentation/web-api/reference/get-multiple-artists
    */
   getArtists(ids: string[]) {
-    return this.get<Artists>(`/artists?ids=${joinIdsArrayToString(ids)}`);
+    return this.get<ArtistsProfile>(`/artists?ids=${joinIdsArrayToString(ids)}`);
   }
 
   /**
