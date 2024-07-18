@@ -190,9 +190,7 @@ describe('Player', () => {
 
       await player.addItemToPlaybackQueue(mockUri, mockOptionalParams);
 
-      expect(generateQueryParametersString).toHaveBeenCalledWith({ uri: encodeURI(mockUri), ...mockOptional
-
-Params });
+      expect(generateQueryParametersString).toHaveBeenCalledWith({ uri: encodeURI(mockUri), ...mockOptionalParams });
       expect(player['post']).toHaveBeenCalledWith('/me/player/queue?uri=spotify%3Atrack%3A123&device_id=device1}');
     });
   });
