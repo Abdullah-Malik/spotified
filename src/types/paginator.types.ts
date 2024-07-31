@@ -1,6 +1,6 @@
 export type RequestQuery = Record<string, string | number | boolean | string[] | undefined>;
 
-export interface PaginationParams {
+export interface PaginationResponseProps {
   href: string;
   limit: number;
   next: string;
@@ -9,6 +9,6 @@ export interface PaginationParams {
   total: number;
 }
 
-export interface PageResult<T> extends PaginationParams {
+export interface PageResult<T> extends PaginationResponseProps {
   items: T[];
 }

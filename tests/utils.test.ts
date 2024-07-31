@@ -1,4 +1,4 @@
-import { joinIdsArrayToString, generateQueryParametersString } from '../utils';
+import { joinIdsArrayToString, generateQueryParametersString } from '../src/utils';
 
 describe('utils', () => {
   describe('joinIdsArrayToString', () => {

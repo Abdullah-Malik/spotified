@@ -1,12 +1,17 @@
 import { SimplifiedAlbum } from './album.types';
 import { Artist } from './artist.types';
-import { Restrictions, ExternalUrls, ExternalIds } from './shared.types';
+import { PaginationResponseProps } from './paginator.types';
+import { Restrictions, ExternalUrls, ExternalIds, PaginationParams } from './shared.types';
 
 interface OptionalParams {
   market?: string;
 }
 
 export type GetTrackParams = OptionalParams;
+
+export interface OptionalUserSavedTrackParams extends PaginationParams {
+  market?: string;
+}
 
 export interface LinkedFrom {
   external_urls: ExternalUrls;
@@ -17,7 +22,7 @@ export interface LinkedFrom {
 }
 
 export interface Track {
-  album?: SimplifiedAlbum;
+  album?: SimplifiedAlbum; // have to make 2 version of this
   artists?: Artist[];
   available_markets?: string[];
   disc_number?: number;
@@ -32,7 +37,7 @@ export interface Track {
   restrictions?: Restrictions;
   name?: string;
   popularity?: number;
-  preview_url?: string;
+  preview_url?: string | null;
   track_number?: number;
   type?: string;
   uri?: string;
@@ -51,6 +56,15 @@ export interface TrackParams {
 export interface TracksParams {
   ids: string[];
   market?: string;
+}
+
+interface SavedTrack {
+  added_at: string;
+  track: Track;
+}
+
+export interface UserSavedTracks extends PaginationResponseProps {
+  items: SavedTrack[];
 }
 
 export interface AudioFeatures {
