@@ -1,4 +1,4 @@
-import { ExternalUrls } from './shared.types';
+import { ExternalUrls, CursorProps } from './shared.types';
 import { Track } from './track.types';
 
 interface Device {
@@ -104,11 +104,6 @@ export interface GetRecentlyPlayedTracksOptionalParams {
   before?: number;
 }
 
-interface PlaybackCursorParams {
-  after?: string;
-  before?: string;
-}
-
 interface ContextParams {
   type?: string;
   href?: string;
@@ -126,7 +121,7 @@ export interface RecentlyPlayedTracks {
   href?: string;
   limit?: number;
   next?: string;
-  cursors?: PlaybackCursorParams;
+  cursors?: CursorProps;
   total?: number;
   items?: PlayHistoryObject[];
 }
