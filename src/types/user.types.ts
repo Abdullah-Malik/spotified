@@ -1,24 +1,18 @@
+import { PaginationResponseProps } from "./paginator.types";
+import { ExternalUrls, Followers, Image, PaginationParams } from "./shared.types";
+
+interface ExplicitContent {
+  filterEnabled: boolean;
+  filterLocked: boolean;
+}
+
 export interface UserProfile {
-  display_name: string;
-  explicit_content: {
-    filter_enabled: boolean;
-    filter_locked: boolean;
-  };
-  external_urls: {
-    spotify: string;
-  };
-  followers: {
-    href: string;
-    total: number;
-  };
+  display_name: string | null;
+  externalUrls: ExternalUrls;
+  followers: Followers;
   href: string;
   id: string;
-  images: {
-    url: string;
-    height: number;
-    width: number;
-  }[];
-  product: string;
+  images: Image[];
   type: string;
   uri: string;
 }
@@ -26,4 +20,14 @@ export interface UserProfile {
 export interface CurrentUserProfile extends UserProfile {
   country: string;
   email: string;
+  product: string;
+  explicitContent: ExplicitContent;
+}
+
+export interface TopItemsOptionalParams extends PaginationParams {
+  timeRange?: string;
+}
+
+export interface UsersTopItems extends PaginationResponseProps {
+  // artist?:  
 }
