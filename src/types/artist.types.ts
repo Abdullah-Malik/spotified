@@ -1,5 +1,5 @@
 import { PaginationResponseProps } from './paginator.types';
-import { ExternalUrls, Image, PaginationParams, Restrictions } from './shared.types';
+import { ExternalUrls, Followers, Image, PaginationParams, Restrictions } from './shared.types';
 
 export interface SimplifiedArtist {
   external_urls?: ExternalUrls;
@@ -10,10 +10,7 @@ export interface SimplifiedArtist {
   uri?: string;
 }
 export interface Artist extends SimplifiedArtist {
-  followers?: {
-    href?: string | null;
-    total?: number;
-  };
+  followers?: Followers;
   genres?: string[];
   images?: Image[];
   popularity?: number;
