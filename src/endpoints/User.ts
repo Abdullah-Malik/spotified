@@ -1,9 +1,14 @@
+import { generateQueryParametersString } from 'utils';
 import { ReadWriteBaseClient } from '../client/ReadWriteBaseClient';
-import { CurrentUserProfile, UserProfile } from '../types';
+import { CurrentUserProfile, TopItemsOptionalParams, UserProfile, UsersTopItems } from '../types';
 
 export class User extends ReadWriteBaseClient {
   getCurrentUserProfile() {
     return this.get<CurrentUserProfile>('/me');
+  }
+
+  getUsersTopItems(type: string, optionalParams?: TopItemsOptionalParams){
+    return this.get<UsersTopItems>(`/me/top/${type}?${generateQueryParametersString({ ...optionalParams })}`)
   }
 
   getUserProfile(userId: string) {
