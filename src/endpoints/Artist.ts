@@ -1,13 +1,13 @@
 import { ReadWriteBaseClient } from '../client/ReadWriteBaseClient';
 import { 
   Artist as ArtistProfile,
-  ArtistsAlbumPageResult,
   Artists as ArtistsProfile,
   Tracks as TracksDetail,
+  GetTrackParams as GetMarketParams,
+  OptionalArtistAlbumParams,
+  ArtistAlbumResult
 } from '../types';
-import { joinIdsArrayToString } from '../utils';
-import { SpotifiedPaginator } from '../paginators';
-import { SimplifiedAlbum } from '../types/album.types';
+import { generateQueryParametersString, joinIdsArrayToString } from '../utils';
 
 export class Artist extends ReadWriteBaseClient {
     /**
@@ -30,20 +30,16 @@ export class Artist extends ReadWriteBaseClient {
    * Get Spotify catalog information about an artist's albums
    * https://developer.spotify.com/documentation/web-api/reference/get-an-artists-albums
    */
-  getArtistAlbums(artistId: string) {
-    return new SpotifiedPaginator<SimplifiedAlbum, ArtistsAlbumPageResult, { hello: string }>({
-      endpoint: `https://api.spotify.com/v1/artists/${artistId}/albums`,
-      requestMaker: this._requestMaker,
-      queryParams: {},
-    });
+  getArtistAlbums(artistId: string, optionalParams?: OptionalArtistAlbumParams) {
+    return this.get<ArtistAlbumResult>(`/artists/${artistId}/albums${generateQueryParametersString({ ...optionalParams })}`);
   }
 
   /**
    * Get Spotify catalog information about an artist's top tracks by country
    * https://developer.spotify.com/documentation/web-api/reference/get-an-artists-top-tracks
    */
-  getArtistTopTracks(id: string) {//also needs an optional param of market here
-      return this.get<TracksDetail>(`/artist/${id}/top-tracks`);//unsure how to join market with this ??
+  getArtistTopTracks(id: string, optionalParams?: GetMarketParams) {
+      return this.get<TracksDetail>(`/artist/${id}/top-tracks`, optionalParams);
   }
 
   /**
