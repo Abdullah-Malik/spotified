@@ -1,5 +1,7 @@
+import { Artists } from "endpoints";
 import { PaginationResponseProps } from "./paginator.types";
 import { ExternalUrls, Followers, Image, PaginationParams } from "./shared.types";
+import { Tracks } from "./track.types";
 
 interface ExplicitContent {
   filterEnabled: boolean;
@@ -29,5 +31,11 @@ export interface TopItemsOptionalParams extends PaginationParams {
 }
 
 export interface UsersTopItems extends PaginationResponseProps {
-  // artist?:  
+  artists?: Artists;  
+  tracks?: Tracks;
+}
+
+export interface FollowedArtistOptionalParams {
+  after?: string;
+  limit?: string;
 }
