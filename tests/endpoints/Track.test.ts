@@ -1,5 +1,5 @@
 import { Track } from '../../src/endpoints/Track';
-import { joinIdsArrayToString, generateQueryParametersString } from '../../src/utils';
+import { joinIdsArrayToString } from '../../src/utils';
 import { UserSavedTracks, AudioFeatures, AudioFeaturesArray, AudioAnalysis, Recommendations } from '../../src/types';
 
 jest.mock('../../src/client/ReadWriteBaseClient');
@@ -49,7 +49,7 @@ describe('Track', () => {
       const result = await track.getTracks(mockIds, mockParams);
 
       expect(joinIdsArrayToString).toHaveBeenCalledWith(mockIds);
-      expect(track['get']).toHaveBeenCalledWith(`/tracks?ids=1234,5678`, mockParams);
+      expect(track['get']).toHaveBeenCalledWith('/tracks', { ids: '1234,5678', market: 'US' });
       expect(result).toEqual(mockResponse);
     });
   });
@@ -66,13 +66,11 @@ describe('Track', () => {
         previous: 'https://api.spotify.com/v1/me/tracks?offset=0&limit=10',
         total: 0,
       };
-      (generateQueryParametersString as jest.Mock).mockReturnValue('?limit=10&offset=0');
       (track['get'] as jest.Mock).mockResolvedValue(mockResponse);
 
       const result = await track.getUsersSavedTracks(mockParams);
 
-      expect(generateQueryParametersString).toHaveBeenCalledWith({ ...mockParams });
-      expect(track['get']).toHaveBeenCalledWith('/tracks?limit=10&offset=0');
+      expect(track['get']).toHaveBeenCalledWith('/tracks', mockParams);
       expect(result).toEqual(mockResponse);
     });
   });
@@ -85,7 +83,7 @@ describe('Track', () => {
       await track.saveTracksforCurrentUser(mockIds);
 
       expect(joinIdsArrayToString).toHaveBeenCalledWith(mockIds);
-      expect(track['put']).toHaveBeenCalledWith('/me/tracks?ids=1234,5678');
+      expect(track['put']).toHaveBeenCalledWith('/me/tracks', { ids: '1234,5678' });
     });
   });
 
@@ -97,7 +95,7 @@ describe('Track', () => {
       await track.removeUsersSavedTracks(mockIds);
 
       expect(joinIdsArrayToString).toHaveBeenCalledWith(mockIds);
-      expect(track['delete']).toHaveBeenCalledWith('/me/tracks?ids=1234,5678');
+      expect(track['delete']).toHaveBeenCalledWith('/me/tracks', { ids: '1234,5678' });
     });
   });
 
@@ -111,7 +109,7 @@ describe('Track', () => {
       const result = await track.checkUsersSavedTracks(mockIds);
 
       expect(joinIdsArrayToString).toHaveBeenCalledWith(mockIds);
-      expect(track['get']).toHaveBeenCalledWith('/me/tracks/contains?ids=1234,5678');
+      expect(track['get']).toHaveBeenCalledWith('/me/tracks/contains', { ids: '1234,5678' });
       expect(result).toEqual(mockResponse);
     });
   });
@@ -146,7 +144,7 @@ describe('Track', () => {
       const result = await track.getMultipleTracksAudioFeatures(mockIds);
 
       expect(joinIdsArrayToString).toHaveBeenCalledWith(mockIds);
-      expect(track['get']).toHaveBeenCalledWith('/audio-features?ids=1234,5678');
+      expect(track['get']).toHaveBeenCalledWith('/audio-features', { ids: '1234,5678' });
       expect(result).toEqual(mockResponse);
     });
   });
@@ -185,17 +183,14 @@ describe('Track', () => {
         seeds: [],
         tracks: [],
       };
-      (generateQueryParametersString as jest.Mock).mockReturnValue(
-        '?seed_artists=1234&seed_genres=rock&seed_tracks=5678&limit=10&market=US'
-      );
       (track['get'] as jest.Mock).mockResolvedValue(mockResponse);
 
       const result = await track.getRecommendations(mockSeedParams, mockOptionalParams);
 
-      expect(generateQueryParametersString).toHaveBeenCalledWith({ ...mockSeedParams, ...mockOptionalParams });
-      expect(track['get']).toHaveBeenCalledWith(
-        '/recommendations?seed_artists=1234&seed_genres=rock&seed_tracks=5678&limit=10&market=US'
-      );
+      expect(track['get']).toHaveBeenCalledWith('/recommendations', {
+        ...mockSeedParams,
+        ...mockOptionalParams,
+      });
       expect(result).toEqual(mockResponse);
     });
   });
