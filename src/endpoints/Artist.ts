@@ -7,7 +7,7 @@ import {
   OptionalArtistAlbumParams,
   ArtistAlbumResult,
 } from '../types';
-import { generateQueryParametersString, joinIdsArrayToString } from '../utils';
+import { joinIdsArrayToString } from '../utils';
 
 export class Artist extends ReadWriteBaseClient {
   /**
