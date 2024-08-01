@@ -1,10 +1,10 @@
 import { Artist } from '../../src/endpoints/Artist';
 import { 
-  ArtistProfile, 
-  ArtistsProfile, 
-  TracksDetail, 
+  Artist as ArtistProfile,
+  Artists as ArtistsProfile,
+  Tracks as TracksDetail,
   ArtistAlbumResult 
-} from '../../src/types/artist.types';
+} from '../../src/types';
 import * as utils from '../../src/utils';
 
 jest.mock('../../src/client/ReadWriteBaseClient');
