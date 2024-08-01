@@ -3,9 +3,9 @@ export type RequestQuery = Record<string, string | number | boolean | string[] |
 export interface PaginationResponseProps {
   href: string;
   limit: number;
-  next: string | null;
+  next: string | undefined;
   offset: number;
-  previous: string | null;
+  previous: string | undefined;
   total: number;
 }
 
