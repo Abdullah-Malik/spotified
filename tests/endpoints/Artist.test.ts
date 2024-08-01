@@ -4,7 +4,7 @@ import {
   ArtistsProfile, 
   TracksDetail, 
   ArtistAlbumResult 
-} from '../../src/types/artist.types';
+} from '../../src/types';
 import * as utils from '../../src/utils';
 
 jest.mock('../../src/client/ReadWriteBaseClient');
@@ -66,9 +66,9 @@ describe('Artist', () => {
         href: 'https://api.spotify.com/v1/artists/1234/albums',
         items: [],
         limit: 10,
-        next: null,
+        next: 'https://api.spotify.com/v1/me/shows?offset=1&limit=1',
         offset: 0,
-        previous: null,
+        previous: 'https://api.spotify.com/v1/me/shows?offset=1&limit=1',
         total: 0
       };
 
