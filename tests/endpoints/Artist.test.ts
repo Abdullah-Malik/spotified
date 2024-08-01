@@ -4,7 +4,7 @@ import {
   ArtistsProfile, 
   TracksDetail, 
   ArtistAlbumResult 
-} from '../../src/types';
+} from '../../src/types/artist.types';
 import * as utils from '../../src/utils';
 
 jest.mock('../../src/client/ReadWriteBaseClient');
