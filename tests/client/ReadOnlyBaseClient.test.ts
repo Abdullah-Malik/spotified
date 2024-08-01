@@ -52,6 +52,34 @@ describe('ReadOnlyBaseClient', () => {
       expect(result).toEqual({ data: mockData, headers: mockHeaders });
     });
 
+    it('should construct URL without params when no params are provided', async () => {
+      mockRequestMaker.send.mockResolvedValue({ data: mockData, headers: mockHeaders });
+
+      await client['get'](mockUrl);
+
+      expect(mockRequestMaker.send).toHaveBeenCalledWith({
+        method: 'get',
+        url: '/test',
+      });
+    });
+
+    it('should construct URL with multiple params of different types', async () => {
+      mockRequestMaker.send.mockResolvedValue({ data: mockData, headers: mockHeaders });
+
+      const mockQueryParams = {
+        stringParam: 'value1',
+        numberParam: 123,
+        booleanParam: true,
+        arrayParam: ['a', 'b'],
+      };
+      await client['get'](mockUrl, mockQueryParams);
+
+      expect(mockRequestMaker.send).toHaveBeenCalledWith({
+        method: 'get',
+        url: '/test?stringParam=value1&numberParam=123&booleanParam=true&arrayParam=a%2Cb',
+      });
+    });
+
     it('should pass additional request arguments to RequestMaker.send', async () => {
       mockRequestMaker.send.mockResolvedValue({ data: mockData, headers: mockHeaders });
 
