@@ -1,16 +1,16 @@
 import { ReadWriteBaseClient } from '../client/ReadWriteBaseClient';
-import { 
+import {
   Artist as ArtistProfile,
   Artists as ArtistsProfile,
   Tracks as TracksDetail,
   GetTrackParams as GetMarketParams,
   OptionalArtistAlbumParams,
-  ArtistAlbumResult
+  ArtistAlbumResult,
 } from '../types';
 import { generateQueryParametersString, joinIdsArrayToString } from '../utils';
 
 export class Artist extends ReadWriteBaseClient {
-    /**
+  /**
    * Get Spotify catalog information for a single artist identified by their unique Spotify ID
    * https://developer.spotify.com/documentation/web-api/reference/get-an-artist
    */
@@ -23,7 +23,7 @@ export class Artist extends ReadWriteBaseClient {
    * https://developer.spotify.com/documentation/web-api/reference/get-multiple-artists
    */
   getArtists(ids: string[]) {
-    return this.get<ArtistsProfile>(`/artists?ids=${joinIdsArrayToString(ids)}`);
+    return this.get<ArtistsProfile>(`/artists`, { ids: joinIdsArrayToString(ids) });
   }
 
   /**
@@ -31,7 +31,7 @@ export class Artist extends ReadWriteBaseClient {
    * https://developer.spotify.com/documentation/web-api/reference/get-an-artists-albums
    */
   getArtistAlbums(artistId: string, optionalParams?: OptionalArtistAlbumParams) {
-    return this.get<ArtistAlbumResult>(`/artists/${artistId}/albums${generateQueryParametersString({ ...optionalParams })}`);
+    return this.get<ArtistAlbumResult>(`/artists/${artistId}/albums`, optionalParams);
   }
 
   /**
@@ -39,7 +39,7 @@ export class Artist extends ReadWriteBaseClient {
    * https://developer.spotify.com/documentation/web-api/reference/get-an-artists-top-tracks
    */
   getArtistTopTracks(id: string, optionalParams?: GetMarketParams) {
-      return this.get<TracksDetail>(`/artist/${id}/top-tracks`, optionalParams);
+    return this.get<TracksDetail>(`/artist/${id}/top-tracks`, optionalParams);
   }
 
   /**
@@ -47,7 +47,7 @@ export class Artist extends ReadWriteBaseClient {
    * https://developer.spotify.com/documentation/web-api/reference/get-an-artists-related-artists
    */
   getRelatedArtists(id: string) {
-    return this.get<ArtistsProfile>(`/artists/${id}/related-artists`)
+    return this.get<ArtistsProfile>(`/artists/${id}/related-artists`);
   }
 }
 

@@ -1,5 +1,6 @@
+import { SimplifiedAlbum } from './album.types';
 import { PaginationResponseProps } from './paginator.types';
-import { ExternalUrls, Followers, Image, PaginationParams, Restrictions } from './shared.types';
+import { ExternalUrls, Followers, Image, PaginationParams } from './shared.types';
 
 export interface SimplifiedArtist {
   external_urls?: ExternalUrls;
@@ -9,6 +10,7 @@ export interface SimplifiedArtist {
   type?: string;
   uri?: string;
 }
+
 export interface Artist extends SimplifiedArtist {
   followers?: Followers;
   genres?: string[];
@@ -20,30 +22,11 @@ export interface Artists {
   artists: Artist[];
 }
 
-
 export interface OptionalArtistAlbumParams extends PaginationParams {
-  includeGroups?: string;
+  include_groups?: string;
   market?: string;
 }
 
-interface SimplifiedArtistAlbum {
-  album_group: string;
-  album_type: string;
-  artists: SimplifiedArtist[];
-  available_markets: string[];
-  external_urls: ExternalUrls;
-  href: string;
-  id: string;
-  images: Image[];
-  name: string;
-  release_date: string;
-  release_date_precision: string;
-  restrictions?: Restrictions;
-  total_tracks: number;
-  type: string;
-  uri: string;
-}
-
 export interface ArtistAlbumResult extends PaginationResponseProps {
-  items: SimplifiedArtistAlbum[];
+  items: (SimplifiedAlbum & { album_group: string })[];
 }
