@@ -4,3 +4,4 @@ export * from './Track';
 export * from './Player';
 export * from './Market';
 export * from './Genre';
+export * from './Category';
