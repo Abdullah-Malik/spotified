@@ -38,10 +38,10 @@ interface SimplifiedArtistAlbum {
   name: string;
   release_date: string;
   release_date_precision: string;
+  restrictions?: Restrictions;
   total_tracks: number;
   type: string;
   uri: string;
-  restrictions?: Restrictions;
 }
 
 export interface ArtistAlbumResult extends PaginationResponseProps {
