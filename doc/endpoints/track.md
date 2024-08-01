@@ -8,7 +8,7 @@ This class provides methods to interact with the Spotify Web API and retrieve in
 
 This method is used to get Spotify catalog information for a single track identified by its unique Spotify ID.
 
-#### Endpoint: [/tracks/{id}](https://developer.spotify.com/documentation/web-api/reference/get-track)
+#### Endpoint: <a href="https://developer.spotify.com/documentation/web-api/reference/get-track" target="_blank">/tracks/{id}</a>
 
 #### Parameters:
 
@@ -16,7 +16,29 @@ This method is used to get Spotify catalog information for a single track identi
 - `optionalParams` (optional): An object containing optional parameters:
   - `market`: An ISO 3166-1 alpha-2 country code or the string "from_token".
 
-#### Returns: `TrackDetail`
+#### Returns: `Track`
+
+The `Track` object contains the following properties:
+- `album`: (Optional) A `SimplifiedAlbum` object
+- `artists`: (Optional) An array of `Artist` objects
+- `available_markets`: (Optional) An array of string market codes
+- `disc_number`: (Optional) A number
+- `duration_ms`: (Optional) A number representing duration in milliseconds
+- `explicit`: (Optional) A boolean
+- `external_ids`: (Optional) An `ExternalIds` object
+- `external_urls`: (Optional) An `ExternalUrls` object
+- `href`: (Optional) A string URL
+- `id`: (Optional) A string
+- `is_playable`: (Optional) A boolean
+- `linked_from`: (Optional) A partial `LinkedFrom` object
+- `restrictions`: (Optional) A `Restrictions` object
+- `name`: (Optional) A string
+- `popularity`: (Optional) A number
+- `preview_url`: (Optional) A string URL
+- `track_number`: (Optional) A number
+- `type`: (Optional) A string
+- `uri`: (Optional) A string
+- `is_local`: (Optional) A boolean
 
 #### Example
 
@@ -30,7 +52,7 @@ console.log(track.artists[0].name);
 
 This method is used to get Spotify catalog information for multiple tracks based on their Spotify IDs.
 
-#### Endpoint: [/tracks](https://developer.spotify.com/documentation/web-api/reference/get-several-tracks)
+#### Endpoint: <a href="https://developer.spotify.com/documentation/web-api/reference/get-several-tracks" target="_blank">/tracks</a>
 
 #### Parameters:
 
@@ -38,7 +60,10 @@ This method is used to get Spotify catalog information for multiple tracks based
 - `optionalParams` (optional): An object containing optional parameters:
   - `market`: An ISO 3166-1 alpha-2 country code or the string "from_token".
 
-#### Returns: `TracksDetail`
+#### Returns: `Tracks`
+
+The `Tracks` object contains:
+- `tracks`: An array of `Track` objects (see `getTrack` return type for `Track` object structure)
 
 #### Example
 
@@ -53,7 +78,7 @@ tracks.tracks.forEach(track => {
 
 This method is used to get a list of the songs saved in the current Spotify user's 'Your Music' library.
 
-#### Endpoint: [/me/tracks](https://developer.spotify.com/documentation/web-api/reference/get-users-saved-tracks)
+#### Endpoint: <a href="https://developer.spotify.com/documentation/web-api/reference/get-users-saved-tracks" target="_blank">/me/tracks</a>
 
 #### Parameters:
 
@@ -63,6 +88,17 @@ This method is used to get a list of the songs saved in the current Spotify user
   - `market`: An ISO 3166-1 alpha-2 country code or the string "from_token".
 
 #### Returns: `UserSavedTracks`
+
+The `UserSavedTracks` object extends `PaginationResponseProps` and contains:
+- `href`: A string URL
+- `limit`: A number
+- `next`: A string URL
+- `offset`: A number
+- `previous`: A string URL
+- `total`: A number representing the total number of saved tracks
+- `items`: An array of `SavedTrack` objects, each containing:
+  - `added_at`: A string representing the date and time the track was saved
+  - `track`: A `Track` object (see `getTrack` return type for `Track` object structure)
 
 #### Example
 
@@ -78,7 +114,7 @@ savedTracks.items.forEach(item => {
 
 This method is used to save one or more tracks to the current user's 'Your Music' library.
 
-#### Endpoint: [/me/tracks](https://developer.spotify.com/documentation/web-api/reference/save-tracks-user)
+#### Endpoint: <a href="https://developer.spotify.com/documentation/web-api/reference/save-tracks-user" target="_blank">/me/tracks</a>
 
 #### Parameters:
 
@@ -97,7 +133,7 @@ console.log('Tracks saved successfully');
 
 This method is used to remove one or more tracks from the current user's 'Your Music' library.
 
-#### Endpoint: [/me/tracks](https://developer.spotify.com/documentation/web-api/reference/remove-tracks-user)
+#### Endpoint: <a href="https://developer.spotify.com/documentation/web-api/reference/remove-tracks-user" target="_blank">/me/tracks</a>
 
 #### Parameters:
 
@@ -116,13 +152,15 @@ console.log('Tracks removed successfully');
 
 This method is used to check if one or more tracks is already saved in the current Spotify user's 'Your Music' library.
 
-#### Endpoint: [/me/tracks/contains](https://developer.spotify.com/documentation/web-api/reference/check-users-saved-tracks)
+#### Endpoint: <a href="https://developer.spotify.com/documentation/web-api/reference/check-users-saved-tracks" target="_blank">/me/tracks/contains</a>
 
 #### Parameters:
 
 - `ids` (required): An array of strings representing the Spotify IDs for the tracks to check.
 
-#### Returns: An array of booleans
+#### Returns: An array of boolean values
+
+Each boolean in the array corresponds to the track ID in the same position in the request. `true` indicates that the track is saved in the user's library.
 
 #### Example
 
@@ -137,13 +175,27 @@ results.forEach((isSaved, index) => {
 
 This method is used to get audio feature information for a single track identified by its unique Spotify ID.
 
-#### Endpoint: [/audio-features/{id}](https://developer.spotify.com/documentation/web-api/reference/get-audio-features)
+#### Endpoint: <a href="https://developer.spotify.com/documentation/web-api/reference/get-audio-features" target="_blank">/audio-features/{id}</a>
 
 #### Parameters:
 
 - `id` (required): A string representing the Spotify ID for the track.
 
 #### Returns: `AudioFeatures`
+
+The `AudioFeatures` object contains various audio features of the track, including:
+- `acousticness`: A confidence measure from 0.0 to 1.0 of whether the track is acoustic.
+- `danceability`: How suitable a track is for dancing based on a combination of musical elements.
+- `energy`: A measure from 0.0 to 1.0 and represents a perceptual measure of intensity and activity.
+- `instrumentalness`: Predicts whether a track contains no vocals.
+- `key`: The key the track is in. Integers map to pitches using standard Pitch Class notation.
+- `liveness`: Detects the presence of an audience in the recording.
+- `loudness`: The overall loudness of a track in decibels (dB).
+- `mode`: Indicates the modality (major or minor) of a track.
+- `speechiness`: Detects the presence of spoken words in a track.
+- `tempo`: The overall estimated tempo of a track in beats per minute (BPM).
+- `time_signature`: An estimated overall time signature of a track.
+- `valence`: A measure from 0.0 to 1.0 describing the musical positiveness conveyed by a track.
 
 #### Example
 
@@ -157,13 +209,16 @@ console.log(`Energy: ${audioFeatures.energy}`);
 
 This method is used to get audio features for multiple tracks based on their Spotify IDs.
 
-#### Endpoint: [/audio-features](https://developer.spotify.com/documentation/web-api/reference/get-several-audio-features)
+#### Endpoint: <a href="https://developer.spotify.com/documentation/web-api/reference/get-several-audio-features" target="_blank">/audio-features</a>
 
 #### Parameters:
 
 - `ids` (required): An array of strings representing the Spotify IDs for the tracks.
 
 #### Returns: `AudioFeaturesArray`
+
+The `AudioFeaturesArray` object contains:
+- `audio_features`: An array of `AudioFeatures` objects (see `getTracksAudioFeatures` return type for `AudioFeatures` object structure)
 
 #### Example
 
@@ -178,13 +233,24 @@ audioFeatures.audio_features.forEach((feature, index) => {
 
 This method is used to get a low-level audio analysis for a track in the Spotify catalog.
 
-#### Endpoint: [/audio-analysis/{id}](https://developer.spotify.com/documentation/web-api/reference/get-audio-analysis)
+#### Endpoint: <a href="https://developer.spotify.com/documentation/web-api/reference/get-audio-analysis" target="_blank">/audio-analysis/{id}</a>
 
 #### Parameters:
 
 - `id` (required): A string representing the Spotify ID for the track.
 
 #### Returns: `AudioAnalysis`
+
+The `AudioAnalysis` object contains detailed audio analysis information, including:
+- `meta`: Metadata about the track and the analysis
+- `track`: Overall data about the track
+- `bars`: Array of bar markers
+- `beats`: Array of beat markers
+- `sections`: Array of section markers
+- `segments`: Array of segment markers
+- `tatums`: Array of tatum markers
+
+Each of these components provides detailed information about different aspects of the track's audio structure and characteristics.
 
 #### Example
 
@@ -198,7 +264,7 @@ console.log(`Overall loudness: ${audioAnalysis.track?.loudness} dB`);
 
 This method is used to get track recommendations based on seed entities and various parameters.
 
-#### Endpoint: [/recommendations](https://developer.spotify.com/documentation/web-api/reference/get-recommendations)
+#### Endpoint: <a href="https://developer.spotify.com/documentation/web-api/reference/get-recommendations" target="_blank">/recommendations</a>
 
 #### Parameters:
 
@@ -209,6 +275,10 @@ This method is used to get track recommendations based on seed entities and vari
 - `optionalParams` (optional): An object containing optional parameters for tuning the recommendation algorithm.
 
 #### Returns: `Recommendations`
+
+The `Recommendations` object contains:
+- `seeds`: An array of `RecommendationSeeds` objects, each containing information about the seeds used
+- `tracks`: An array of `Track` objects (see `getTrack` return type for `Track` object structure)
 
 #### Example
 
