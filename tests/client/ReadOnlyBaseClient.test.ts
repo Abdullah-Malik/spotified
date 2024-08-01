@@ -31,8 +31,7 @@ describe('ReadOnlyBaseClient', () => {
 
       expect(mockRequestMaker.send).toHaveBeenCalledWith({
         method: 'get',
-        url: mockUrl,
-        params: mockParams,
+        url: `${mockUrl}?param1=value1`,
       });
     });
 
@@ -64,8 +63,7 @@ describe('ReadOnlyBaseClient', () => {
 
       expect(mockRequestMaker.send).toHaveBeenCalledWith({
         method: 'get',
-        url: mockUrl,
-        params: mockParams,
+        url: `${mockUrl}?param1=value1`,
         headers: { 'Custom-Header': 'Value' },
       });
     });
