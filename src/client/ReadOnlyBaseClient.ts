@@ -1,5 +1,6 @@
 import RequestMaker from '../client-helpers/RequestMaker';
 import { RequestArgs, SpotifiedResponse } from '../types';
+import { generateQueryParametersString } from '../utils';
 
 export abstract class ReadOnlyBaseClient {
   protected _requestMaker: RequestMaker;
@@ -21,10 +22,11 @@ export abstract class ReadOnlyBaseClient {
     params?: Record<string, any>,
     { fullResponse, ...rest }: Partial<RequestArgs> = {}
   ): Promise<T | SpotifiedResponse<T>> {
+    const urlWithParams = `${url}${generateQueryParametersString({ ...params })}`;
+
     const options = {
       method: 'get',
-      url,
-      params,
+      url: urlWithParams,
       ...rest,
     };
 
