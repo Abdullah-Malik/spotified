@@ -1,5 +1,5 @@
 import { Category } from '../../src/endpoints/Category';
-import { CategoryList, SingleBrowseCategory } from '../../src/types';
+import { CategoryList, Category as SingleBrowseCategory } from '../../src/types';
 
 jest.mock('../../src/client/ReadWriteBaseClient');
 
