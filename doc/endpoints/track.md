@@ -6,135 +6,130 @@ This class provides methods to interact with the Spotify Web API and retrieve in
 
 ### getTrack(id: string, optionalParams?: GetTrackParams)
 
-This method is used to get information about a single track in the Spotify catalog, identified by its unique Spotify ID.
+This method is used to get Spotify catalog information for a single track identified by its unique Spotify ID.
 
-#### Endpoint: [/tracks/{id}](https://developer.spotify.com/documentation/web-api/reference/get-track)
+#### Endpoint: <a href="https://developer.spotify.com/documentation/web-api/reference/get-track" target="_blank">/tracks/{id}</a>
 
 #### Parameters:
 
-- `id` (required): A string representing the unique Spotify ID for the track.
-- `optionalParams` (optional): An object containing optional parameters to be included in the request. This includes the information on market, which is a ISO 3166-1 alpha-2 country code.
+- `id` (required): A string representing the Spotify ID of the track.
+- `optionalParams` (optional): An object containing optional parameters:
+  - `market`: An ISO 3166-1 alpha-2 country code or the string "from_token".
 
-#### Return: `Track`
+#### Returns: `TrackDetail`
 
 #### Example
 
 ```typescript
-const track = await spotified.track.getTrack('11dFghVXANMlKmJXsNCbNl');
-console.log(track);
+const track = await spotified.track.getTrack('trackId', { market: 'US' });
+console.log(track.name);
+console.log(track.artists[0].name);
 ```
 
 ### getTracks(ids: string[], optionalParams?: GetTrackParams)
 
-This method is used to get information about multiple tracks in the Spotify catalog, identified by their unique Spotify IDs.
+This method is used to get Spotify catalog information for multiple tracks based on their Spotify IDs.
 
-#### Endpoint: [/tracks](https://developer.spotify.com/documentation/web-api/reference/get-several-tracks)
+#### Endpoint: <a href="https://developer.spotify.com/documentation/web-api/reference/get-several-tracks" target="_blank">/tracks</a>
 
-#### Parameters
+#### Parameters:
 
-- `ids` (required): An array of strings representing the unique Spotify IDs for the tracks.
-- `optionalParams` (optional): An object containing optional parameters to be included in the request. This includes the information on market, which is a ISO 3166-1 alpha-2 country code.
+- `ids` (required): An array of strings representing the Spotify IDs for the tracks.
+- `optionalParams` (optional): An object containing optional parameters:
+  - `market`: An ISO 3166-1 alpha-2 country code or the string "from_token".
 
-#### Returns
-
-A promise that resolves to a `TracksDetail` object, which contains detailed information about the tracks requested.
+#### Returns: `TracksDetail`
 
 #### Example
 
 ```typescript
-const trackIds = ['7ouMYWpwJ422jRcDASZB7P','4VqPOruhp5EdPBeR92t6lQ','2takcwOaAZWiXQijPHIx7B'];
-const tracks = await spotified.track.getTracks(trackIds);
-console.log(tracks);
+const tracks = await spotified.track.getTracks(['trackId1', 'trackId2'], { market: 'US' });
+tracks.tracks.forEach(track => {
+    console.log(`${track.name} by ${track.artists[0].name}`);
+});
 ```
 
-### getUsersSavedTracks(optionalParams?: OptionalUserSavedTrackParam)
+### getUsersSavedTracks(optionalParams?: OptionalUserSavedTrackParams)
 
-This method is used to get information about multiple tracks saved in the current Spotify user's 'Your Music' library.
+This method is used to get a list of the songs saved in the current Spotify user's 'Your Music' library.
 
-#### Endpoint: [/me/tracks](https://developer.spotify.com/documentation/web-api/reference/get-users-saved-tracks)
+#### Endpoint: <a href="https://developer.spotify.com/documentation/web-api/reference/get-users-saved-tracks" target="_blank">/me/tracks</a>
 
-#### Parameters
+#### Parameters:
 
-- `optionalParams` (optional): An object containing optional parameters to be included in the request. This includes the information on market, which is a ISO 3166-1 alpha-2 country code, limit, which is the maximum number of items to return, and offset, the index of the first item to return, with 0 being the default. 
+- `optionalParams` (optional): An object containing optional parameters:
+  - `limit`: The maximum number of tracks to return. Default: 20. Minimum: 1. Maximum: 50.
+  - `offset`: The index of the first track to return. Default: 0 (the first object).
+  - `market`: An ISO 3166-1 alpha-2 country code or the string "from_token".
 
-#### Returns
-
-A promise that resolves to a `UserSavedTracks` object, which contains detailed information about the tracks in user's 'Your Music' library.
+#### Returns: `UserSavedTracks`
 
 #### Example
 
 ```typescript
-const trackIds = ['7ouMYWpwJ422jRcDASZB7P','4VqPOruhp5EdPBeR92t6lQ','2takcwOaAZWiXQijPHIx7B'];
-const tracks = await spotified.track.getUsersSavedTracks(trackIds);
-console.log(tracks);
+const savedTracks = await spotified.track.getUsersSavedTracks({ limit: 50, offset: 0 });
+console.log(`Total saved tracks: ${savedTracks.total}`);
+savedTracks.items.forEach(item => {
+    console.log(`${item.track.name} saved on ${item.added_at}`);
+});
 ```
 
 ### saveTracksforCurrentUser(ids: string[])
 
-This method is used to save one or more tracks to the current Spotify user's 'Your Music' library.
+This method is used to save one or more tracks to the current user's 'Your Music' library.
 
-#### Endpoint: [/me/tracks](https://developer.spotify.com/documentation/web-api/reference/save-tracks-user)
+#### Endpoint: <a href="https://developer.spotify.com/documentation/web-api/reference/save-tracks-user" target="_blank">/me/tracks</a>
 
-#### Parameters
+#### Parameters:
 
-- `ids` (required): An array of strings representing the unique Spotify IDs for the tracks to be saved.
+- `ids` (required): An array of strings representing the Spotify IDs for the tracks to be saved.
 
-#### Returns
-
-A promise that resolves with no value if the operation is successful.
+#### Returns: This endpoint doesn't return any data.
 
 #### Example
 
 ```typescript
-const trackIds = ['7ouMYWpwJ422jRcDASZB7P','4VqPOruhp5EdPBeR92t6lQ','2takcwOaAZWiXQijPHIx7B'];
-const response = await spotified.track.saveTracksforCurrentUser(trackIds);
-console.log(response);
+await spotified.track.saveTracksforCurrentUser(['trackId1', 'trackId2']);
+console.log('Tracks saved successfully');
 ```
 
 ### removeUsersSavedTracks(ids: string[])
 
-This method is used to remove one or more tracks from the current Spotify user's 'Your Music' library.
+This method is used to remove one or more tracks from the current user's 'Your Music' library.
 
-#### Endpoint: [/me/tracks](https://developer.spotify.com/documentation/web-api/reference/remove-tracks-user)
+#### Endpoint: <a href="https://developer.spotify.com/documentation/web-api/reference/remove-tracks-user" target="_blank">/me/tracks</a>
 
-#### Parameters
+#### Parameters:
 
-- `ids` (required): An array of strings representing the unique Spotify IDs for the tracks to be removed.
+- `ids` (required): An array of strings representing the Spotify IDs for the tracks to be removed.
 
-#### Returns
-
-A promise that resolves with no value if the operation is successful.
+#### Returns: This endpoint doesn't return any data.
 
 #### Example
 
 ```typescript
-const trackIds = ['7ouMYWpwJ422jRcDASZB7P','4VqPOruhp5EdPBeR92t6lQ','2takcwOaAZWiXQijPHIx7B'];
-const response = await spotified.track.removeUsersSavedTracks(trackIds);
-console.log(response);
+await spotified.track.removeUsersSavedTracks(['trackId1', 'trackId2']);
+console.log('Tracks removed successfully');
 ```
 
 ### checkUsersSavedTracks(ids: string[])
 
-This method is used to check if one or more tracks are already saved in the current Spotify user's 'Your Music' library.
+This method is used to check if one or more tracks is already saved in the current Spotify user's 'Your Music' library.
 
-#### Endpoint: [/me/tracks/contains](https://developer.spotify.com/documentation/web-api/reference/check-users-saved-tracks)
+#### Endpoint: <a href="https://developer.spotify.com/documentation/web-api/reference/check-users-saved-tracks" target="_blank">/me/tracks/contains</a>
 
-#### Parameters
+#### Parameters:
 
-- `ids` (required): An array of strings representing the unique Spotify IDs for the tracks to be checked.
+- `ids` (required): An array of strings representing the Spotify IDs for the tracks to check.
 
-#### Returns
-
-A promise that resolves with an array of boolean values indicating whether or not the corresponding track in the `ids` parameter is saved in the current user's library.
+#### Returns: An array of booleans
 
 #### Example
 
 ```typescript
-const trackIds = ['7ouMYWpwJ422jRcDASZB7P','4VqPOruhp5EdPBeR92t6lQ','2takcwOaAZWiXQijPHIx7B'];
-const results = await spotified.track.checkUsersSavedTracks(trackIds);
+const results = await spotified.track.checkUsersSavedTracks(['trackId1', 'trackId2']);
 results.forEach((isSaved, index) => {
-    const trackId = trackIds[index];
-    console.log(`Track ${trackId} is saved: ${isSaved}`);
+    console.log(`Track ${index + 1} is saved: ${isSaved}`);
 });
 ```
 
@@ -142,87 +137,87 @@ results.forEach((isSaved, index) => {
 
 This method is used to get audio feature information for a single track identified by its unique Spotify ID.
 
-#### Endpoint: [/audio-features](https://developer.spotify.com/documentation/web-api/reference/get-several-audio-features)
+#### Endpoint: <a href="https://developer.spotify.com/documentation/web-api/reference/get-audio-features" target="_blank">/audio-features/{id}</a>
 
-#### Parameters
+#### Parameters:
 
-- `id` (required): A string representing the unique Spotify ID for the track to be retrieved.
+- `id` (required): A string representing the Spotify ID for the track.
 
-#### Returns
-
-A promise that resolves with an object containing audio feature information for the specified track.
+#### Returns: `AudioFeatures`
 
 #### Example
 
 ```typescript
-const trackId = '7ouMYWpwJ422jRcDASZB7P'; 
-const audioFeatures = await spotified.track.getTracksAudioFeatures(trackId);
-console.log(audioFeatures);
+const audioFeatures = await spotified.track.getTracksAudioFeatures('trackId');
+console.log(`Danceability: ${audioFeatures.danceability}`);
+console.log(`Energy: ${audioFeatures.energy}`);
 ```
 
 ### getMultipleTracksAudioFeatures(ids: string[])
 
-This method is used to get audio feature information for multiple tracks based on their Spotify IDs.
+This method is used to get audio features for multiple tracks based on their Spotify IDs.
 
-#### Endpoint: [/audio-features/{id}](https://developer.spotify.com/documentation/web-api/reference/get-audio-features)
+#### Endpoint: <a href="https://developer.spotify.com/documentation/web-api/reference/get-several-audio-features" target="_blank">/audio-features</a>
 
-#### Parameters
+#### Parameters:
 
-- `ids` (required): An array of strings representing the unique Spotify IDs of the tracks for which audio analysis information is to be retrieved.
+- `ids` (required): An array of strings representing the Spotify IDs for the tracks.
 
-#### Returns
-
-A promise that resolves with an array of objects, each containing audio feature information for a track in the specified list.
+#### Returns: `AudioFeaturesArray`
 
 #### Example
 
 ```typescript
-const trackIds = ['7ouMYWpwJ422jRcDASZB7P','4VqPOruhp5EdPBeR92t6lQ','2takcwOaAZWiXQijPHIx7B'];
-const audioFeaturesArray = await spotified.track.getMultipleTracksAudioFeatures(trackIds);
-console.log(audioFeaturesArray);
+const audioFeatures = await spotified.track.getMultipleTracksAudioFeatures(['trackId1', 'trackId2']);
+audioFeatures.audio_features.forEach((feature, index) => {
+    console.log(`Track ${index + 1} - Danceability: ${feature.danceability}, Energy: ${feature.energy}`);
+});
 ```
 
 ### getTracksAudioAnalysis(id: string)
 
-This method is used to get audio analysis for a single track based on its Spotify ID.
+This method is used to get a low-level audio analysis for a track in the Spotify catalog.
 
-#### Endpoint: [/audio-analysis/{id}](https://developer.spotify.com/documentation/web-api/reference/get-audio-analysis)
+#### Endpoint: <a href="https://developer.spotify.com/documentation/web-api/reference/get-audio-analysis" target="_blank">/audio-analysis/{id}</a>
 
-#### Parameters
+#### Parameters:
 
-- `id` (required): A string representing the unique Spotify ID of the track to be retrieved.
+- `id` (required): A string representing the Spotify ID for the track.
 
-#### Returns
-
-A promise that resolves with an object, containing audio analysis information for the track.
+#### Returns: `AudioAnalysis`
 
 #### Example
 
 ```typescript
-const trackId = '7ouMYWpwJ422jRcDASZB7P'; 
-const audioAnalysis = await spotified.track.getTracksAudioAnalysis(trackId);
-console.log(audioAnalysis);
+const audioAnalysis = await spotified.track.getTracksAudioAnalysis('trackId');
+console.log(`Track duration: ${audioAnalysis.track?.duration} seconds`);
+console.log(`Overall loudness: ${audioAnalysis.track?.loudness} dB`);
 ```
 
 ### getRecommendations(seedParams: RecommendationSeedParams, optionalParams: RecommendationOptionalParams)
 
-This method is used to get recommendations that are generated based on the available information for a given seed entity and matched against similar artists and tracks.
+This method is used to get track recommendations based on seed entities and various parameters.
 
-#### Endpoint: [/recommendations](https://developer.spotify.com/documentation/web-api/reference/get-recommendations)
+#### Endpoint: <a href="https://developer.spotify.com/documentation/web-api/reference/get-recommendations" target="_blank">/recommendations</a>
 
-#### Parameters
+#### Parameters:
 
-- `seedParams` (required): An object containing the seed parameters to be included in the object. This object includes the information about the seed_artists, which is a comma separated list of Spotify IDs for seed artists, seed_genres, a comma separated list of Spotify IDs for seed tracks, and seed_tracks, a comma separated list of Spotify IDs for a seed track. You can only provide 5 seed values in any combination of seed_artists, seed_genres, and seed_tracks.
-- `optionalParams` (optional): An object containing optional parameters to be included in the request. This includes strings like market and numbers like limit, min_acousticness, target_danceability, max_energy, etc.
+- `seedParams` (required): An object containing seed entities:
+  - `seed_artists`: A comma separated list of Spotify IDs for seed artists.
+  - `seed_genres`: A comma separated list of any genres in the set of available genre seeds.
+  - `seed_tracks`: A comma separated list of Spotify IDs for a seed track.
+- `optionalParams` (optional): An object containing optional parameters for tuning the recommendation algorithm.
 
-#### Returns
-
-A promise that resolves with an object, containing an array of objects called seeds, and an array of Track objects.
+#### Returns: `Recommendations`
 
 #### Example
 
 ```typescript
-const trackId = '7ouMYWpwJ422jRcDASZB7P'; 
-const audioAnalysis = await spotified.track.getTracksAudioAnalysis(trackId);
-console.log(audioAnalysis);
+const recommendations = await spotified.track.getRecommendations(
+    { seed_artists: 'artistId1,artistId2', seed_genres: 'pop,rock', seed_tracks: 'trackId1' },
+    { limit: 10, min_energy: 0.4, min_popularity: 50 }
+);
+recommendations.tracks.forEach(track => {
+    console.log(`Recommended: ${track.name} by ${track.artists[0].name}`);
+});
 ```
