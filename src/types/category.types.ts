@@ -1,3 +1,4 @@
+import { PaginationResponseProps } from './paginator.types';
 import { Image, PaginationParams } from './shared.types';
 
 export interface GetSingleBrowseCategoryOptionalParams {
@@ -16,13 +17,5 @@ export interface Category {
 }
 
 export interface CategoryList {
-  categories: {
-    href: string;
-    items: Category[];
-    limit: number;
-    next: string | null;
-    offset: number;
-    previous: string | null;
-    total: number;
-  };
+  categories: { items: Category[] } & PaginationResponseProps;
 }
