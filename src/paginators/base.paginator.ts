@@ -9,7 +9,7 @@ export abstract class BasePaginator<Item, ApiResponse, ApiParams extends object>
 
   protected _queryParams: Partial<ApiParams>;
 
-  protected nextPageURL: string;
+  protected nextPageURL: string | null;
 
   constructor({
     requestMaker,
@@ -48,6 +48,9 @@ export abstract class BasePaginator<Item, ApiResponse, ApiParams extends object>
   }
 
   async fetchNext() {
+    if (!this.nextPageURL) {
+      return;
+    }
     const result = await this.makeRequest(this.nextPageURL);
     this.updatePaginatorProperties(result.data);
   }
