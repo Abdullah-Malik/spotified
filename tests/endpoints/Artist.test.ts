@@ -1,9 +1,9 @@
 import { Artist } from '../../src/endpoints/Artist';
-import { 
+import {
   Artist as ArtistProfile,
   Artists as ArtistsProfile,
   Tracks as TracksDetail,
-  ArtistAlbumResult 
+  ArtistAlbumResult,
 } from '../../src/types';
 import * as utils from '../../src/utils';
 
@@ -25,7 +25,7 @@ describe('Artist', () => {
         id: '1234',
         name: 'Test Artist',
         type: 'artist',
-        uri: 'spotify:artist:1234'
+        uri: 'spotify:artist:1234',
       };
 
       (artist['get'] as jest.Mock).mockResolvedValue(mockResponse);
@@ -43,8 +43,8 @@ describe('Artist', () => {
       const mockResponse: ArtistsProfile = {
         artists: [
           { id: '1234', name: 'Test Artist 1', type: 'artist', uri: 'spotify:artist:1234' },
-          { id: '5678', name: 'Test Artist 2', type: 'artist', uri: 'spotify:artist:5678' }
-        ]
+          { id: '5678', name: 'Test Artist 2', type: 'artist', uri: 'spotify:artist:5678' },
+        ],
       };
 
       (utils.joinIdsArrayToString as jest.Mock).mockReturnValue('1234,5678');
@@ -53,7 +53,7 @@ describe('Artist', () => {
       const result = await artist.getArtists(mockArtistIds);
 
       expect(utils.joinIdsArrayToString).toHaveBeenCalledWith(mockArtistIds);
-      expect(artist['get']).toHaveBeenCalledWith('/artists?ids=1234,5678');
+      expect(artist['get']).toHaveBeenCalledWith('/artists', { ids: '1234,5678' });
       expect(result).toEqual(mockResponse);
     });
   });
@@ -69,16 +69,14 @@ describe('Artist', () => {
         next: 'https://api.spotify.com/v1/me/shows?offset=1&limit=1',
         offset: 0,
         previous: 'https://api.spotify.com/v1/me/shows?offset=1&limit=1',
-        total: 0
+        total: 0,
       };
 
-      (utils.generateQueryParametersString as jest.Mock).mockReturnValue('?limit=10&offset=0');
       (artist['get'] as jest.Mock).mockResolvedValue(mockResponse);
 
       const result = await artist.getArtistAlbums(mockArtistId, mockOptionalParams);
 
-      expect(utils.generateQueryParametersString).toHaveBeenCalledWith(mockOptionalParams);
-      expect(artist['get']).toHaveBeenCalledWith('/artists/1234/albums?limit=10&offset=0');
+      expect(artist['get']).toHaveBeenCalledWith('/artists/1234/albums', mockOptionalParams);
       expect(result).toEqual(mockResponse);
     });
   });
@@ -88,7 +86,7 @@ describe('Artist', () => {
       const mockArtistId = '1234';
       const mockOptionalParams = { market: 'US' };
       const mockResponse: TracksDetail = {
-        tracks: []
+        tracks: [],
       };
 
       (artist['get'] as jest.Mock).mockResolvedValue(mockResponse);
@@ -104,9 +102,7 @@ describe('Artist', () => {
     it('should call get method with correct params and return expected result', async () => {
       const mockArtistId = '1234';
       const mockResponse: ArtistsProfile = {
-        artists: [
-          { id: '5678', name: 'Related Artist', type: 'artist', uri: 'spotify:artist:5678' }
-        ]
+        artists: [{ id: '5678', name: 'Related Artist', type: 'artist', uri: 'spotify:artist:5678' }],
       };
 
       (artist['get'] as jest.Mock).mockResolvedValue(mockResponse);
