@@ -121,9 +121,9 @@ This method is used to get Spotify catalog information about an artist's top tra
 - `optionalParams` (optional): An object containing optional parameters:
   - `market`: An ISO 3166-1 alpha-2 country code or the string "from_token".
 
-#### Return: `TracksDetail`
+#### Return: `Tracks`
 
-The `TracksDetail` object contains:
+The `Tracks` object contains:
 - `tracks`: An array of `Track` objects (see `getTrack` return type for `Track` object structure)
 
 #### Example

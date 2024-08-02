@@ -2,7 +2,7 @@ import { ReadWriteBaseClient } from '../client/ReadWriteBaseClient';
 import {
   Artist as ArtistProfile,
   Artists as ArtistsProfile,
-  Tracks as TracksDetail,
+  Tracks,
   GetTrackParams as GetMarketParams,
   OptionalArtistAlbumParams,
   ArtistAlbumResult,
@@ -39,7 +39,7 @@ export class Artist extends ReadWriteBaseClient {
    * https://developer.spotify.com/documentation/web-api/reference/get-an-artists-top-tracks
    */
   getArtistTopTracks(id: string, optionalParams?: GetMarketParams) {
-    return this.get<TracksDetail>(`/artist/${id}/top-tracks`, optionalParams);
+    return this.get<Tracks>(`/artist/${id}/top-tracks`, optionalParams);
   }
 
   /**

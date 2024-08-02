@@ -1,10 +1,5 @@
 import { Artist } from '../../src/endpoints/Artist';
-import {
-  Artist as ArtistProfile,
-  Artists as ArtistsProfile,
-  Tracks as TracksDetail,
-  ArtistAlbumResult,
-} from '../../src/types';
+import { Artist as ArtistProfile, Artists as ArtistsProfile, Tracks, ArtistAlbumResult } from '../../src/types';
 import * as utils from '../../src/utils';
 
 jest.mock('../../src/client/ReadWriteBaseClient');
@@ -85,7 +80,7 @@ describe('Artist', () => {
     it('should call get method with correct params and return expected result', async () => {
       const mockArtistId = '1234';
       const mockOptionalParams = { market: 'US' };
-      const mockResponse: TracksDetail = {
+      const mockResponse: Tracks = {
         tracks: [],
       };
 
