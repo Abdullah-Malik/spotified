@@ -22,7 +22,7 @@ export interface LinkedFrom {
 }
 
 export interface Track {
-  album?: SimplifiedAlbum; // have to make 2 version of this
+  album?: SimplifiedAlbum;
   artists?: Artist[];
   available_markets?: string[];
   disc_number?: number;

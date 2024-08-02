@@ -1,6 +1,6 @@
 import { SimplifiedAlbum } from './album.types';
-import { PageResult } from './paginator.types';
-import { ExternalUrls, Image } from './shared.types';
+import { PaginationResponseProps } from './paginator.types';
+import { ExternalUrls, Followers, Image, PaginationParams } from './shared.types';
 
 export interface SimplifiedArtist {
   external_urls?: ExternalUrls;
@@ -10,14 +10,23 @@ export interface SimplifiedArtist {
   type?: string;
   uri?: string;
 }
+
 export interface Artist extends SimplifiedArtist {
-  followers?: {
-    href?: string | null;
-    total?: number;
-  };
+  followers?: Followers;
   genres?: string[];
   images?: Image[];
   popularity?: number;
 }
 
-export type ArtistsAlbumPageResult = PageResult<SimplifiedAlbum>;
+export interface Artists {
+  artists: Artist[];
+}
+
+export interface OptionalArtistAlbumParams extends PaginationParams {
+  include_groups?: string;
+  market?: string;
+}
+
+export interface ArtistAlbumResult extends PaginationResponseProps {
+  items: (SimplifiedAlbum & { album_group: string })[];
+}
