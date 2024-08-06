@@ -1,4 +1,4 @@
-import joinIdsArrayToString from "utils";
+import joinIdsArrayToString from "../utils";
 import { ReadWriteBaseClient } from "../client/ReadWriteBaseClient";
 import { 
     GetTrackParams as GetMarketParams,
