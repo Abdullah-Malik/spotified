@@ -40,4 +40,3 @@ export interface FollowedArtistOptionalParams {
   limit?: string;
 }
 
-export type boolArray = Boolean[];

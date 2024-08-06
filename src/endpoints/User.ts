@@ -1,6 +1,6 @@
 import { joinIdsArrayToString, generateQueryParametersString } from 'utils';
 import { ReadWriteBaseClient } from '../client/ReadWriteBaseClient';
-import { boolArray, CurrentUserProfile, TopItemsOptionalParams, UserProfile, UsersTopItems } from '../types';
+import { CurrentUserProfile, TopItemsOptionalParams, UserProfile, UsersTopItems } from '../types';
 
 export class User extends ReadWriteBaseClient {
   getCurrentUserProfile() {
@@ -32,11 +32,11 @@ export class User extends ReadWriteBaseClient {
   }
 
   checkIfUserFollows(type: string, ids: string[]){
-    return this.get<boolArray>('/me/following/contains',{type, ids: joinIdsArrayToString(ids)});
+    return this.get<Array<boolean>>('/me/following/contains',{type, ids: joinIdsArrayToString(ids)});
   }
 
   checkIfCurrentUserFollowsPlaylist(playlistId: string){
-    return this.get<boolArray>(`/playlists/${playlistId}/followers/contains`);
+    return this.get<Array<boolean>>(`/playlists/${playlistId}/followers/contains`);
   }
 }
 
