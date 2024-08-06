@@ -39,3 +39,5 @@ export interface FollowedArtistOptionalParams {
   after?: string;
   limit?: string;
 }
+
+export type boolArray = Boolean[];
