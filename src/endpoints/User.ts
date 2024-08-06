@@ -1,6 +1,6 @@
 import { joinIdsArrayToString, generateQueryParametersString } from 'utils';
 import { ReadWriteBaseClient } from '../client/ReadWriteBaseClient';
-import { CurrentUserProfile, TopItemsOptionalParams, UserProfile, UsersTopItems } from '../types';
+import { CurrentUserProfile, FollowedArtist, FollowedArtistOptionalParams, TopItemsOptionalParams, UserProfile, UsersTopItems } from '../types';
 
 export class User extends ReadWriteBaseClient {
   getCurrentUserProfile() {
@@ -23,9 +23,9 @@ export class User extends ReadWriteBaseClient {
     return this.delete(`/playlists/${playlistId}/followers`);
   }
 
-  // getFollowedArtists(type:string, optionalParams?: FollowedArtistOptionalParams) {
-
-  // }
+  getFollowedArtists(type:string, optionalParams?: FollowedArtistOptionalParams) {
+    return this.get<FollowedArtist>(`/me/following`,{type, ...optionalParams})
+  }
 
   unfollowArtistsUsers(type: string, ids: string[]){
     return this.delete('/me/following',{type, ids: joinIdsArrayToString(ids)});

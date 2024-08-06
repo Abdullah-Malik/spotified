@@ -40,3 +40,16 @@ export interface FollowedArtistOptionalParams {
   limit?: string;
 }
 
+interface Cursors {
+  after?: string;
+  before?: string;
+}
+
+export interface FollowedArtist {
+  href?: string;
+  limit?: number;
+  next?: string;
+  cursors?: Cursors;
+  total?: number;
+  items?: Artists;
+}
