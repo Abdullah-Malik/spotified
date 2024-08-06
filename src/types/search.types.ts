@@ -1,5 +1,12 @@
-import { Track } from "endpoints";
+import { Tracks } from "./track.types";
 import { PaginationParams } from "./shared.types";
+import { PaginationResponseProps } from "./paginator.types";
+import { SimplifiedAlbum } from "./album.types";
+import { Artists } from "./artist.types";
+import { SimplifiedPlaylist } from "./playlist.types";
+import { SimplifiedShow } from "./shows.types";
+import { SimplifiedEpisode } from "./episodes.types";
+import { SimplifiedAudiobook } from "./audiobooks.types";
 
 export interface searchOptionalParams extends PaginationParams{
     market?: string;
@@ -7,6 +14,11 @@ export interface searchOptionalParams extends PaginationParams{
 }
 
 export interface searchResponse {
-    track?: Track;
-    
+    track?: (Tracks & PaginationResponseProps);
+    artist?: (Artists & PaginationResponseProps);
+    albums?: (SimplifiedAlbum[] & PaginationResponseProps);
+    playlists?: (SimplifiedPlaylist[] & PaginationResponseProps);
+    shows?: (SimplifiedShow[] & PaginationResponseProps);
+    episodes?: (SimplifiedEpisode[] & PaginationResponseProps);
+    audiobooks?: (SimplifiedAudiobook[] & PaginationResponseProps);
 }
