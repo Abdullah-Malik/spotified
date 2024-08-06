@@ -1,10 +1,10 @@
-import { ReadWriteBaseClient } from "client";
-import { GetTrackParams as GetMarketParams } from "types";
+import { ReadWriteBaseClient } from "../client/ReadWriteBaseClient";
 import { 
+    GetTrackParams as GetMarketParams,
     Chapter as ChapterDetails,
     Chapters as ChaptersDetails,
-} from "types/chapter.types";
-import joinIdsArrayToString from "utils";
+} from "../types";
+import joinIdsArrayToString from "../utils";
 
 export class Chapter extends ReadWriteBaseClient{
     

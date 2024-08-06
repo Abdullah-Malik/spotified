@@ -1,6 +1,6 @@
-import { ReadWriteBaseClient } from "client";
-import { searchOptionalParams, searchResponse } from "types/search.types";
-import joinIdsArrayToString from "utils";
+import { ReadWriteBaseClient } from "../client/ReadWriteBaseClient";
+import { searchOptionalParams, searchResponse } from "../types";
+import joinIdsArrayToString from "../utils";
 
 export class Search extends ReadWriteBaseClient {
     searchForItem(q: string, type: string[], optionalParams?: searchOptionalParams){

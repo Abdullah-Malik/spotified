@@ -39,9 +39,9 @@ export interface Episodes {
 
 interface SavedEpisode {
     added_at: string;
-    track: Episode;  
+    episode: Episode;  
 }
 
 export interface UserSavedEpisodes extends PaginationResponseProps {
     items: SavedEpisode[];
-  }
+}
