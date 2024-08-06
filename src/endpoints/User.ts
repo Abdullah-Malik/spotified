@@ -1,4 +1,4 @@
-import { joinIdsArrayToString, generateQueryParametersString } from 'utils';
+import { joinIdsArrayToString, generateQueryParametersString } from '../utils';
 import { ReadWriteBaseClient } from '../client/ReadWriteBaseClient';
 import { CurrentUserProfile, FollowedArtist, FollowedArtistOptionalParams, TopItemsOptionalParams, UserProfile, UsersTopItems } from '../types';
 
