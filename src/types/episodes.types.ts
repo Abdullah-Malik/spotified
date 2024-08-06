@@ -1,6 +1,6 @@
 import { PaginationResponseProps } from "./paginator.types";
 import {  ExternalUrls, Image, Restrictions } from "./shared.types";
-import { Show } from "./show.types";
+import { SimplifiedShow } from "./shows.types";
 
 export interface ResumePoint {
     fullyPlayed?: boolean;
@@ -30,7 +30,7 @@ export interface SimplifiedEpisode {
 }
 
 export interface Episode extends SimplifiedEpisode {
-    show: Show;
+    show: SimplifiedShow;
 }
 
 export interface Episodes {
