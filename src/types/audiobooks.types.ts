@@ -4,7 +4,7 @@ interface Author {
     name?: string;
 }
 
-interface Narrator {
+export interface Narrator {
     name?: string;    
 }
 

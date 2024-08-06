@@ -1,12 +1,11 @@
+import { SimplifiedAudiobook } from "./audiobooks.types";
+import { ResumePoint } from "./episodes.types";
 import { ExternalUrls, Image, Restrictions } from "./shared.types";
 
-export interface ResumePoint {
-    fullyPlayed?: boolean;
-    resumePointMS?: number;
-}
-
-export interface SimplifiedEpisode {
+export interface Chapter {
     audioPreviewUrl: string | null;
+    availableMarkets?: string[];
+    chapterNumber: number;
     description: string;
     HTMLDescription: string;
     durationMs: number;
@@ -15,7 +14,6 @@ export interface SimplifiedEpisode {
     href: string;
     id: string;
     images: Image[];
-    isExternallyHosted: boolean;
     isPlayable: boolean;
     languages: string[];
     name: string;
@@ -24,5 +22,8 @@ export interface SimplifiedEpisode {
     resumePoint?: ResumePoint;
     type: string;
     uri: string;
-    restrictions: Restrictions;
+    restrictions?: Restrictions;
+    audiobook: SimplifiedAudiobook;
 }
+
+export type Chapters = Chapter[];
