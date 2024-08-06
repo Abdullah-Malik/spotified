@@ -5,3 +5,7 @@ export * from './Player';
 export * from './Market';
 export * from './Genre';
 export * from './Category';
+export * from './Chapter';
+export * from './Episode';
+export * from './Search';
+export * from './Show';
