@@ -1,6 +1,6 @@
 import { generateQueryParametersString } from 'utils';
 import { ReadWriteBaseClient } from '../client/ReadWriteBaseClient';
-import { CurrentUserProfile, FollowedArtistOptionalParams, TopItemsOptionalParams, UserProfile, UsersTopItems } from '../types';
+import { CurrentUserProfile, TopItemsOptionalParams, UserProfile, UsersTopItems } from '../types';
 
 export class User extends ReadWriteBaseClient {
   getCurrentUserProfile() {
