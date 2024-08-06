@@ -7,6 +7,7 @@ import {
 import joinIdsArrayToString from "utils";
 
 export class Chapter extends ReadWriteBaseClient{
+    
     getChapter(chapterId: string, optionalParams?: GetMarketParams){
         return this.get<ChapterDetails>(`/chapters/${chapterId}`,{...optionalParams});
     }

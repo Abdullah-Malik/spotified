@@ -1,4 +1,6 @@
-import { ExternalUrls, Image, Restrictions } from "./shared.types";
+import { PaginationResponseProps } from "./paginator.types";
+import {  ExternalUrls, Image, Restrictions } from "./shared.types";
+import { Show } from "./show.types";
 
 export interface ResumePoint {
     fullyPlayed?: boolean;
@@ -26,3 +28,20 @@ export interface SimplifiedEpisode {
     uri: string;
     restrictions: Restrictions;
 }
+
+export interface Episode extends SimplifiedEpisode {
+    show: Show;
+}
+
+export interface Episodes {
+    episodes: Episode[];
+}
+
+interface SavedEpisode {
+    added_at: string;
+    track: Episode;  
+}
+
+export interface UserSavedEpisodes extends PaginationResponseProps {
+    items: SavedEpisode[];
+  }
