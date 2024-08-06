@@ -1,4 +1,4 @@
-import { Artists } from "endpoints";
+import { Artists } from "./artist.types";
 import { PaginationResponseProps } from "./paginator.types";
 import { ExternalUrls, Followers, Image, PaginationParams } from "./shared.types";
 import { Tracks } from "./track.types";
