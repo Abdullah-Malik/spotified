@@ -8,7 +8,7 @@ This class provides methods to interact with the Spotify Web API and retrieve in
 
 This method is used to get Spotify catalog information for a single artist identified by their unique Spotify ID.
 
-#### Endpoint: [/artists/{id}](https://developer.spotify.com/documentation/web-api/reference/get-an-artist)
+#### Endpoint: <a href="https://developer.spotify.com/documentation/web-api/reference/get-an-artist" target="_blank">/artists/{id}</a>
 
 #### Parameters:
 
@@ -40,7 +40,7 @@ console.log(artist.genres[0]);
 
 This method is used to get Spotify catalog information for several artists based on their Spotify IDs.
 
-#### Endpoint: [/artists](https://developer.spotify.com/documentation/web-api/reference/get-multiple-artists)
+#### Endpoint: <a href="https://developer.spotify.com/documentation/web-api/reference/get-multiple-artists" target="_blank">/artists</a>
 
 #### Parameters:
 
@@ -64,7 +64,7 @@ artists.artists.forEach(artist => {
 
 This method is used to get Spotify catalog information about an artist's albums.
 
-#### Endpoint: [/artists/{id}/albums](https://developer.spotify.com/documentation/web-api/reference/get-an-artists-albums)
+#### Endpoint: <a href="https://developer.spotify.com/documentation/web-api/reference/get-an-artists-albums" target="_blank">/artists/{id}/albums</a>
 
 #### Parameters:
 
@@ -113,7 +113,7 @@ console.log(artist.genres[0]);
 
 This method is used to get Spotify catalog information about an artist's top tracks by country.
 
-#### Endpoint: [/artists/{id}/top-tracks](https://developer.spotify.com/documentation/web-api/reference/get-an-artists-top-tracks)
+#### Endpoint: <a href="https://developer.spotify.com/documentation/web-api/reference/get-an-artists-top-tracks" target="_blank">/artists/{id}/top-tracks</a>
 
 #### Parameters:
 
@@ -137,7 +137,8 @@ console.log(track);
 
 This method is used to get Spotify catalog information about artists similar to a given artist. Similarity is based on analysis of the Spotify community's listening history.
 
-#### Endpoint: [/artists/{id}/related-artists](https://developer.spotify.com/documentation/web-api/reference/get-an-artists-related-artists)
+#### Endpoint: <a href="https://developer.spotify.com/documentation/web-api/reference/get-an-artists-related-artists" target="_blank">/artists/{id}/related-artists
+</a>
 
 #### Parameters:
 
@@ -147,6 +148,7 @@ This method is used to get Spotify catalog information about artists similar to 
 
 The `ArtistsProfile` object contains:
 - `ArtistsProfile`: An array of `ArtistProfile` objects (see `getArtist` return type for `ArtistProfile` object structure)
+
 
 #### Example
 

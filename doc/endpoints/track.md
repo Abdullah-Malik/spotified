@@ -8,7 +8,7 @@ This class provides methods to interact with the Spotify Web API and retrieve in
 
 This method is used to get Spotify catalog information for a single track identified by its unique Spotify ID.
 
-#### Endpoint: [/tracks/{id}](https://developer.spotify.com/documentation/web-api/reference/get-track)
+#### Endpoint: <a href="https://developer.spotify.com/documentation/web-api/reference/get-track" target="_blank">/tracks/{id}</a>
 
 #### Parameters:
 
@@ -52,7 +52,7 @@ console.log(track.artists[0].name);
 
 This method is used to get Spotify catalog information for multiple tracks based on their Spotify IDs.
 
-#### Endpoint: [/tracks](https://developer.spotify.com/documentation/web-api/reference/get-several-tracks)
+#### Endpoint: <a href="https://developer.spotify.com/documentation/web-api/reference/get-several-tracks" target="_blank">/tracks</a>
 
 #### Parameters:
 
@@ -78,7 +78,7 @@ tracks.tracks.forEach(track => {
 
 This method is used to get a list of the songs saved in the current Spotify user's 'Your Music' library.
 
-#### Endpoint: [/me/tracks](https://developer.spotify.com/documentation/web-api/reference/get-users-saved-tracks)
+#### Endpoint: <a href="https://developer.spotify.com/documentation/web-api/reference/get-users-saved-tracks" target="_blank">/me/tracks</a>
 
 #### Parameters:
 
@@ -114,7 +114,7 @@ savedTracks.items.forEach(item => {
 
 This method is used to save one or more tracks to the current user's 'Your Music' library.
 
-#### Endpoint: [/me/tracks](https://developer.spotify.com/documentation/web-api/reference/save-tracks-user)
+#### Endpoint: <a href="https://developer.spotify.com/documentation/web-api/reference/save-tracks-user" target="_blank">/me/tracks</a>
 
 #### Parameters:
 
@@ -133,7 +133,7 @@ console.log('Tracks saved successfully');
 
 This method is used to remove one or more tracks from the current user's 'Your Music' library.
 
-#### Endpoint: [/me/tracks](https://developer.spotify.com/documentation/web-api/reference/remove-tracks-user)
+#### Endpoint: <a href="https://developer.spotify.com/documentation/web-api/reference/remove-tracks-user" target="_blank">/me/tracks</a>
 
 #### Parameters:
 
@@ -152,7 +152,7 @@ console.log('Tracks removed successfully');
 
 This method is used to check if one or more tracks is already saved in the current Spotify user's 'Your Music' library.
 
-#### Endpoint: [/me/tracks/contains](https://developer.spotify.com/documentation/web-api/reference/check-users-saved-tracks)
+#### Endpoint: <a href="https://developer.spotify.com/documentation/web-api/reference/check-users-saved-tracks" target="_blank">/me/tracks/contains</a>
 
 #### Parameters:
 
@@ -175,7 +175,7 @@ results.forEach((isSaved, index) => {
 
 This method is used to get audio feature information for a single track identified by its unique Spotify ID.
 
-#### Endpoint: [/audio-features/{id}](https://developer.spotify.com/documentation/web-api/reference/get-audio-features)
+#### Endpoint: <a href="https://developer.spotify.com/documentation/web-api/reference/get-audio-features" target="_blank">/audio-features/{id}</a>
 
 #### Parameters:
 
@@ -209,7 +209,7 @@ console.log(`Energy: ${audioFeatures.energy}`);
 
 This method is used to get audio features for multiple tracks based on their Spotify IDs.
 
-#### Endpoint: [/audio-features](https://developer.spotify.com/documentation/web-api/reference/get-several-audio-features)
+#### Endpoint: <a href="https://developer.spotify.com/documentation/web-api/reference/get-several-audio-features" target="_blank">/audio-features</a>
 
 #### Parameters:
 
@@ -233,7 +233,7 @@ audioFeatures.audio_features.forEach((feature, index) => {
 
 This method is used to get a low-level audio analysis for a track in the Spotify catalog.
 
-#### Endpoint: [/audio-analysis/{id}](https://developer.spotify.com/documentation/web-api/reference/get-audio-analysis)
+#### Endpoint: <a href="https://developer.spotify.com/documentation/web-api/reference/get-audio-analysis" target="_blank">/audio-analysis/{id}</a>
 
 #### Parameters:
 
@@ -264,7 +264,7 @@ console.log(`Overall loudness: ${audioAnalysis.track?.loudness} dB`);
 
 This method is used to get track recommendations based on seed entities and various parameters.
 
-#### Endpoint: [/recommendations](https://developer.spotify.com/documentation/web-api/reference/get-recommendations)
+#### Endpoint: <a href="https://developer.spotify.com/documentation/web-api/reference/get-recommendations" target="_blank">/recommendations</a>
 
 #### Parameters:
 
