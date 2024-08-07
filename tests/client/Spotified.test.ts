@@ -1,11 +1,16 @@
 import { Spotified } from '../../src/client/Spotified';
 import { OAuth2Helper } from '../../src/client-helpers/OAuth2Helper';
-import { User, Artist } from '../../src/endpoints';
+import { User, Artist, Track, Player, Market, Genre, Category } from '../../src/endpoints';
 
 jest.mock('../../src/client-helpers/OAuth2Helper');
 jest.mock('../../src/client-helpers/RequestMaker');
 jest.mock('../../src/endpoints/User');
 jest.mock('../../src/endpoints/Artist');
+jest.mock('../../src/endpoints/Track');
+jest.mock('../../src/endpoints/Player');
+jest.mock('../../src/endpoints/Market');
+jest.mock('../../src/endpoints/Genre');
+jest.mock('../../src/endpoints/Category');
 
 const AUTHORIZE_URL = 'https://accounts.spotify.com/authorize';
 
@@ -62,6 +67,81 @@ describe('Spotified', () => {
       const artist2 = spotified.artist;
       expect(artist1).toBe(artist2);
       expect(Artist).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('track getter', () => {
+    it('should create and return a Track instance', () => {
+      const { track } = spotified;
+      expect(track).toBeInstanceOf(Track);
+      expect(Track).toHaveBeenCalledTimes(1);
+    });
+
+    it('should return the same Track instance on subsequent calls', () => {
+      const track1 = spotified.track;
+      const track2 = spotified.track;
+      expect(track1).toBe(track2);
+      expect(Track).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('player getter', () => {
+    it('should create and return a Player instance', () => {
+      const { player } = spotified;
+      expect(player).toBeInstanceOf(Player);
+      expect(Player).toHaveBeenCalledTimes(1);
+    });
+
+    it('should return the same Player instance on subsequent calls', () => {
+      const player1 = spotified.player;
+      const player2 = spotified.player;
+      expect(player1).toBe(player2);
+      expect(Player).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('market getter', () => {
+    it('should create and return a Market instance', () => {
+      const { market } = spotified;
+      expect(market).toBeInstanceOf(Market);
+      expect(Market).toHaveBeenCalledTimes(1);
+    });
+
+    it('should return the same Market instance on subsequent calls', () => {
+      const market1 = spotified.market;
+      const market2 = spotified.market;
+      expect(market1).toBe(market2);
+      expect(Market).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('genre getter', () => {
+    it('should create and return a Genre instance', () => {
+      const { genre } = spotified;
+      expect(genre).toBeInstanceOf(Genre);
+      expect(Genre).toHaveBeenCalledTimes(1);
+    });
+
+    it('should return the same Genre instance on subsequent calls', () => {
+      const genre1 = spotified.genre;
+      const genre2 = spotified.genre;
+      expect(genre1).toBe(genre2);
+      expect(Genre).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('category getter', () => {
+    it('should create and return a Category instance', () => {
+      const { category } = spotified;
+      expect(category).toBeInstanceOf(Category);
+      expect(Category).toHaveBeenCalledTimes(1);
+    });
+
+    it('should return the same Category instance on subsequent calls', () => {
+      const category1 = spotified.category;
+      const category2 = spotified.category;
+      expect(category1).toBe(category2);
+      expect(Category).toHaveBeenCalledTimes(1);
     });
   });
 
@@ -129,6 +209,28 @@ describe('Spotified', () => {
       expect(result.url).toContain('state=mock-state');
       expect(result.url).not.toContain('scope');
       expect(result.state).toBe('mock-state');
+    });
+
+    it('should handle scope as an array', () => {
+      const options = {
+        scope: ['user-read-private', 'user-read-email'],
+      };
+
+      const result = spotified.generateAuthURL(mockRedirectUri, options);
+
+      expect(result.url).toContain(`${AUTHORIZE_URL}`);
+      expect(result.url).toContain('scope=user-read-private%20user-read-email');
+    });
+
+    it('should handle scope as a string', () => {
+      const options = {
+        scope: 'user-read-private user-read-email',
+      };
+
+      const result = spotified.generateAuthURL(mockRedirectUri, options);
+
+      expect(result.url).toContain(`${AUTHORIZE_URL}`);
+      expect(result.url).toContain('scope=user-read-private%20user-read-email');
     });
   });
 
@@ -286,6 +388,34 @@ describe('Spotified', () => {
       expect(result.url).toContain(`redirect_uri=${encodeURIComponent(mockRedirectUri)}`);
       expect(result.url).toContain('state=custom-state');
       expect(result.state).toBe('custom-state');
+    });
+
+    it('should handle scope as an array', () => {
+      const options = {
+        scope: ['user-read-private', 'user-read-email'],
+      };
+
+      const result = spotified.generateImplicitGrantAuthURL(mockRedirectUri, options);
+
+      expect(result.url).toContain(`${AUTHORIZE_URL}`);
+      expect(result.url).toContain('response_type=token');
+      expect(result.url).toContain(`client_id=${mockClientId}`);
+      expect(result.url).toContain(`redirect_uri=${encodeURIComponent(mockRedirectUri)}`);
+      expect(result.url).toContain('scope=user-read-private%20user-read-email');
+    });
+
+    it('should handle scope as a string', () => {
+      const options = {
+        scope: 'user-read-private user-read-email',
+      };
+
+      const result = spotified.generateImplicitGrantAuthURL(mockRedirectUri, options);
+
+      expect(result.url).toContain(`${AUTHORIZE_URL}`);
+      expect(result.url).toContain('response_type=token');
+      expect(result.url).toContain(`client_id=${mockClientId}`);
+      expect(result.url).toContain(`redirect_uri=${encodeURIComponent(mockRedirectUri)}`);
+      expect(result.url).toContain('scope=user-read-private%20user-read-email');
     });
   });
 
