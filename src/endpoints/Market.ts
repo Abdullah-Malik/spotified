@@ -6,7 +6,7 @@ export class Market extends ReadWriteBaseClient {
    * https://developer.spotify.com/documentation/web-api/reference/get-available-markets
    */
   getAvailableMarkets() {
-    this.get<{ markets: string[] }>('/markets');
+    return this.get<{ markets: string[] }>('/markets');
   }
 }
 

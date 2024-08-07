@@ -13,7 +13,7 @@ import {
   ImplicitGrantRequestArgs,
   ImplicitGrantURLData,
 } from '../types';
-import { User, Artist, Track, Player, Market, Genre } from '../endpoints';
+import { User, Artist, Track, Player, Market, Genre, Category } from '../endpoints';
 import RequestMaker from '../client-helpers/RequestMaker';
 
 const AUTHORIZE_URL = 'https://accounts.spotify.com/authorize';
@@ -37,6 +37,8 @@ export class Spotified extends ReadWriteBaseClient {
   protected _market?: Market;
 
   protected _genre?: Genre;
+
+  protected _category?: Category;
 
   constructor(token: ClientToken) {
     super(new RequestMaker());
@@ -96,6 +98,14 @@ export class Spotified extends ReadWriteBaseClient {
     }
     this._genre = new Genre(this._requestMaker);
     return this._genre;
+  }
+
+  public get category() {
+    if (this._category) {
+      return this._category;
+    }
+    this._category = new Category(this._requestMaker);
+    return this._category;
   }
 
   generateAuthURL(redirectUri: string, options: Partial<OAuth2RequestArgs> = {}): AuthURLData {

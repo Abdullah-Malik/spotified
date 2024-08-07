@@ -24,8 +24,8 @@ export class Player extends ReadWriteBaseClient {
    * Get information about the user’s current playback state, including track or episode, progress, and active device
    * https://developer.spotify.com/documentation/web-api/reference/get-information-about-the-users-current-playback
    */
-  getPlaybackState(params?: GetPlaybackStateParams) {
-    return this.get<PlaybackState>('/me/player', params);
+  getPlaybackState(optionalParams?: GetPlaybackStateParams) {
+    return this.get<PlaybackState>('/me/player', optionalParams);
   }
 
   /**
@@ -48,8 +48,8 @@ export class Player extends ReadWriteBaseClient {
    * Get the object currently being played on the user's Spotify account
    * https://developer.spotify.com/documentation/web-api/reference/get-the-users-currently-playing-track
    */
-  getCurrentlyPlayingTrack(params?: CurrentlyPlayingTrackParams) {
-    return this.get<CurrentlyPlayingTrack>('/me/player/currently-playing', params);
+  getCurrentlyPlayingTrack(optionalParams?: CurrentlyPlayingTrackParams) {
+    return this.get<CurrentlyPlayingTrack>('/me/player/currently-playing', optionalParams);
   }
 
   /**

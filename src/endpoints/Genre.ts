@@ -6,7 +6,7 @@ export class Genre extends ReadWriteBaseClient {
    * https://developer.spotify.com/documentation/web-api/reference/get-recommendation-genres
    */
   getAvailableGenreSeeds() {
-    this.get<{ genres: string[] }>('/recommendations/available-genre-seeds');
+    return this.get<{ genres: string[] }>('/recommendations/available-genre-seeds');
   }
 }
 
