@@ -1,5 +1,6 @@
 import { ExternalUrls, CursorProps } from './shared.types';
 import { Track } from './track.types';
+import { Episode } from './episode.types';
 
 interface Device {
   id: string | null;
@@ -9,6 +10,7 @@ interface Device {
   name: string;
   type: string;
   volume_percent: number | null;
+  supports_volume: boolean;
 }
 
 export interface Devices {
@@ -43,7 +45,7 @@ export interface PlaybackState {
   timestamp?: number;
   progress_ms?: number;
   is_playing?: boolean;
-  item?: Track;
+  item?: Track | Episode | null;
   currently_playing_type?: string;
   actions?: Actions;
 }
@@ -76,8 +78,8 @@ export type SetPlaybackVolumeOptionalParams = PlayerOptionalParams;
 export type TogglePlaybackShuffleOptionalParams = PlayerOptionalParams;
 
 export interface UserTrackEpisodeQueue {
-  currently_playing: Track | null;
-  queue: Track[];
+  currently_playing: Track | Episode | null;
+  queue: Track[] | Episode[];
 }
 
 export type AddItemToPlaybackQueueOptionalParams = PlayerOptionalParams;
@@ -91,7 +93,6 @@ interface URIOffset {
 }
 
 export interface ResumePlaybackParams {
-  device_id?: string;
   context_uri?: string;
   uris?: string[];
   position_ms?: number;
@@ -104,17 +105,10 @@ export interface GetRecentlyPlayedTracksOptionalParams {
   before?: number;
 }
 
-interface ContextParams {
-  type?: string;
-  href?: string;
-  external_urls: ExternalUrls;
-  uri?: string;
-}
-
 interface PlayHistoryObject {
   track?: Track;
   played_at?: string;
-  context?: ContextParams;
+  context?: Context;
 }
 
 export interface RecentlyPlayedTracks {

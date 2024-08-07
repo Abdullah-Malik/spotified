@@ -56,8 +56,8 @@ export class Player extends ReadWriteBaseClient {
    * Start a new context or resume current playback on the user's active device
    * https://developer.spotify.com/documentation/web-api/reference/start-a-users-playback
    */
-  startResumePlayback(params?: ResumePlaybackParams) {
-    this.put(`/me/player/play${generateQueryParametersString({ device_id: params?.device_id })}`, params);
+  startResumePlayback(deviceId: string, params: ResumePlaybackParams) {
+    this.put(`/me/player/play${generateQueryParametersString({ device_id: deviceId })}`, params);
   }
 
   /**
@@ -105,7 +105,7 @@ export class Player extends ReadWriteBaseClient {
    * https://developer.spotify.com/documentation/web-api/reference/set-volume-for-users-playback
    */
   setPlaybackVolume(volume: number, optionalParams?: SetPlaybackVolumeOptionalParams) {
-    return this.put(`/me/player/repeat${generateQueryParametersString({ volume_percent: volume, ...optionalParams })}`);
+    return this.put(`/me/player/volume${generateQueryParametersString({ volume_percent: volume, ...optionalParams })}`);
   }
 
   /**
@@ -118,10 +118,10 @@ export class Player extends ReadWriteBaseClient {
 
   /**
    * Get tracks from the current user's recently played tracks
-   * https://developer.spotify.com/documentation/web-api/reference/get-recently-played   
+   * https://developer.spotify.com/documentation/web-api/reference/get-recently-played
    */
   getRecentlyPlayedTracks(optionalParams: GetRecentlyPlayedTracksOptionalParams) {
-    return this.get<RecentlyPlayedTracks>(`/me/player/recently-played${generateQueryParametersString({...optionalParams})}`);
+    return this.get<RecentlyPlayedTracks>(`/me/player/recently-played`, optionalParams);
   }
 
   /**
@@ -137,7 +137,7 @@ export class Player extends ReadWriteBaseClient {
    * https://developer.spotify.com/documentation/web-api/reference/add-to-queue
    */
   addItemToPlaybackQueue(uri: string, optionalParams: AddItemToPlaybackQueueOptionalParams) {
-    this.post(`/me/player/queue${generateQueryParametersString({ uri: encodeURI(uri), ...optionalParams })}}`);
+    this.post(`/me/player/queue${generateQueryParametersString({ uri: encodeURIComponent(uri), ...optionalParams })}}`);
   }
 }
 

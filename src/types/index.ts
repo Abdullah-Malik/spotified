@@ -11,3 +11,4 @@ export * from './album.types';
 export * from './track.types';
 export * from './player.types';
 export * from './category.types';
+export * from './episode.types';
