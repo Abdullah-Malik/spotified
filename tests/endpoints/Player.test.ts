@@ -1,12 +1,6 @@
 import { Player } from '../../src/endpoints/Player';
 import { generateQueryParametersString } from '../../src/utils';
-import {
-  PlaybackState,
-  Devices,
-  CurrentlyPlayingTrack,
-  RecentlyPlayedTracks,
-  UserTrackEpisodeQueue,
-} from '../../src/types';
+import { PlaybackState, CurrentlyPlayingTrack, RecentlyPlayedTracks, UserTrackEpisodeQueue } from '../../src/types';
 
 jest.mock('../../src/client/ReadWriteBaseClient');
 jest.mock('../../src/utils');
@@ -49,7 +43,7 @@ describe('Player', () => {
 
   describe('getAvailableDevices', () => {
     it('should call get method and return expected result', async () => {
-      const mockResponse: Devices = { devices: [{ id: 'device1', is_active: true, name: 'Device 1' }] };
+      const mockResponse = { devices: [{ id: 'device1', is_active: true, name: 'Device 1' }] };
       (player['get'] as jest.Mock).mockResolvedValue(mockResponse);
 
       const result = await player.getAvailableDevices();
