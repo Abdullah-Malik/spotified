@@ -12,6 +12,7 @@ import {
   AuthURLData,
   ImplicitGrantRequestArgs,
   ImplicitGrantURLData,
+  ClientCredentialsFlowResponse,
 } from '../types';
 import { User, Artist, Track, Player, Market, Genre, Category } from '../endpoints';
 import RequestMaker from '../client-helpers/RequestMaker';
@@ -145,6 +146,20 @@ export class Spotified extends ReadWriteBaseClient {
       codeVerifier,
       codeChallenge,
     };
+  }
+
+  async generateClientCredentialsFlow() {
+    const accessTokenResult = await this.post<ClientCredentialsFlowResponse>(
+      API_TOKEN_URL,
+      {
+        grant_type: 'client_credentials',
+      },
+      {
+        headers: this.authHeaders,
+      }
+    );
+
+    return accessTokenResult;
   }
 
   generateImplicitGrantAuthURL(
