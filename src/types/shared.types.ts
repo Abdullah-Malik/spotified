@@ -36,3 +36,8 @@ export interface PaginationParams {
   limit?: number;
   offset?: number;
 }
+
+export interface CursorProps {
+  after?: string;
+  before?: string;
+}
