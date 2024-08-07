@@ -210,6 +210,28 @@ describe('Spotified', () => {
       expect(result.url).not.toContain('scope');
       expect(result.state).toBe('mock-state');
     });
+
+    it('should handle scope as an array', () => {
+      const options = {
+        scope: ['user-read-private', 'user-read-email'],
+      };
+
+      const result = spotified.generateAuthURL(mockRedirectUri, options);
+
+      expect(result.url).toContain(`${AUTHORIZE_URL}`);
+      expect(result.url).toContain('scope=user-read-private%20user-read-email');
+    });
+
+    it('should handle scope as a string', () => {
+      const options = {
+        scope: 'user-read-private user-read-email',
+      };
+
+      const result = spotified.generateAuthURL(mockRedirectUri, options);
+
+      expect(result.url).toContain(`${AUTHORIZE_URL}`);
+      expect(result.url).toContain('scope=user-read-private%20user-read-email');
+    });
   });
 
   describe('generatePKCEAuthLink', () => {
@@ -366,6 +388,34 @@ describe('Spotified', () => {
       expect(result.url).toContain(`redirect_uri=${encodeURIComponent(mockRedirectUri)}`);
       expect(result.url).toContain('state=custom-state');
       expect(result.state).toBe('custom-state');
+    });
+
+    it('should handle scope as an array', () => {
+      const options = {
+        scope: ['user-read-private', 'user-read-email'],
+      };
+
+      const result = spotified.generateImplicitGrantAuthURL(mockRedirectUri, options);
+
+      expect(result.url).toContain(`${AUTHORIZE_URL}`);
+      expect(result.url).toContain('response_type=token');
+      expect(result.url).toContain(`client_id=${mockClientId}`);
+      expect(result.url).toContain(`redirect_uri=${encodeURIComponent(mockRedirectUri)}`);
+      expect(result.url).toContain('scope=user-read-private%20user-read-email');
+    });
+
+    it('should handle scope as a string', () => {
+      const options = {
+        scope: 'user-read-private user-read-email',
+      };
+
+      const result = spotified.generateImplicitGrantAuthURL(mockRedirectUri, options);
+
+      expect(result.url).toContain(`${AUTHORIZE_URL}`);
+      expect(result.url).toContain('response_type=token');
+      expect(result.url).toContain(`client_id=${mockClientId}`);
+      expect(result.url).toContain(`redirect_uri=${encodeURIComponent(mockRedirectUri)}`);
+      expect(result.url).toContain('scope=user-read-private%20user-read-email');
     });
   });
 
