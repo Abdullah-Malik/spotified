@@ -1,12 +1,12 @@
-import { ReadWriteBaseClient } from "../client/ReadWriteBaseClient";
+import { ReadWriteBaseClient } from '../client/ReadWriteBaseClient';
 import { 
     GetTrackParams as GetMarketParams,
     OptionalUserSavedTrackParams as GetSavedEpisodeParams,
     Episode as EpisodeDetails,
     Episodes as EpisodesDetails,
     UserSavedEpisodes, 
-} from "../types";
-import joinIdsArrayToString from "../utils";
+} from '../types';
+import joinIdsArrayToString from '../utils';
 
 export class Episode extends ReadWriteBaseClient {
 

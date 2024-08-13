@@ -1,5 +1,5 @@
-import joinIdsArrayToString from "../utils";
-import { ReadWriteBaseClient } from "../client/ReadWriteBaseClient";
+import joinIdsArrayToString from '../utils';
+import { ReadWriteBaseClient } from '../client/ReadWriteBaseClient';
 import { 
     GetTrackParams as GetMarketParams,
     PaginationParams,
