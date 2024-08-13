@@ -11,9 +11,9 @@ export * from './album.types';
 export * from './track.types';
 export * from './player.types';
 export * from './category.types';
-export * from './audiobooks.types';
+export * from './audiobook.types';
 export * from './chapter.types'
-export * from './shows.types';
-export * from './episodes.types';
+export * from './show.types';
+export * from './episode.types';
 export * from './playlist.types';
 export * from './search.types';

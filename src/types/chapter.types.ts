@@ -1,25 +1,25 @@
-import { SimplifiedAudiobook } from "./audiobooks.types";
-import { ResumePoint } from "./episodes.types";
+import { SimplifiedAudiobook } from "./audiobook.types";
+import { ResumePoint } from "./episode.types";
 import { ExternalUrls, Image, Restrictions } from "./shared.types";
 
 export interface Chapter {
-    audioPreviewUrl: string | null;
-    availableMarkets?: string[];
-    chapterNumber: number;
+    audio_preview_url: string | null;
+    available_markets?: string[];
+    chapter_number: number;
     description: string;
-    HTMLDescription: string;
-    durationMs: number;
+    html_description: string;
+    duration_ms: number;
     explicit: boolean;
-    externalUrls: ExternalUrls;
+    external_urls: ExternalUrls;
     href: string;
     id: string;
     images: Image[];
-    isPlayable: boolean;
+    is_playable: boolean;
     languages: string[];
     name: string;
-    releaseDate: string;
-    releaseDatePrecision: string;    
-    resumePoint?: ResumePoint;
+    release_date: string;
+    release_date_precision: string;    
+    resume_point?: ResumePoint;
     type: string;
     uri: string;
     restrictions?: Restrictions;

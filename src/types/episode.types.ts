@@ -1,29 +1,29 @@
 import { PaginationResponseProps } from "./paginator.types";
 import {  ExternalUrls, Image, Restrictions } from "./shared.types";
-import { SimplifiedShow } from "./shows.types";
+import { SimplifiedShow } from "./show.types";
 
 export interface ResumePoint {
-    fullyPlayed?: boolean;
-    resumePointMS?: number;
+    fully_played?: boolean;
+    resume_position_ms?: number;
 }
 
 export interface SimplifiedEpisode {
-    audioPreviewUrl: string | null;
+    audio_preview_url: string | null;
     description: string;
-    HTMLDescription: string;
-    durationMs: number;
+    html_description: string;
+    duration_ms: number;
     explicit: boolean;
-    externalUrls: ExternalUrls;
+    external_urls: ExternalUrls;
     href: string;
     id: string;
     images: Image[];
-    isExternallyHosted: boolean;
-    isPlayable: boolean;
+    is_externally_hosted: boolean;
+    is_playable: boolean;
     languages: string[];
     name: string;
-    releaseDate: string;
-    releaseDatePrecision: string;    
-    resumePoint?: ResumePoint;
+    release_date: string;
+    release_date_precision: string;    
+    resume_point?: ResumePoint;
     type: string;
     uri: string;
     restrictions: Restrictions;

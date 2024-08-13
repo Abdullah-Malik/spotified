@@ -4,9 +4,9 @@ import { PaginationResponseProps } from "./paginator.types";
 import { SimplifiedAlbum } from "./album.types";
 import { Artists } from "./artist.types";
 import { SimplifiedPlaylist } from "./playlist.types";
-import { SimplifiedShow } from "./shows.types";
-import { SimplifiedEpisode } from "./episodes.types";
-import { SimplifiedAudiobook } from "./audiobooks.types";
+import { SimplifiedShow } from "./show.types";
+import { SimplifiedEpisode } from "./episode.types";
+import { SimplifiedAudiobook } from "./audiobook.types";
 
 export interface searchOptionalParams extends PaginationParams{
     market?: string;

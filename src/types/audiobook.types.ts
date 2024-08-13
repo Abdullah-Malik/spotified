@@ -10,22 +10,22 @@ export interface Narrator {
 
 export interface SimplifiedAudiobook {
     authors: Author[];
-    availableMarkets: string[];
+    available_markets: string[];
     copyrights: Copyright[];
     description: string;
-    HTMLDescription: string;
+    html_description: string;
     edition?: string;
     explicit: boolean;
-    externalUrls: ExternalUrls;
+    external_urls: ExternalUrls;
     href: string;
     id: string;
     images: Image[];
     languages: string[];
-    mediaType: string;
+    media_type: string;
     name: string;
     narrators: Narrator[];
     publisher: string;
     type: string;
     uri: string;
-    totalChapters: number[]
+    total_chapters: number[]
 }

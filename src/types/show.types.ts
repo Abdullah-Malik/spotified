@@ -1,25 +1,25 @@
-import { SimplifiedEpisode } from "./episodes.types";
+import { SimplifiedEpisode } from "./episode.types";
 import { PaginationResponseProps } from "./paginator.types";
 import { Copyright, ExternalUrls, Image } from "./shared.types";
 
 export interface SimplifiedShow {
-    availableMarkets : string[];
+    available_markets : string[];
     copyrights: Copyright[];
     description: string;
-    HTMLdescription: string;
+    html_description: string;
     explicit: boolean;
-    externalUrls: ExternalUrls;
+    external_urls: ExternalUrls;
     href: string;
     id: string;
     images: Image[];
-    isExternallyHosted: boolean;
+    is_externally_hosted: boolean;
     languages: string[];
-    mediaType: string;
+    media_type: string;
     name: string;
     publisher: string;
     type: string;
     uri: string;
-    totalEpisodes: number;
+    total_episodes: number;
 }
 
 export interface Show extends SimplifiedShow {
