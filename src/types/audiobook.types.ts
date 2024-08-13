@@ -1,4 +1,4 @@
-import { Copyright, ExternalUrls, Image } from "./shared.types";
+import { Copyright, ExternalUrls, Image } from './shared.types';
 
 interface Author {
     name?: string;

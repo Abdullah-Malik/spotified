@@ -1,13 +1,13 @@
-import { ExternalUrls, Followers, Image } from "./shared.types";
+import { ExternalUrls, Followers, Image } from './shared.types';
 
 interface Owner {
-    externalUrls?: ExternalUrls;
+    external_urls?: ExternalUrls;
     followers?: Followers;
     href?: string;
     id?: string;
     type?: string;
     uri?: string;
-    displayName?: string | null;
+    display_name?: string | null;
 }
 
 interface PlaylistTracks {
@@ -18,14 +18,14 @@ interface PlaylistTracks {
 export interface SimplifiedPlaylist {
     collaborative?: boolean;
     description?: string;
-    externalUrls?: ExternalUrls;
+    external_urls?: ExternalUrls;
     href?: string;
     id?: string;
     images?: Image[];
     name?: string;
     owner?: Owner;
     public?: boolean;
-    snapshotId?: string;
+    snapshot_id?: string;
     tracks?: PlaylistTracks | null;
     type?: string;
     uri?: string;

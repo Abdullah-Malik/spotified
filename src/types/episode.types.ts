@@ -1,6 +1,6 @@
-import { PaginationResponseProps } from "./paginator.types";
-import {  ExternalUrls, Image, Restrictions } from "./shared.types";
-import { SimplifiedShow } from "./show.types";
+import { PaginationResponseProps } from './paginator.types';
+import {  ExternalUrls, Image, Restrictions } from './shared.types';
+import { SimplifiedShow } from './show.types';
 
 export interface ResumePoint {
     fully_played?: boolean;

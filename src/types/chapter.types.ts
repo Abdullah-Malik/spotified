@@ -1,6 +1,6 @@
-import { SimplifiedAudiobook } from "./audiobook.types";
-import { ResumePoint } from "./episode.types";
-import { ExternalUrls, Image, Restrictions } from "./shared.types";
+import { SimplifiedAudiobook } from './audiobook.types';
+import { ResumePoint } from './episode.types';
+import { ExternalUrls, Image, Restrictions } from './shared.types';
 
 export interface Chapter {
     audio_preview_url: string | null;
