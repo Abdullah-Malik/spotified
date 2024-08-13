@@ -1,16 +1,16 @@
-import { Artists } from "./artist.types";
-import { PaginationResponseProps } from "./paginator.types";
-import { ExternalUrls, Followers, Image, PaginationParams } from "./shared.types";
-import { Tracks } from "./track.types";
+import { Artists } from './artist.types';
+import { PaginationResponseProps } from './paginator.types';
+import { ExternalUrls, Followers, Image, PaginationParams } from './shared.types';
+import { Tracks } from './track.types';
 
 interface ExplicitContent {
-  filterEnabled: boolean;
-  filterLocked: boolean;
+  filter_enabled: boolean;
+  filter_locked: boolean;
 }
 
 export interface UserProfile {
   display_name: string | null;
-  externalUrls: ExternalUrls;
+  external_urls: ExternalUrls;
   followers: Followers;
   href: string;
   id: string;
@@ -23,16 +23,21 @@ export interface CurrentUserProfile extends UserProfile {
   country: string;
   email: string;
   product: string;
-  explicitContent: ExplicitContent;
+  explicit_content: ExplicitContent;
 }
 
+export type UsersTopItemsType = 'artists' | 'tracks';
+
+export type FollowedArtistType = 'artist';
+
+export type ArtistsUsersType = 'artist' | 'user';
+
 export interface TopItemsOptionalParams extends PaginationParams {
-  timeRange?: string;
+  time_range?: string;
 }
 
 export interface UsersTopItems extends PaginationResponseProps {
-  artists?: Artists;  
-  tracks?: Tracks;
+  items: Artists | Tracks;
 }
 
 export interface FollowedArtistOptionalParams {
@@ -46,10 +51,12 @@ interface Cursors {
 }
 
 export interface FollowedArtist {
-  href?: string;
-  limit?: number;
-  next?: string;
-  cursors?: Cursors;
-  total?: number;
-  items?: Artists;
+  artists: {
+    href?: string;
+    limit?: number;
+    next?: string;
+    cursors?: Cursors;
+    total?: number;
+    items?: Artists;
+  };
 }
