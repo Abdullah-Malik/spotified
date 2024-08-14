@@ -27,5 +27,5 @@ export interface SimplifiedAudiobook {
     publisher: string;
     type: string;
     uri: string;
-    total_chapters: number[]
+    total_chapters: number;
 }
