@@ -32,10 +32,14 @@ export interface SimplifiedAudiobook {
     total_chapters: number;
 }
 
-interface AudiobookChapters extends PaginationResponseProps{
-    items: SimplifiedChapter[];
+export interface Audiobook extends SimplifiedAudiobook {
+    chapters: {items: SimplifiedChapter[]} & PaginationResponseProps;
 }
 
-export interface Audiobook extends SimplifiedAudiobook {
-    chapters: AudiobookChapters;
+export interface Audiobooks {
+    audiobooks: Audiobook[]
+}
+
+export interface UserSavedAudiobooks extends PaginationResponseProps {
+    items: SimplifiedAudiobook[];
 }

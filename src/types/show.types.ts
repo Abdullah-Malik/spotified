@@ -23,7 +23,7 @@ export interface SimplifiedShow {
 }
 
 export interface Show extends SimplifiedShow {
-    episodes: (SimplifiedEpisode[] & PaginationResponseProps)
+    episodes: ShowEpisodes;
 }
 
 export interface Shows {
