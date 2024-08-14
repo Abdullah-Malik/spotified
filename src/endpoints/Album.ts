@@ -5,7 +5,7 @@ import {
     Albums as AlbumsDetails,
     AlbumTracks,
     GetTrackParams as GetMarketParams,
-    OptionalUserSavedTrackParams as OptionalAlbumTrackParams,
+    OptionalUserSavedTrackParams as OptionalAlbumParams,
     PagedAlbums,
     PaginationParams,
     UserSavedAlbum
@@ -32,7 +32,7 @@ export class Album extends ReadWriteBaseClient {
      * Get Spotify catalog information about an album’s tracks. Optional parameters can be used to limit the number of tracks returned.
      * https://developer.spotify.com/documentation/web-api/reference/get-an-albums-tracks
      */
-    getAlbumTracks(albumId: string, optionalParams?: OptionalAlbumTrackParams) {
+    getAlbumTracks(albumId: string, optionalParams?: OptionalAlbumParams) {
         return this.get<AlbumTracks>(`/albums/${albumId}/tracks`, optionalParams);
     }
 
@@ -40,7 +40,7 @@ export class Album extends ReadWriteBaseClient {
      * Get a list of the albums saved in the current Spotify user's 'Your Music' library.
      * https://developer.spotify.com/documentation/web-api/reference/get-users-saved-albums
      */
-    getUsersSavedAlbum(optionalParams?: OptionalAlbumTrackParams){
+    getUsersSavedAlbum(optionalParams?: OptionalAlbumParams){
         return this.get<UserSavedAlbum>(`/me/albums`, optionalParams);
     }
 

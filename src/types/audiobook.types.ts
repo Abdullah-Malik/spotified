@@ -43,3 +43,7 @@ export interface Audiobooks {
 export interface UserSavedAudiobooks extends PaginationResponseProps {
     items: SimplifiedAudiobook[];
 }
+
+export interface AudiobookChapters extends PaginationResponseProps {
+    items: SimplifiedChapter[];
+}
