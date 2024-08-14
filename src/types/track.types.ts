@@ -21,14 +21,12 @@ export interface LinkedFrom {
   uri: string;
 }
 
-export interface Track {
-  album?: SimplifiedAlbum;
+export interface SimplifiedTrack {
   artists?: Artist[];
   available_markets?: string[];
   disc_number?: number;
   duration_ms?: number;
   explicit?: boolean;
-  external_ids?: ExternalIds;
   external_urls?: ExternalUrls;
   href?: string;
   id?: string;
@@ -36,12 +34,17 @@ export interface Track {
   linked_from?: Partial<LinkedFrom>;
   restrictions?: Restrictions;
   name?: string;
-  popularity?: number;
   preview_url?: string | null;
   track_number?: number;
   type?: string;
   uri?: string;
   is_local?: boolean;
+}
+
+export interface Track extends SimplifiedTrack {
+  album?: SimplifiedAlbum;
+  external_ids?: ExternalIds;
+  popularity?: number;
 }
 
 export interface Tracks {
