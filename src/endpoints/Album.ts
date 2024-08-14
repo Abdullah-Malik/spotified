@@ -1,4 +1,3 @@
-import joinIdsArrayToString from '../utils';
 import { ReadWriteBaseClient } from '../client/ReadWriteBaseClient';
 import {
     Album as AlbumDetails,
@@ -10,6 +9,7 @@ import {
     PaginationParams,
     UserSavedAlbum
 } from '../types';
+import { joinIdsArrayToString } from '../utils';
 
 export class Album extends ReadWriteBaseClient {
     /**

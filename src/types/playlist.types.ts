@@ -56,3 +56,9 @@ export interface UserPlaylist extends PaginationResponseProps{
 export interface FeaturedPlaylist extends UserPlaylist {
     message?: string;
 }
+
+export interface OptionalPlaylistParams {
+    market?: string;
+    fields?: string;
+    additional_types?: string;
+}
