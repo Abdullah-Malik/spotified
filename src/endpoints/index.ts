@@ -9,3 +9,4 @@ export * from './Chapter';
 export * from './Episode';
 export * from './Search';
 export * from './Show';
+export * from './Album';
