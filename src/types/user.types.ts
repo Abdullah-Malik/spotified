@@ -33,7 +33,7 @@ export type FollowedArtistType = 'artist';
 export type ArtistsUsersType = 'artist' | 'user';
 
 export interface TopItemsOptionalParams extends PaginationParams {
-  time_range?: string;
+  time_range?: 'long_term' | 'medium_term' | 'short_term';
 }
 
 export interface UsersTopItems extends PaginationResponseProps {

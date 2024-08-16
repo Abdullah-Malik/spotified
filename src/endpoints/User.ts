@@ -41,8 +41,8 @@ export class User extends ReadWriteBaseClient {
    * Add the current user as a follower of a playlist.
    * https://developer.spotify.com/documentation/web-api/reference/follow-playlist
    */
-  followPlaylist(playlistId: string, options?: { public: boolean }) {
-    return this.put(`/playlists/${playlistId}/followers`, options);
+  followPlaylist(playlistId: string, optionalParams?: { public: boolean }) {
+    return this.put(`/playlists/${playlistId}/followers`, optionalParams);
   }
 
   /**
