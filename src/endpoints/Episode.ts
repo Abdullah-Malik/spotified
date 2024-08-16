@@ -2,7 +2,7 @@ import { ReadWriteBaseClient } from '../client/ReadWriteBaseClient';
 import { GetEpisodeParams, GetSavedEpisodeParams, Episode as EpisodeDetail, UserSavedEpisodes } from '../types';
 import joinIdsArrayToString from '../utils';
 
-export default class Episode extends ReadWriteBaseClient {
+export class Episode extends ReadWriteBaseClient {
   /**
    * Get Spotify catalog information for a single episode identified by its unique Spotify ID.
    * https://developer.spotify.com/documentation/web-api/reference/get-an-episode
@@ -51,3 +51,5 @@ export default class Episode extends ReadWriteBaseClient {
     return this.get<Array<boolean>>(`/me/episodes/contains`, { ids: joinIdsArrayToString(ids) });
   }
 }
+
+export default Episode;

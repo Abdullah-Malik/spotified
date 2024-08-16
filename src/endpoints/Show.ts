@@ -11,7 +11,7 @@ import {
   RemoveUsersShowsOptionalParams,
 } from '../types';
 
-export default class Show extends ReadWriteBaseClient {
+export class Show extends ReadWriteBaseClient {
   /**
    * Get Spotify catalog information for a single show identified by its unique Spotify ID.
    * https://developer.spotify.com/documentation/web-api/reference/get-a-show
@@ -72,3 +72,5 @@ export default class Show extends ReadWriteBaseClient {
     return this.get<Array<boolean>>(`/me/shows/contains`, { ids: joinIdsArrayToString(ids) });
   }
 }
+
+export default Show;

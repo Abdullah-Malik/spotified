@@ -2,7 +2,7 @@ import { ReadWriteBaseClient } from '../client/ReadWriteBaseClient';
 import { GetChapterOptionalParams, Chapter as ChapterDetail } from '../types';
 import joinIdsArrayToString from '../utils';
 
-export default class Chapter extends ReadWriteBaseClient {
+export class Chapter extends ReadWriteBaseClient {
   /**
    * Get Spotify catalog information for a single audiobook chapter. Chapters are only available within
    * the US, UK, Canada, Ireland, New Zealand and Australia markets.
@@ -21,3 +21,5 @@ export default class Chapter extends ReadWriteBaseClient {
     return this.get<ChapterDetail[]>(`/chapters`, { ids: joinIdsArrayToString(ids), ...optionalParams });
   }
 }
+
+export default Chapter;
