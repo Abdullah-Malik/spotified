@@ -44,7 +44,7 @@ export class Track extends ReadWriteBaseClient {
    * https://developer.spotify.com/documentation/web-api/reference/save-tracks-user
    */
   saveTracksforCurrentUser(ids: string[]) {
-    return this.put(`/me/tracks`, { ids: joinIdsArrayToString(ids) });
+    return this.put(`/me/tracks`, { ids });
   }
 
   /**
@@ -52,7 +52,7 @@ export class Track extends ReadWriteBaseClient {
    * https://developer.spotify.com/documentation/web-api/reference/remove-tracks-user
    */
   removeUsersSavedTracks(ids: string[]) {
-    return this.delete(`/me/tracks`, { ids: joinIdsArrayToString(ids) });
+    return this.delete(`/me/tracks`, { ids });
   }
 
   /**

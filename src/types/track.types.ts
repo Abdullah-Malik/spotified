@@ -1,11 +1,7 @@
 import { SimplifiedAlbum } from './album.types';
 import { Artist } from './artist.types';
 import { PaginationResponseProps } from './paginator.types';
-import { Restrictions, ExternalUrls, ExternalIds, PaginationParams } from './shared.types';
-
-interface OptionalParams {
-  market?: string;
-}
+import { Restrictions, ExternalUrls, ExternalIds, PaginationParams, OptionalParams } from './shared.types';
 
 export type GetTrackParams = OptionalParams;
 

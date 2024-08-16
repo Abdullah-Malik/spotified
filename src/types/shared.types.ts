@@ -36,3 +36,12 @@ export interface PaginationParams {
   limit?: number;
   offset?: number;
 }
+
+export interface OptionalParams {
+  market?: string;
+}
+
+export interface ResumePoint {
+  fully_played?: boolean;
+  resume_position_ms?: number;
+}
