@@ -1,5 +1,5 @@
 import { SimplifiedAlbum } from './album.types';
-import { SimplifiedArtist } from './artist.types';
+import { Artist } from './artist.types';
 import { PaginationResponseProps } from './paginator.types';
 import { Restrictions, ExternalUrls, ExternalIds, PaginationParams, OptionalParams } from './shared.types';
 
@@ -17,14 +17,12 @@ export interface LinkedFrom {
   uri: string;
 }
 
-export interface Track {
-  album?: SimplifiedAlbum;
-  artists?: SimplifiedArtist[];
+export interface SimplifiedTrack {
+  artists?: Artist[];
   available_markets?: string[];
   disc_number?: number;
   duration_ms?: number;
   explicit?: boolean;
-  external_ids?: ExternalIds;
   external_urls?: ExternalUrls;
   href?: string;
   id?: string;
@@ -32,12 +30,17 @@ export interface Track {
   linked_from?: Partial<LinkedFrom>;
   restrictions?: Restrictions;
   name?: string;
-  popularity?: number;
   preview_url?: string | null;
   track_number?: number;
   type?: string;
   uri?: string;
   is_local?: boolean;
+}
+
+export interface Track extends SimplifiedTrack {
+  album?: SimplifiedAlbum;
+  external_ids?: ExternalIds;
+  popularity?: number;
 }
 
 export interface Tracks {
