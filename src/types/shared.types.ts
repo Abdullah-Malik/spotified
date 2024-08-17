@@ -37,6 +37,14 @@ export interface PaginationParams {
   offset?: number;
 }
 
+export interface OptionalParams {
+  market?: string;
+}
+
+export interface ResumePoint {
+  fully_played?: boolean;
+  resume_position_ms?: number;
+}
 export interface CursorProps {
   after?: string;
   before?: string;
