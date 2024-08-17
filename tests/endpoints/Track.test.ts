@@ -82,7 +82,7 @@ describe('Track', () => {
 
       await track.saveTracksforCurrentUser(mockIds);
 
-      expect(track['put']).toHaveBeenCalledWith('/me/tracks', mockIds);
+      expect(track['put']).toHaveBeenCalledWith('/me/tracks', { ids: mockIds });
     });
   });
 
@@ -93,7 +93,7 @@ describe('Track', () => {
 
       await track.removeUsersSavedTracks(mockIds);
 
-      expect(track['delete']).toHaveBeenCalledWith('/me/tracks', mockIds);
+      expect(track['delete']).toHaveBeenCalledWith('/me/tracks', { ids: mockIds });
     });
   });
 
