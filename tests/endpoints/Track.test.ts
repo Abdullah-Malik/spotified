@@ -82,8 +82,7 @@ describe('Track', () => {
 
       await track.saveTracksforCurrentUser(mockIds);
 
-      expect(joinIdsArrayToString).toHaveBeenCalledWith(mockIds);
-      expect(track['put']).toHaveBeenCalledWith('/me/tracks?ids=1234,5678');
+      expect(track['put']).toHaveBeenCalledWith('/me/tracks', mockIds);
     });
   });
 
@@ -94,8 +93,7 @@ describe('Track', () => {
 
       await track.removeUsersSavedTracks(mockIds);
 
-      expect(joinIdsArrayToString).toHaveBeenCalledWith(mockIds);
-      expect(track['delete']).toHaveBeenCalledWith('/me/tracks?ids=1234,5678');
+      expect(track['delete']).toHaveBeenCalledWith('/me/tracks', mockIds);
     });
   });
 
