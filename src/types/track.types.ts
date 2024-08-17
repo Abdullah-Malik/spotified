@@ -1,5 +1,5 @@
 import { SimplifiedAlbum } from './album.types';
-import { Artist } from './artist.types';
+import { SimplifiedArtist } from './artist.types';
 import { PaginationResponseProps } from './paginator.types';
 import { Restrictions, ExternalUrls, ExternalIds, PaginationParams, OptionalParams } from './shared.types';
 
@@ -18,7 +18,7 @@ export interface LinkedFrom {
 }
 
 export interface SimplifiedTrack {
-  artists?: Artist[];
+  artists?: SimplifiedArtist[];
   available_markets?: string[];
   disc_number?: number;
   duration_ms?: number;
