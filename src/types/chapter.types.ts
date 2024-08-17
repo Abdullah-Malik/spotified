@@ -1,5 +1,5 @@
 import { SimplifiedAudiobook } from './audiobook.types';
-import { ExternalUrls, Image, Restrictions, ResumePoint } from './shared.types';
+import { ExternalUrls, Image, OptionalParams, Restrictions, ResumePoint } from './shared.types';
 
 export interface SimplifiedChapter {
   audio_preview_url: string | null;
@@ -29,3 +29,5 @@ export interface Chapter extends SimplifiedChapter {
 }
 
 export type Chapters = Chapter[];
+
+export type GetChapterOptionalParams = OptionalParams;
