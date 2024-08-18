@@ -138,20 +138,6 @@ export class Spotified extends ReadWriteBaseClient {
     };
   }
 
-  async generateClientCredentialsFlow() {
-    const accessTokenResult = await this.post<ClientCredentialsFlowResponse>(
-      API_TOKEN_URL,
-      {
-        grant_type: 'client_credentials',
-      },
-      {
-        headers: this.authHeaders,
-      }
-    );
-
-    return accessTokenResult;
-  }
-
   generateImplicitGrantAuthURL(
     redirectUri: string,
     options: Partial<ImplicitGrantRequestArgs> = {}
@@ -211,6 +197,20 @@ export class Spotified extends ReadWriteBaseClient {
         grant_type: 'authorization_code',
         client_id: this.clientId,
         client_secret: this.clientSecret,
+      },
+      {
+        headers: this.authHeaders,
+      }
+    );
+
+    return accessTokenResult;
+  }
+
+  async generateClientCredentialsFlow() {
+    const accessTokenResult = await this.post<ClientCredentialsFlowResponse>(
+      API_TOKEN_URL,
+      {
+        grant_type: 'client_credentials',
       },
       {
         headers: this.authHeaders,
