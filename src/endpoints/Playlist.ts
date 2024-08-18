@@ -45,7 +45,7 @@ export class Playlist extends ReadWriteBaseClient {
    * Either reorder or replace items in a playlist depending on the request's parameters
    * https://developer.spotify.com/documentation/web-api/reference/reorder-or-replace-playlists-tracks
    */
-  updatePlaylistItems(playlistId: string, uris?: string[], bodyParams?: OptionalUpdatePlaylistItemsParams) {
+  updatePlaylistItems(playlistId: string, uris: string[], bodyParams?: OptionalUpdatePlaylistItemsParams) {
     return this.put<PlaylistItemsResponse>(`/playlists/${playlistId}/tracks${joinIdsArrayToString(uris)}`, bodyParams);
   }
 
