@@ -15,7 +15,11 @@ export abstract class ReadWriteBaseClient extends ReadOnlyBaseClient {
     return res.data;
   }
 
-  protected async put<T>(url: string, data?: Record<string, any>, requestArgs?: Partial<RequestArgs>): Promise<T> {
+  protected async put<T>(
+    url: string,
+    data?: Record<string, any> | string,
+    requestArgs?: Partial<RequestArgs>
+  ): Promise<T> {
     const options = {
       method: 'put',
       url,

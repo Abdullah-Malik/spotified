@@ -14,4 +14,16 @@ export function generateQueryParametersString(params: Record<string, string | nu
   return queryParams.toString() ? `?${queryParams.toString()}` : '';
 }
 
+export function getRequestBody(data: any): string | undefined {
+  if (!data) {
+    return undefined;
+  }
+
+  if (typeof data === 'string') {
+    return data;
+  }
+
+  return JSON.stringify(data);
+}
+
 export default joinIdsArrayToString;

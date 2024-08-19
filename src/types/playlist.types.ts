@@ -50,7 +50,7 @@ export interface Playlist extends SimplifiedPlaylist {
 }
 
 export interface UserPlaylist extends PaginationResponseProps {
-  items: SimplifiedPlaylist[];
+  items: Array<Omit<SimplifiedPlaylist, 'tracks'> & { tracks: { href: string; total: number } }>;
 }
 
 export interface FeaturedPlaylist {
@@ -58,23 +58,32 @@ export interface FeaturedPlaylist {
   playlists?: UserPlaylist;
 }
 
-export interface OptionalPlaylistParams {
+export type CategoryPlaylist = FeaturedPlaylist;
+
+export interface GetPlaylistOptionalParams {
   market?: string;
   fields?: string;
   additional_types?: string;
 }
 
-export interface OptionalPlaylistDetailsParams {
+export interface ChangePlaylistDetailsOptionalParams {
   name?: string;
   public?: boolean;
   collaborative?: boolean;
   description?: string;
 }
 
-export interface OptionalPlaylistItemsParams extends PaginationParams {
+export type CreatePlaylistOptionalParams = Omit<ChangePlaylistDetailsOptionalParams, 'name'>;
+
+export interface GetPlaylistItemsOptionalParams extends PaginationParams {
   market?: string;
   fields?: string;
   additional_types?: string;
+}
+
+export interface AddItemsToPlaylistOptionalParams {
+  uris?: string[];
+  position?: number;
 }
 
 export interface PlaylistItems extends PaginationResponseProps {
@@ -83,21 +92,29 @@ export interface PlaylistItems extends PaginationResponseProps {
 
 export type PlaylistItemsResponse = { snapshot_id: string };
 
-export interface OptionalUpdatePlaylistItemsParams {
-  uris: string;
+export type UpdatePlaylistItemsResponse = PlaylistItemsResponse;
+
+export type AddItemsToPlaylistResponse = PlaylistItemsResponse;
+
+export type RemovePlaylistItemsResponse = PlaylistItemsResponse;
+
+export interface UpdatePlaylistItemsOptionalParams {
+  uris: string[];
   range_start: number;
   insert_before: number;
   range_length: number;
   snapshot_id: string;
 }
 
-export interface BodyRemovePlaylistItemsParams {
-  tracks: Array<{ uris: string }>;
+export interface RemovePlaylistItemsParams {
+  tracks: Array<{ uri: string }>;
   snapshot_id?: string;
 }
 
-export type GetUsersSavedPlaylistOptionalParams = PaginationParams;
+export type GetUserSavedPlaylistsOptionalParams = PaginationParams;
 
-export interface OptionalFeaturedPlaylistParams extends PaginationParams {
+export type GetCategoryPlaylistOptionalParams = PaginationParams;
+
+export interface OptionalGetFeaturedPlaylistParams extends PaginationParams {
   locale?: string;
 }
