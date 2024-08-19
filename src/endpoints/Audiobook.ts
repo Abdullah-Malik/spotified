@@ -1,14 +1,13 @@
 import { ReadWriteBaseClient } from '../client/ReadWriteBaseClient';
 import {
-  GetTrackParams as GetMarketParams,
-  OptionalUserSavedTrackParams as OptionalAudiobookParams,
-  Audiobook as AudiobookDetails,
-  Audiobooks as AudiobooksDetails,
+  Audiobook as AudiobookDetail,
   AudiobookChapters,
   UserSavedAudiobooks,
-  GetUsersSavedAudiobooksOptionalParams,
+  GetUsersSavedAudiobooksOptionalParams as GetUserSavedAudiobooksOptionalParams,
+  GetAudiobookOptionalParams,
+  GetAudiobookChaptersOptionalParams,
 } from '../types';
-import joinIdsArrayToString from '../utils';
+import joinIdsArrayToString, { generateQueryParametersString } from '../utils';
 
 export class Audiobook extends ReadWriteBaseClient {
   /**
@@ -16,8 +15,8 @@ export class Audiobook extends ReadWriteBaseClient {
    * Audiobooks are only available within the US, UK, Canada, Ireland, New Zealand and Australia markets.
    * https://developer.spotify.com/documentation/web-api/reference/get-an-audiobook
    */
-  getAudiobook(id: string, optionalParams?: GetMarketParams) {
-    return this.get<AudiobookDetails>(`/audiobooks/${id}`, optionalParams);
+  getAudiobook(id: string, optionalParams?: GetAudiobookOptionalParams) {
+    return this.get<AudiobookDetail>(`/audiobooks/${id}`, optionalParams);
   }
 
   /**
@@ -25,8 +24,8 @@ export class Audiobook extends ReadWriteBaseClient {
    * Audiobooks are only available within the US, UK, Canada, Ireland, New Zealand and Australia markets.
    * https://developer.spotify.com/documentation/web-api/reference/get-multiple-audiobooks
    */
-  getAudiobooks(ids: string[], optionalParams?: GetMarketParams) {
-    return this.get<AudiobooksDetails>(`/audiobooks`, { ids: joinIdsArrayToString(ids), ...optionalParams });
+  getSeveralAudiobooks(ids: string[], optionalParams?: GetAudiobookOptionalParams) {
+    return this.get<AudiobookDetail[]>(`/audiobooks`, { ids: joinIdsArrayToString(ids), ...optionalParams });
   }
 
   /**
@@ -34,7 +33,7 @@ export class Audiobook extends ReadWriteBaseClient {
    * Audiobooks are only available within the US, UK, Canada, Ireland, New Zealand and Australia markets.
    * https://developer.spotify.com/documentation/web-api/reference/get-audiobook-chapters
    */
-  getAudiobookChapters(id: string, optionalParams?: OptionalAudiobookParams) {
+  getAudiobookChapters(id: string, optionalParams?: GetAudiobookChaptersOptionalParams) {
     return this.get<AudiobookChapters>(`/audiobooks/${id}/chapters`, optionalParams);
   }
 
@@ -42,7 +41,7 @@ export class Audiobook extends ReadWriteBaseClient {
    * Get a list of the audiobooks saved in the current Spotify user's 'Your Music' library.
    * https://developer.spotify.com/documentation/web-api/reference/get-users-saved-audiobooks
    */
-  getUsersSavedAudiobook(optionalParams?: GetUsersSavedAudiobooksOptionalParams) {
+  getUserSavedAudiobook(optionalParams?: GetUserSavedAudiobooksOptionalParams) {
     return this.get<UserSavedAudiobooks>(`/me/audiobooks`, optionalParams);
   }
 
@@ -51,23 +50,25 @@ export class Audiobook extends ReadWriteBaseClient {
    * https://developer.spotify.com/documentation/web-api/reference/save-audiobooks-user
    */
   saveAudiobooksforCurrentUser(ids: string[]) {
-    return this.put(`/me/audiobooks`, { ids: joinIdsArrayToString(ids) });
+    return this.put(`/me/audiobooks${generateQueryParametersString({ ids: joinIdsArrayToString(ids) })}`);
   }
 
   /**
    * Remove one or more audiobooks from the Spotify user's library.
    * https://developer.spotify.com/documentation/web-api/reference/remove-audiobooks-user
    */
-  removeUsersSavedAudiobooks(ids: string[]) {
-    return this.delete(`/me/audiobooks`, { ids: joinIdsArrayToString(ids) });
+  removeUserSavedAudiobooks(ids: string[]) {
+    return this.delete(`/me/audiobooks${generateQueryParametersString({ ids: joinIdsArrayToString(ids) })}`);
   }
 
   /**
    * Check if one or more audiobooks are already saved in the current Spotify user's library.
    * https://developer.spotify.com/documentation/web-api/reference/check-users-saved-audiobooks
    */
-  checkUsersSavedAudiobooks(ids: string[]) {
-    return this.get<Array<boolean>>(`/me/audiobooks/contains`, { ids: joinIdsArrayToString(ids) });
+  checkUserSavedAudiobooks(ids: string[]) {
+    return this.get<Array<boolean>>(
+      `/me/audiobooks/contains${generateQueryParametersString({ ids: joinIdsArrayToString(ids) })}`
+    );
   }
 }
 
