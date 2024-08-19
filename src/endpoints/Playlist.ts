@@ -2,7 +2,7 @@ import {
   FeaturedPlaylist,
   GetUserSavedPlaylistsOptionalParams,
   Image,
-  OptionalGetFeaturedPlaylistParams,
+  GetFeaturedPlaylistOptionalParams,
   ChangePlaylistDetailsOptionalParams,
   GetPlaylistItemsOptionalParams,
   GetPlaylistOptionalParams,
@@ -98,7 +98,7 @@ export class Playlist extends ReadWriteBaseClient {
    * Get a list of Spotify featured playlists (shown, for example, on a Spotify player's 'Browse' tab).
    * https://developer.spotify.com/documentation/web-api/reference/get-featured-playlists
    */
-  getFeaturedPlaylist(optionalParams?: OptionalGetFeaturedPlaylistParams) {
+  getFeaturedPlaylist(optionalParams?: GetFeaturedPlaylistOptionalParams) {
     return this.get<FeaturedPlaylist>(`/browse/featured-playlists`, optionalParams);
   }
 

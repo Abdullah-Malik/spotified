@@ -115,6 +115,6 @@ export type GetUserSavedPlaylistsOptionalParams = PaginationParams;
 
 export type GetCategoryPlaylistOptionalParams = PaginationParams;
 
-export interface OptionalGetFeaturedPlaylistParams extends PaginationParams {
+export interface GetFeaturedPlaylistOptionalParams extends PaginationParams {
   locale?: string;
 }
