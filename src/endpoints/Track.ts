@@ -27,7 +27,7 @@ export class Track extends ReadWriteBaseClient {
    * Get Spotify catalog information for multiple tracks based on their Spotify IDs
    * https://developer.spotify.com/documentation/web-api/reference/get-several-tracks
    */
-  getTracks(ids: string[], optionalParams?: GetTrackParams) {
+  getSeveralTracks(ids: string[], optionalParams?: GetTrackParams) {
     return this.get<TracksDetail>(`/tracks`, { ids: joinIdsArrayToString(ids), ...optionalParams });
   }
 
