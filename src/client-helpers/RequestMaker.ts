@@ -1,3 +1,4 @@
+import { getRequestBody } from '../utils';
 import { SpotifyApiError, NetworkError } from '../errors';
 import { BearerToken, SpotifiedResponse } from '../types';
 
@@ -35,7 +36,7 @@ export default class RequestMaker {
       const res = await fetch(url, {
         method: requestParams.method,
         headers: finalHeaders,
-        body: JSON.stringify(requestParams.data),
+        body: getRequestBody(requestParams.data),
       });
 
       if (!res.ok) {
