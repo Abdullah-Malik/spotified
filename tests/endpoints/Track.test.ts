@@ -36,7 +36,7 @@ describe('Track', () => {
     });
   });
 
-  describe('getTracks', () => {
+  describe('getSeveralTracks', () => {
     it('should call get method with correct params and return expected result', async () => {
       const mockIds = ['1234', '5678'];
       const mockParams = { market: 'US' };
@@ -46,7 +46,7 @@ describe('Track', () => {
       (joinIdsArrayToString as jest.Mock).mockReturnValue('1234,5678');
       (track['get'] as jest.Mock).mockResolvedValue(mockResponse);
 
-      const result = await track.getTracks(mockIds, mockParams);
+      const result = await track.getSeveralTracks(mockIds, mockParams);
 
       expect(joinIdsArrayToString).toHaveBeenCalledWith(mockIds);
       expect(track['get']).toHaveBeenCalledWith('/tracks', { ids: '1234,5678', market: 'US' });
