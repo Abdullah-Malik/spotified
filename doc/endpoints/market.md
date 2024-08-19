@@ -22,7 +22,7 @@ The response object contains:
 #### Example
 
 ```typescript
-const availableMarkets = await spotified.market.getAvailableMarkets();
+const availableMarkets = await client.market.getAvailableMarkets();
 console.log('Spotify is available in the following markets:');
 availableMarkets.markets.forEach(market => console.log(market));
 ```

@@ -22,7 +22,7 @@ The response object contains:
 #### Example
 
 ```typescript
-const genreSeeds = await spotified.genre.getAvailableGenreSeeds();
+const genreSeeds = await client.genre.getAvailableGenreSeeds();
 console.log('Available genre seeds:');
 genreSeeds.genres.forEach(genre => console.log(genre));
 ```

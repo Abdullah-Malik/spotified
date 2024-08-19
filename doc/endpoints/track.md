@@ -43,7 +43,7 @@ The `Track` object contains the following properties:
 #### Example
 
 ```typescript
-const track = await spotified.track.getTrack('trackId', { market: 'US' });
+const track = await client.track.getTrack('trackId', { market: 'US' });
 console.log(track.name);
 console.log(track.artists[0].name);
 ```
@@ -68,7 +68,7 @@ The `Tracks` object contains:
 #### Example
 
 ```typescript
-const tracks = await spotified.track.getTracks(['trackId1', 'trackId2'], { market: 'US' });
+const tracks = await client.track.getTracks(['trackId1', 'trackId2'], { market: 'US' });
 tracks.tracks.forEach(track => {
     console.log(`${track.name} by ${track.artists[0].name}`);
 });
@@ -103,7 +103,7 @@ The `UserSavedTracks` object extends `PaginationResponseProps` and contains:
 #### Example
 
 ```typescript
-const savedTracks = await spotified.track.getUsersSavedTracks({ limit: 50, offset: 0 });
+const savedTracks = await client.track.getUsersSavedTracks({ limit: 50, offset: 0 });
 console.log(`Total saved tracks: ${savedTracks.total}`);
 savedTracks.items.forEach(item => {
     console.log(`${item.track.name} saved on ${item.added_at}`);
@@ -125,7 +125,7 @@ This method is used to save one or more tracks to the current user's 'Your Music
 #### Example
 
 ```typescript
-await spotified.track.saveTracksforCurrentUser(['trackId1', 'trackId2']);
+await client.track.saveTracksforCurrentUser(['trackId1', 'trackId2']);
 console.log('Tracks saved successfully');
 ```
 
@@ -144,7 +144,7 @@ This method is used to remove one or more tracks from the current user's 'Your M
 #### Example
 
 ```typescript
-await spotified.track.removeUsersSavedTracks(['trackId1', 'trackId2']);
+await client.track.removeUsersSavedTracks(['trackId1', 'trackId2']);
 console.log('Tracks removed successfully');
 ```
 
