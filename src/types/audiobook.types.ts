@@ -36,6 +36,14 @@ export interface Audiobook extends SimplifiedAudiobook {
   chapters: { items: SimplifiedChapter[] } & PaginationResponseProps;
 }
 
+export interface GetAudiobookOptionalParams {
+  market?: string;
+}
+
+export interface GetAudiobookChaptersOptionalParams extends PaginationParams {
+  market?: string;
+}
+
 export interface Audiobooks {
   audiobooks: Audiobook[];
 }
