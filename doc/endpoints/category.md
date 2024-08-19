@@ -27,7 +27,7 @@ The `Category` object contains the following properties:
 #### Example
 
 ```typescript
-const category = await spotified.category.getSingleBrowseCategory('dinner', { locale: 'en_US' });
+const category = await client.category.getSingleBrowseCategory('dinner', { locale: 'en_US' });
 console.log(category.name);
 console.log(category.icons[0].url);
 ```
@@ -60,7 +60,7 @@ A promise that resolves to a `CategoryList` object, which contains:
 #### Example
 
 ```typescript
-const categoryList = await spotified.category.getSeveralBrowseCategories({ limit: 10, locale: 'en_US' });
+const categoryList = await client.category.getSeveralBrowseCategories({ limit: 10, locale: 'en_US' });
 console.log(`Total categories: ${categoryList.categories.total}`);
 categoryList.categories.items.forEach(category => {
     console.log(`${category.name} (${category.id})`);

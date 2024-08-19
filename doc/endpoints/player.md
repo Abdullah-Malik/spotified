@@ -33,7 +33,7 @@ The `PlaybackState` object contains information about the user's current playbac
 #### Example
 
 ```typescript
-const playbackState = await spotified.player.getPlaybackState({ market: 'US' });
+const playbackState = await client.player.getPlaybackState({ market: 'US' });
 console.log(`Currently playing: ${playbackState.item?.name}`);
 console.log(`Is playing: ${playbackState.is_playing}`);
 ```
@@ -55,7 +55,7 @@ This method is used to transfer playback to a new device and determine if it sho
 #### Example
 
 ```typescript
-await spotified.player.transferPlayback(['deviceId123'], { play: true });
+await client.player.transferPlayback(['deviceId123'], { play: true });
 console.log('Playback transferred successfully');
 ```
 
@@ -79,7 +79,7 @@ The `Devices` object contains an array of `Device` objects, each with the follow
 #### Example
 
 ```typescript
-const devices = await spotified.player.getAvailableDevices();
+const devices = await client.player.getAvailableDevices();
 devices.devices.forEach(device => {
     console.log(`Device: ${device.name}, Type: ${device.type}, Active: ${device.is_active}`);
 });
@@ -104,7 +104,7 @@ The `CurrentlyPlayingTrack` object is the same as the `PlaybackState` object (se
 #### Example
 
 ```typescript
-const currentTrack = await spotified.player.getCurrentlyPlayingTrack({ market: 'US' });
+const currentTrack = await client.player.getCurrentlyPlayingTrack({ market: 'US' });
 console.log(`Now playing: ${currentTrack.item?.name} by ${currentTrack.item?.artists?.[0].name}`);
 ```
 
@@ -128,7 +128,7 @@ This method is used to start a new context or resume current playback on the use
 #### Example
 
 ```typescript
-await spotified.player.startResumePlayback('deviceId123', {
+await client.player.startResumePlayback('deviceId123', {
     context_uri: 'spotify:album:1Je1IMUlBXcx1Fz0WE7oPT'
 });
 console.log('Playback started/resumed');
@@ -149,7 +149,7 @@ This method is used to pause playback on the user's account.
 #### Example
 
 ```typescript
-await spotified.player.pausePlayback();
+await client.player.pausePlayback();
 console.log('Playback paused');
 ```
 
@@ -168,7 +168,7 @@ This method is used to skip to the next track in the user's queue.
 #### Example
 
 ```typescript
-await spotified.player.skipToNext();
+await client.player.skipToNext();
 console.log('Skipped to next track');
 ```
 
@@ -187,7 +187,7 @@ This method is used to skip to the previous track in the user's queue.
 #### Example
 
 ```typescript
-await spotified.player.skipToPrevious();
+await client.player.skipToPrevious();
 console.log('Skipped to previous track');
 ```
 
@@ -208,7 +208,7 @@ This method is used to seek to the given position in the user's currently playin
 #### Example
 
 ```typescript
-await spotified.player.seekToPosition(30000);
+await client.player.seekToPosition(30000);
 console.log('Seeked to 30 seconds');
 ```
 
@@ -229,7 +229,7 @@ This method is used to set the repeat mode for the user's playback.
 #### Example
 
 ```typescript
-await spotified.player.setRepeatMode('track');
+await client.player.setRepeatMode('track');
 console.log('Repeat mode set to track');
 ```
 
@@ -250,7 +250,7 @@ This method is used to set the volume for the user's current playback device.
 #### Example
 
 ```typescript
-await spotified.player.setPlaybackVolume(50);
+await client.player.setPlaybackVolume(50);
 console.log('Volume set to 50%');
 ```
 
@@ -271,7 +271,7 @@ This method is used to toggle shuffle on or off for user's playback.
 #### Example
 
 ```typescript
-await spotified.player.togglePlaybackShuffle(true, {});
+await client.player.togglePlaybackShuffle(true, {});
 console.log('Shuffle turned on');
 ```
 
@@ -304,7 +304,7 @@ The `RecentlyPlayedTracks` object contains:
 #### Example
 
 ```typescript
-const recentTracks = await spotified.player.getRecentlyPlayedTracks({ limit: 5 });
+const recentTracks = await client.player.getRecentlyPlayedTracks({ limit: 5 });
 recentTracks.items?.forEach(item => {
     console.log(`${item.track?.name} played at ${item.played_at}`);
 });
@@ -325,7 +325,7 @@ The `UserTrackEpisodeQueue` object contains:
 #### Example
 
 ```typescript
-const queue = await spotified.player.getTheUserQueue();
+const queue = await client.player.getTheUserQueue();
 console.log(`Currently playing: ${queue.currently_playing?.name}`);
 queue.queue.forEach((item, index) => {
     console.log(`Queue item ${index + 1}: ${item.name}`);
@@ -349,6 +349,6 @@ This method is used to add an item to the end of the user's current playback que
 #### Example
 
 ```typescript
-await spotified.player.addItemToPlaybackQueue('spotify:track:4iV5W9uYEdYUVa79Axb7Rh', {});
+await client.player.addItemToPlaybackQueue('spotify:track:4iV5W9uYEdYUVa79Axb7Rh', {});
 console.log('Item added to queue');
 ```
