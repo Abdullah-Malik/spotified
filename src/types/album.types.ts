@@ -1,4 +1,12 @@
-import { Copyright, ExternalIds, ExternalUrls, Image, PaginationParams, Restrictions } from './shared.types';
+import {
+  Copyright,
+  ExternalIds,
+  ExternalUrls,
+  Image,
+  OptionalParams,
+  PaginationParams,
+  Restrictions,
+} from './shared.types';
 import { SimplifiedArtist } from './artist.types';
 import { PaginationResponseProps } from './paginator.types';
 import { SimplifiedTrack } from './track.types';
@@ -33,9 +41,13 @@ export interface Album extends SimplifiedAlbum {
   popularity: number;
 }
 
-export interface Albums {
-  albums: Album[];
+export type GetAlbumOptionalParams = OptionalParams;
+
+export interface GetAlbumTracksOptionalParams extends PaginationParams {
+  market?: string;
 }
+
+export type GetUserSavedAlbumsOptionalParams = GetAlbumTracksOptionalParams;
 
 interface SavedAlbum {
   added_at?: string;
@@ -50,4 +62,4 @@ export interface PagedAlbums extends PaginationResponseProps {
   items: SimplifiedAlbum[];
 }
 
-export type GetUsersSavedAlbumsOptionalParams = PaginationParams;
+export type GetNewReleasesOptionalParams = PaginationParams;
