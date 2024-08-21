@@ -5,9 +5,11 @@ import {
   CurrentlyPlayingTrackParams,
   Devices,
   GetPlaybackStateParams,
+  GetRecentlyPlayedTracksOptionalParams,
   PlaybackState,
   RepeatState,
   ResumePlaybackParams,
+  RecentlyPlayedTracks,
   SeekToPositionOptionalParam,
   SetPlaybackVolumeOptionalParams,
   SetRepeatModeOptionalParams,
@@ -22,8 +24,8 @@ export class Player extends ReadWriteBaseClient {
    * Get information about the user’s current playback state, including track or episode, progress, and active device
    * https://developer.spotify.com/documentation/web-api/reference/get-information-about-the-users-current-playback
    */
-  getPlaybackState(params?: GetPlaybackStateParams) {
-    return this.get<PlaybackState>('/me/player', params);
+  getPlaybackState(optionalParams?: GetPlaybackStateParams) {
+    return this.get<PlaybackState>('/me/player', optionalParams);
   }
 
   /**
@@ -46,16 +48,16 @@ export class Player extends ReadWriteBaseClient {
    * Get the object currently being played on the user's Spotify account
    * https://developer.spotify.com/documentation/web-api/reference/get-the-users-currently-playing-track
    */
-  getCurrentlyPlayingTrack(params?: CurrentlyPlayingTrackParams) {
-    return this.get<CurrentlyPlayingTrack>('/me/player/currently-playing', params);
+  getCurrentlyPlayingTrack(optionalParams?: CurrentlyPlayingTrackParams) {
+    return this.get<CurrentlyPlayingTrack>('/me/player/currently-playing', optionalParams);
   }
 
   /**
    * Start a new context or resume current playback on the user's active device
    * https://developer.spotify.com/documentation/web-api/reference/start-a-users-playback
    */
-  startResumePlayback(params?: ResumePlaybackParams) {
-    this.put(`/me/player/play${generateQueryParametersString({ device_id: params?.device_id })}`, params);
+  startResumePlayback(deviceId: string, params: ResumePlaybackParams) {
+    this.put(`/me/player/play${generateQueryParametersString({ device_id: deviceId })}`, params);
   }
 
   /**
@@ -103,7 +105,7 @@ export class Player extends ReadWriteBaseClient {
    * https://developer.spotify.com/documentation/web-api/reference/set-volume-for-users-playback
    */
   setPlaybackVolume(volume: number, optionalParams?: SetPlaybackVolumeOptionalParams) {
-    return this.put(`/me/player/repeat${generateQueryParametersString({ volume_percent: volume, ...optionalParams })}`);
+    return this.put(`/me/player/volume${generateQueryParametersString({ volume_percent: volume, ...optionalParams })}`);
   }
 
   /**
@@ -112,6 +114,14 @@ export class Player extends ReadWriteBaseClient {
    */
   togglePlaybackShuffle(state: boolean, optionalParams: TogglePlaybackShuffleOptionalParams) {
     return this.put(`/me/player/shuffle${generateQueryParametersString({ state, ...optionalParams })}`);
+  }
+
+  /**
+   * Get tracks from the current user's recently played tracks
+   * https://developer.spotify.com/documentation/web-api/reference/get-recently-played
+   */
+  getRecentlyPlayedTracks(optionalParams: GetRecentlyPlayedTracksOptionalParams) {
+    return this.get<RecentlyPlayedTracks>(`/me/player/recently-played`, optionalParams);
   }
 
   /**
@@ -127,7 +137,7 @@ export class Player extends ReadWriteBaseClient {
    * https://developer.spotify.com/documentation/web-api/reference/add-to-queue
    */
   addItemToPlaybackQueue(uri: string, optionalParams: AddItemToPlaybackQueueOptionalParams) {
-    this.post(`/me/player/queue${generateQueryParametersString({ uri: encodeURI(uri), ...optionalParams })}}`);
+    this.post(`/me/player/queue${generateQueryParametersString({ uri: encodeURIComponent(uri), ...optionalParams })}}`);
   }
 }
 

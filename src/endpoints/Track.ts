@@ -12,7 +12,7 @@ import {
   Tracks as TracksDetail,
   UserSavedTracks,
 } from '../types';
-import { joinIdsArrayToString, generateQueryParametersString } from '../utils';
+import { joinIdsArrayToString } from '../utils';
 
 export class Track extends ReadWriteBaseClient {
   /**
@@ -27,8 +27,8 @@ export class Track extends ReadWriteBaseClient {
    * Get Spotify catalog information for multiple tracks based on their Spotify IDs
    * https://developer.spotify.com/documentation/web-api/reference/get-several-tracks
    */
-  getTracks(ids: string[], optionalParams?: GetTrackParams) {
-    return this.get<TracksDetail>(`/tracks?ids=${joinIdsArrayToString(ids)}`, optionalParams);
+  getSeveralTracks(ids: string[], optionalParams?: GetTrackParams) {
+    return this.get<TracksDetail>(`/tracks`, { ids: joinIdsArrayToString(ids), ...optionalParams });
   }
 
   /**
@@ -36,7 +36,7 @@ export class Track extends ReadWriteBaseClient {
    * https://developer.spotify.com/documentation/web-api/reference/get-users-saved-tracks
    */
   getUsersSavedTracks(optionalParams?: OptionalUserSavedTrackParams) {
-    return this.get<UserSavedTracks>(`/tracks${generateQueryParametersString({ ...optionalParams })}`);
+    return this.get<UserSavedTracks>(`/tracks`, optionalParams);
   }
 
   /**
@@ -44,7 +44,7 @@ export class Track extends ReadWriteBaseClient {
    * https://developer.spotify.com/documentation/web-api/reference/save-tracks-user
    */
   saveTracksforCurrentUser(ids: string[]) {
-    return this.put(`/me/tracks?ids=${joinIdsArrayToString(ids)}`);
+    return this.put(`/me/tracks`, { ids });
   }
 
   /**
@@ -52,7 +52,7 @@ export class Track extends ReadWriteBaseClient {
    * https://developer.spotify.com/documentation/web-api/reference/remove-tracks-user
    */
   removeUsersSavedTracks(ids: string[]) {
-    return this.delete(`/me/tracks?ids=${joinIdsArrayToString(ids)}`);
+    return this.delete(`/me/tracks`, { ids });
   }
 
   /**
@@ -60,7 +60,7 @@ export class Track extends ReadWriteBaseClient {
    * https://developer.spotify.com/documentation/web-api/reference/check-users-saved-tracks
    */
   checkUsersSavedTracks(ids: string[]) {
-    return this.get<Array<boolean>>(`/me/tracks/contains?ids=${joinIdsArrayToString(ids)}`);
+    return this.get<Array<boolean>>(`/me/tracks/contains`, { ids: joinIdsArrayToString(ids) });
   }
 
   /**
@@ -76,7 +76,7 @@ export class Track extends ReadWriteBaseClient {
    * https://developer.spotify.com/documentation/web-api/reference/get-several-audio-features
    */
   getMultipleTracksAudioFeatures(ids: string[]) {
-    return this.get<AudioFeaturesArray>(`/audio-features?ids=${joinIdsArrayToString(ids)}`);
+    return this.get<AudioFeaturesArray>(`/audio-features`, { ids: joinIdsArrayToString(ids) });
   }
 
   /**
@@ -94,9 +94,7 @@ export class Track extends ReadWriteBaseClient {
    * https://developer.spotify.com/documentation/web-api/reference/get-recommendations
    */
   getRecommendations(seedParams: RecommendationSeedParams, optionalParams: RecommendationOptionalParams) {
-    return this.get<Recommendations>(
-      `/recommendations${generateQueryParametersString({ ...seedParams, ...optionalParams })}`
-    );
+    return this.get<Recommendations>(`/recommendations`, { ...seedParams, ...optionalParams });
   }
 }
 

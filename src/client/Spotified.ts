@@ -1,6 +1,6 @@
 import { ReadWriteBaseClient } from './ReadWriteBaseClient';
 import { OAuth2Credentials } from '../types';
-import { User, Artist, Track, Player, Market, Genre } from '../endpoints';
+import { User, Artist, Track, Player, Market, Genre, Category } from '../endpoints';
 import RequestMaker from '../client-helpers/RequestMaker';
 import Auth from '../auth/Auth';
 
@@ -18,6 +18,8 @@ export class Spotified extends ReadWriteBaseClient {
   protected _market?: Market;
 
   protected _genre?: Genre;
+
+  protected _category?: Category;
 
   constructor(credentials: OAuth2Credentials) {
     super(new RequestMaker());
@@ -74,6 +76,14 @@ export class Spotified extends ReadWriteBaseClient {
     }
     this._genre = new Genre(this._requestMaker);
     return this._genre;
+  }
+
+  public get category() {
+    if (this._category) {
+      return this._category;
+    }
+    this._category = new Category(this._requestMaker);
+    return this._category;
   }
 
   setBearerToken(bearerToken: string) {
