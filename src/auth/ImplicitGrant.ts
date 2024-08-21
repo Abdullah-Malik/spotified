@@ -10,7 +10,7 @@ export class ImplicitGrant {
     this.clientId = clientId;
   }
 
-  generateImplicitGrantAuthURL(redirectUri: string, options: Partial<OAuth2AuthArgs> = {}): ImplicitGrantURLData {
+  generateAuthorizationURL(redirectUri: string, options: Partial<OAuth2AuthArgs> = {}): ImplicitGrantURLData {
     const state = options.state ?? OAuth2Helper.generateRandomString(64);
     const scope = options.scope ?? '';
     const showDialog = options.show_dialog ?? false;
