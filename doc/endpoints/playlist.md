@@ -120,7 +120,11 @@ This method is used to either reorder or replace items in a playlist depending o
   - `range_length`: The number of items to be reordered.
   - `snapshot_id`: A string representing the playlist snapshot to modify.
 
-#### Returns: ``
+#### Returns: `UpdatePlaylistItemsResponse`
+
+The `UpdatePlaylistItemsResponse` interface is defined as follows:
+- `snapshot_id`: A string
+
 
 #### Example
 
@@ -147,7 +151,10 @@ This method is used to add one or more items to a user's playlist.
   - `uris`: An array of strings representing the URIs of the items to add to the playlist.
   - `position`: The position to insert the items; if omitted, the items are added to the end of the playlist.
 
-#### Returns: ``
+#### Returns: `AddItemsToPlaylistResponse`
+
+The `AddItemsToPlaylistResponse` interface is defined as follows:
+- `snapshot_id`: A string
 
 #### Example
 
@@ -171,7 +178,10 @@ This method is used to remove one or more items from a user's playlist.
   - `tracks`: An array of objects, each containing a `uri` of the track to remove.
   - `snapshot_id`: (optional) A string representing the playlist snapshot to modify.
 
-#### Returns: ``
+#### Returns: `RemovePlaylistItemsResponse`
+
+The `RemovePlaylistItemsResponse` interface is defined as follows:
+- `snapshot_id`: A string
 
 #### Example
 
