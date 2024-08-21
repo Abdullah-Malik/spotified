@@ -1,6 +1,6 @@
 import { stringify } from 'querystring';
 import { API_TOKEN_URL, AUTHORIZE_URL } from '../constants';
-import { ReadWriteBaseClient } from '../client';
+import { ReadWriteBaseClient } from '../client/ReadWriteBaseClient';
 import { OAuth2AccessTokenResponse, OAuth2AuthPCKEArgs, PCKEAuthURLData } from '../types';
 import RequestMaker from '../client-helpers/RequestMaker';
 import OAuth2Helper from '../client-helpers/OAuth2Helper';

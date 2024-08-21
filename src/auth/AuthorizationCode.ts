@@ -1,6 +1,6 @@
 import { stringify } from 'querystring';
 import OAuth2Helper from '../client-helpers/OAuth2Helper';
-import { ReadWriteBaseClient } from '../client';
+import { ReadWriteBaseClient } from '../client/ReadWriteBaseClient';
 import RequestMaker from '../client-helpers/RequestMaker';
 import {
   AuthURLData,
@@ -10,6 +10,7 @@ import {
   OAuth2Credentials,
 } from '../types';
 import { API_TOKEN_URL, AUTHORIZE_URL } from '../constants';
+import { encodeStringToBase64 } from '../utils';
 
 export class AuthorizationCode extends ReadWriteBaseClient {
   protected clientId?: string;
@@ -32,7 +33,6 @@ export class AuthorizationCode extends ReadWriteBaseClient {
       client_id: this.clientId as string,
       redirect_uri: redirectUri,
       state,
-      showDialog,
     };
 
     if (showDialog) {
@@ -66,7 +66,7 @@ export class AuthorizationCode extends ReadWriteBaseClient {
       {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
-          'Authorization': `Basic ${Buffer.from(`${this.clientId}:${this.clientSecret}`).toString('base64')}`,
+          'Authorization': `Basic ${encodeStringToBase64(`${this.clientId}:${this.clientSecret}`)}`,
         },
       }
     );
@@ -88,7 +88,7 @@ export class AuthorizationCode extends ReadWriteBaseClient {
       {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
-          'Authorization': `Basic ${Buffer.from(`${this.clientId}:${this.clientSecret}`).toString('base64')}`,
+          'Authorization': `Basic ${encodeStringToBase64(`${this.clientId}:${this.clientSecret}`)}`,
         },
       }
     );

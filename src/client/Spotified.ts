@@ -5,10 +5,6 @@ import RequestMaker from '../client-helpers/RequestMaker';
 import Auth from '../auth/Auth';
 
 export class Spotified extends ReadWriteBaseClient {
-  protected clientId?: string;
-
-  protected clientSecret?: string;
-
   protected _auth: Auth;
 
   protected _user?: User;

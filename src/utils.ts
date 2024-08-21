@@ -14,4 +14,8 @@ export function generateQueryParametersString(params: Record<string, string | nu
   return queryParams.toString() ? `?${queryParams.toString()}` : '';
 }
 
+export function encodeStringToBase64(str: string): string {
+  return typeof Buffer !== 'undefined' ? Buffer.from(str).toString('base64') : btoa(str);
+}
+
 export default joinIdsArrayToString;

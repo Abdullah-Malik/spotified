@@ -1,7 +1,8 @@
 import { ClientCredentialsFlowResponse, OAuth2Credentials } from '../types';
-import { ReadWriteBaseClient } from '../client';
+import { ReadWriteBaseClient } from '../client/ReadWriteBaseClient';
 import RequestMaker from '../client-helpers/RequestMaker';
 import { API_TOKEN_URL } from '../constants';
+import { encodeStringToBase64 } from '../utils';
 
 export class ClientCredentials extends ReadWriteBaseClient {
   protected clientId?: string;
@@ -14,7 +15,7 @@ export class ClientCredentials extends ReadWriteBaseClient {
     this.clientSecret = credentials.clientSecret;
   }
 
-  async clientCredentialsFlow() {
+  async requestAccessToken() {
     if (this.clientSecret === undefined) {
       throw new Error('Client secret is required for requesting authorization');
     }
@@ -27,7 +28,7 @@ export class ClientCredentials extends ReadWriteBaseClient {
       {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
-          'Authorization': `Basic ${Buffer.from(`${this.clientId}:${this.clientSecret}`).toString('base64')}`,
+          'Authorization': `Basic ${encodeStringToBase64(`${this.clientId}:${this.clientSecret}`)}`,
         },
       }
     );
