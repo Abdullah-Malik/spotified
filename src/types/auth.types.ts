@@ -1,6 +1,6 @@
 import { TypeOrArrayOf } from './shared.types';
 
-export type SOAuth2Scope =
+export type OAuth2Scope =
   | 'ugc-image-upload'
   | 'user-read-playback-state'
   | 'user-modify-playback-state'
@@ -21,20 +21,18 @@ export type SOAuth2Scope =
   | 'user-read-email'
   | 'user-read-private';
 
-export interface OAuth2RequestArgs {
-  scope?: TypeOrArrayOf<SOAuth2Scope> | TypeOrArrayOf<string>;
+export interface OAuth2AuthPCKEArgs {
+  scope?: TypeOrArrayOf<OAuth2Scope>;
   state?: string;
+}
+
+export interface OAuth2AuthArgs extends OAuth2AuthPCKEArgs {
+  show_dialog?: boolean;
 }
 
 export interface AuthURLData {
   url: string;
   state: string;
-}
-
-export interface ImplicitGrantRequestArgs {
-  state?: string;
-  scope?: TypeOrArrayOf<SOAuth2Scope> | TypeOrArrayOf<string>;
-  showDialog?: boolean;
 }
 
 export interface PCKEAuthURLData extends AuthURLData {
@@ -62,4 +60,10 @@ export interface OAuth2AccessTokenResponse {
   access_token: string;
   scope: string;
   refresh_token?: string;
+}
+
+export interface ClientCredentialsFlowResponse {
+  access_token: string;
+  token_type: 'bearer';
+  expires_in: number;
 }
