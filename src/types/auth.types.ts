@@ -21,9 +21,12 @@ export type OAuth2Scope =
   | 'user-read-email'
   | 'user-read-private';
 
-export interface OAuth2RequestArgs {
+export interface OAuth2AuthPCKEArgs {
   scope?: TypeOrArrayOf<OAuth2Scope>;
   state?: string;
+}
+
+export interface OAuth2AuthArgs extends OAuth2AuthPCKEArgs {
   show_dialog?: boolean;
 }
 
