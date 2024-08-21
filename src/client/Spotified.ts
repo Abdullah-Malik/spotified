@@ -10,7 +10,6 @@ import {
   OAuth2PKCEAccessTokenArgs,
   OAuth2RequestArgs,
   AuthURLData,
-  ImplicitGrantRequestArgs,
   ImplicitGrantURLData,
   ClientCredentialsFlowResponse,
 } from '../types';
@@ -24,8 +23,6 @@ export class Spotified extends ReadWriteBaseClient {
   protected clientId?: string;
 
   protected clientSecret?: string;
-
-  protected authHeaders?: Record<string, string>;
 
   protected _user?: User;
 
@@ -44,10 +41,6 @@ export class Spotified extends ReadWriteBaseClient {
     if (isOAuth2Init(token)) {
       this.clientId = token.clientId;
       this.clientSecret = token.clientSecret;
-      this.authHeaders = {
-        'Content-Type': 'application/x-www-form-urlencoded',
-        'Authorization': `Basic ${Buffer.from(`${this.clientId}:${this.clientSecret}`).toString('base64')}`,
-      };
     }
   }
 
@@ -99,15 +92,17 @@ export class Spotified extends ReadWriteBaseClient {
     return this._genre;
   }
 
-  generateAuthURL(redirectUri: string, options: Partial<OAuth2RequestArgs> = {}): AuthURLData {
-    const state = options.state ?? OAuth2Helper.generateRandomString(32);
+  generateAuthorizationCodeFlowURL(redirectUri: string, options: Partial<OAuth2RequestArgs> = {}): AuthURLData {
+    const state = options.state ?? OAuth2Helper.generateRandomString(64);
     const scope = options.scope ?? '';
+    const showDialog = options.show_dialog ?? false;
 
-    const params: Record<string, string> = {
+    const params: Record<string, string | boolean> = {
       response_type: 'code',
       client_id: this.clientId as string,
       redirect_uri: redirectUri,
       state,
+      showDialog,
     };
 
     if (scope) {
@@ -122,8 +117,8 @@ export class Spotified extends ReadWriteBaseClient {
     };
   }
 
-  generatePKCEAuthURL(redirectUri: string, options: Partial<OAuth2RequestArgs> = {}): PCKEAuthURLData {
-    const res = this.generateAuthURL(redirectUri, { ...options });
+  generatePKCEAuthorizationCodeFlowURL(redirectUri: string, options: Partial<OAuth2RequestArgs> = {}): PCKEAuthURLData {
+    const res = this.generateAuthorizationCodeFlowURL(redirectUri, { ...options });
     const { state } = res;
 
     const codeVerifier = OAuth2Helper.getCodeVerifier();
@@ -138,13 +133,10 @@ export class Spotified extends ReadWriteBaseClient {
     };
   }
 
-  generateImplicitGrantAuthURL(
-    redirectUri: string,
-    options: Partial<ImplicitGrantRequestArgs> = {}
-  ): ImplicitGrantURLData {
-    const state = options.state ?? OAuth2Helper.generateRandomString(32);
+  generateImplicitGrantAuthURL(redirectUri: string, options: Partial<OAuth2RequestArgs> = {}): ImplicitGrantURLData {
+    const state = options.state ?? OAuth2Helper.generateRandomString(64);
     const scope = options.scope ?? '';
-    const showDialog = options.showDialog ?? false;
+    const showDialog = options.show_dialog ?? false;
 
     const params: Record<string, string> = {
       response_type: 'token',
@@ -169,25 +161,30 @@ export class Spotified extends ReadWriteBaseClient {
     };
   }
 
-  async getAccessToken({ code, redirectUri }: OAuth2AccessTokenArgs) {
+  async requestAuthorizationCodeFlowAccessToken({ code, redirectUri }: OAuth2AccessTokenArgs) {
+    if (this.clientSecret === undefined) {
+      throw new Error('Client secret is required for requesting an access token');
+    }
+
     const accessTokenResult = await this.post<OAuth2AccessTokenResponse>(
       API_TOKEN_URL,
       {
         code,
         redirect_uri: redirectUri,
         grant_type: 'authorization_code',
-        client_id: this.clientId,
-        client_secret: this.clientSecret,
       },
       {
-        headers: this.authHeaders,
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Authorization': `Basic ${Buffer.from(`${this.clientId}:${this.clientSecret}`).toString('base64')}`,
+        },
       }
     );
 
     return accessTokenResult;
   }
 
-  async getPKCEAccessToken({ code, codeVerifier, redirectUri }: OAuth2PKCEAccessTokenArgs) {
+  async requestPKCEAuthorizationCodeFlowAccessToken({ code, codeVerifier, redirectUri }: OAuth2PKCEAccessTokenArgs) {
     const accessTokenResult = await this.post<OAuth2AccessTokenResponse>(
       API_TOKEN_URL,
       {
@@ -196,31 +193,41 @@ export class Spotified extends ReadWriteBaseClient {
         redirect_uri: redirectUri,
         grant_type: 'authorization_code',
         client_id: this.clientId,
-        client_secret: this.clientSecret,
       },
       {
-        headers: this.authHeaders,
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       }
     );
 
     return accessTokenResult;
   }
 
-  async generateClientCredentialsFlow() {
+  async clientCredentialsFlow() {
+    if (this.clientSecret === undefined) {
+      throw new Error('Client secret is required for requesting authorization');
+    }
+
     const accessTokenResult = await this.post<ClientCredentialsFlowResponse>(
       API_TOKEN_URL,
       {
         grant_type: 'client_credentials',
       },
       {
-        headers: this.authHeaders,
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Authorization': `Basic ${Buffer.from(`${this.clientId}:${this.clientSecret}`).toString('base64')}`,
+        },
       }
     );
 
     return accessTokenResult;
   }
 
-  async refreshOAuth2Token(refreshToken: string) {
+  async refreshAuthorizationCodeFlowAccessToken(refreshToken: string) {
+    if (this.clientSecret === undefined) {
+      throw new Error('Client secret is required for requesting an access token');
+    }
+
     const accessTokenResult = await this.post<OAuth2AccessTokenResponse>(
       API_TOKEN_URL,
       {
@@ -228,14 +235,17 @@ export class Spotified extends ReadWriteBaseClient {
         refresh_token: refreshToken,
       },
       {
-        headers: this.authHeaders,
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Authorization': `Basic ${Buffer.from(`${this.clientId}:${this.clientSecret}`).toString('base64')}`,
+        },
       }
     );
 
     return accessTokenResult;
   }
 
-  async refreshPKCEOAuth2Token(refreshToken: string) {
+  async refreshPKCEAuthorizationCodeFlowAccessToken(refreshToken: string) {
     const accessTokenResult = await this.post<OAuth2AccessTokenResponse>(
       API_TOKEN_URL,
       {
@@ -244,7 +254,9 @@ export class Spotified extends ReadWriteBaseClient {
         client_id: this.clientId,
       },
       {
-        headers: this.authHeaders,
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
       }
     );
 

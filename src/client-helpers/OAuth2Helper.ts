@@ -1,7 +1,5 @@
 import * as crypto from 'crypto';
 
-// Code in this file has been copied from https://github.com/PLhery/node-twitter-api-v2
-
 export class OAuth2Helper {
   static getCodeVerifier() {
     return this.generateRandomString(128);
