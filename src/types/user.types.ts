@@ -1,6 +1,5 @@
 import { Artists } from './artist.types';
-import { PaginationResponseProps } from './paginator.types';
-import { ExternalUrls, Followers, Image, PaginationParams } from './shared.types';
+import { ExternalUrls, Followers, Image, PaginationParams, PaginationResponseProps } from './shared.types';
 import { Tracks } from './track.types';
 
 interface ExplicitContent {

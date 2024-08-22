@@ -1,6 +1,5 @@
 import { Track } from './track.types';
-import { PaginationResponseProps } from './paginator.types';
-import { ExternalUrls, Followers, Image, PaginationParams } from './shared.types';
+import { ExternalUrls, Followers, Image, PaginationParams, PaginationResponseProps } from './shared.types';
 import { Episode } from './episode.types';
 
 interface Owner {

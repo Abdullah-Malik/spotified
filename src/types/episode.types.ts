@@ -1,5 +1,11 @@
-import { PaginationResponseProps } from './paginator.types';
-import { ExternalUrls, Image, OptionalParams, Restrictions, ResumePoint } from './shared.types';
+import {
+  ExternalUrls,
+  Image,
+  OptionalParams,
+  PaginationResponseProps,
+  Restrictions,
+  ResumePoint,
+} from './shared.types';
 import { SimplifiedShow } from './show.types';
 
 export interface SimplifiedEpisode {

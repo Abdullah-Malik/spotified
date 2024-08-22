@@ -1,6 +1,5 @@
 import { SimplifiedChapter } from './chapter.types';
-import { PaginationResponseProps } from './paginator.types';
-import { Copyright, ExternalUrls, Image, PaginationParams } from './shared.types';
+import { Copyright, ExternalUrls, Image, PaginationParams, PaginationResponseProps } from './shared.types';
 
 interface Author {
   name?: string;
