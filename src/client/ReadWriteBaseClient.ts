@@ -10,7 +10,7 @@ export abstract class ReadWriteBaseClient extends ReadOnlyBaseClient {
       ...requestArgs,
     };
 
-    const res = await this._requestMaker.send<T>(options);
+    const res = await this._requestMaker.makeRequest<T>(options);
 
     return res.data;
   }
@@ -27,7 +27,7 @@ export abstract class ReadWriteBaseClient extends ReadOnlyBaseClient {
       ...requestArgs,
     };
 
-    const res = await this._requestMaker.send<T>(options);
+    const res = await this._requestMaker.makeRequest<T>(options);
 
     return res.data;
   }
@@ -40,7 +40,7 @@ export abstract class ReadWriteBaseClient extends ReadOnlyBaseClient {
       ...requestArgs,
     };
 
-    const res = await this._requestMaker.send<T>(options);
+    const res = await this._requestMaker.makeRequest<T>(options);
 
     return res.data;
   }

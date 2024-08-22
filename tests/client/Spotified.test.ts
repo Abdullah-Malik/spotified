@@ -1,7 +1,22 @@
 import { Spotified } from '../../src/client/Spotified';
 import RequestMaker from '../../src/client-helpers/RequestMaker';
 import Auth from '../../src/auth/Auth';
-import { User, Artist, Track, Player, Market, Genre, Category } from '../../src/endpoints';
+import {
+  User,
+  Artist,
+  Track,
+  Player,
+  Market,
+  Genre,
+  Category,
+  Album,
+  Audiobook,
+  Chapter,
+  Episode,
+  Playlist,
+  Search,
+  Show,
+} from '../../src/endpoints';
 
 jest.mock('../../src/client-helpers/OAuth2Helper');
 jest.mock('../../src/client-helpers/RequestMaker');
@@ -12,6 +27,13 @@ jest.mock('../../src/endpoints/Player');
 jest.mock('../../src/endpoints/Market');
 jest.mock('../../src/endpoints/Genre');
 jest.mock('../../src/endpoints/Category');
+jest.mock('../../src/endpoints/Album');
+jest.mock('../../src/endpoints/Audiobook');
+jest.mock('../../src/endpoints/Chapter');
+jest.mock('../../src/endpoints/Episode');
+jest.mock('../../src/endpoints/Playlist');
+jest.mock('../../src/endpoints/Search');
+jest.mock('../../src/endpoints/Show');
 jest.mock('../../src/auth/Auth');
 
 describe('Spotified', () => {
@@ -145,7 +167,118 @@ describe('Spotified', () => {
       expect(Category).toHaveBeenCalledTimes(1);
     });
   });
-  
+
+  describe('auth getter', () => {
+    it('should return the Auth instance', () => {
+      expect(spotified.auth).toBeInstanceOf(Auth);
+    });
+  });
+
+  describe('album getter', () => {
+    it('should create and return an Album instance', () => {
+      const { album } = spotified;
+      expect(album).toBeInstanceOf(Album);
+      expect(Album).toHaveBeenCalledTimes(1);
+    });
+
+    it('should return the same Album instance on subsequent calls', () => {
+      const album1 = spotified.album;
+      const album2 = spotified.album;
+      expect(album1).toBe(album2);
+      expect(Album).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('audiobook getter', () => {
+    it('should create and return an Audiobook instance', () => {
+      const { audiobook } = spotified;
+      expect(audiobook).toBeInstanceOf(Audiobook);
+      expect(Audiobook).toHaveBeenCalledTimes(1);
+    });
+
+    it('should return the same Audiobook instance on subsequent calls', () => {
+      const audiobook1 = spotified.audiobook;
+      const audiobook2 = spotified.audiobook;
+      expect(audiobook1).toBe(audiobook2);
+      expect(Audiobook).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('chapter getter', () => {
+    it('should create and return a Chapter instance', () => {
+      const { chapter } = spotified;
+      expect(chapter).toBeInstanceOf(Chapter);
+      expect(Chapter).toHaveBeenCalledTimes(1);
+    });
+
+    it('should return the same Chapter instance on subsequent calls', () => {
+      const chapter1 = spotified.chapter;
+      const chapter2 = spotified.chapter;
+      expect(chapter1).toBe(chapter2);
+      expect(Chapter).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('playlist getter', () => {
+    it('should create and return a Playlist instance', () => {
+      const { playlist } = spotified;
+      expect(playlist).toBeInstanceOf(Playlist);
+      expect(Playlist).toHaveBeenCalledTimes(1);
+    });
+
+    it('should return the same Playlist instance on subsequent calls', () => {
+      const playlist1 = spotified.playlist;
+      const playlist2 = spotified.playlist;
+      expect(playlist1).toBe(playlist2);
+      expect(Playlist).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('episode getter', () => {
+    it('should create and return an Episode instance', () => {
+      const { episode } = spotified;
+      expect(episode).toBeInstanceOf(Episode);
+      expect(Episode).toHaveBeenCalledTimes(1);
+    });
+
+    it('should return the same Episode instance on subsequent calls', () => {
+      const episode1 = spotified.episode;
+      const episode2 = spotified.episode;
+      expect(episode1).toBe(episode2);
+      expect(Episode).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('show getter', () => {
+    it('should create and return a Show instance', () => {
+      const { show } = spotified;
+      expect(show).toBeInstanceOf(Show);
+      expect(Show).toHaveBeenCalledTimes(1);
+    });
+
+    it('should return the same Show instance on subsequent calls', () => {
+      const show1 = spotified.show;
+      const show2 = spotified.show;
+      expect(show1).toBe(show2);
+      expect(Show).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('search getter', () => {
+    it('should create and return a Search instance', () => {
+      const { search } = spotified;
+      expect(search).toBeInstanceOf(Search);
+      expect(Search).toHaveBeenCalledTimes(1);
+    });
+
+    it('should return the same Search instance on subsequent calls', () => {
+      const search1 = spotified.search;
+      const search2 = spotified.search;
+      expect(search1).toBe(search2);
+      expect(Search).toHaveBeenCalledTimes(1);
+    });
+  });
+
   describe('setBearerToken', () => {
     it('should set the bearer token on the RequestMaker', () => {
       const mockToken = 'mock-token';

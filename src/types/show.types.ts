@@ -1,6 +1,12 @@
 import { SimplifiedEpisode } from './episode.types';
-import { PaginationResponseProps } from './paginator.types';
-import { Copyright, ExternalUrls, Image, OptionalParams, PaginationParams } from './shared.types';
+import {
+  Copyright,
+  ExternalUrls,
+  Image,
+  OptionalParams,
+  PaginationParams,
+  PaginationResponseProps,
+} from './shared.types';
 
 export interface SimplifiedShow {
   available_markets: string[];

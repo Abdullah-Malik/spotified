@@ -1,6 +1,5 @@
 import { SimplifiedChapter } from './chapter.types';
-import { PaginationResponseProps } from './paginator.types';
-import { Copyright, ExternalUrls, Image, PaginationParams } from './shared.types';
+import { Copyright, ExternalUrls, Image, PaginationParams, PaginationResponseProps } from './shared.types';
 
 interface Author {
   name?: string;
@@ -27,7 +26,7 @@ export interface SimplifiedAudiobook {
   name: string;
   narrators: Narrator[];
   publisher: string;
-  type: string;
+  type: 'audiobook';
   uri: string;
   total_chapters: number;
 }

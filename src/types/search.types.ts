@@ -1,6 +1,5 @@
 import { Track } from './track.types';
-import { PaginationParams } from './shared.types';
-import { PaginationResponseProps } from './paginator.types';
+import { PaginationParams, PaginationResponseProps } from './shared.types';
 import { SimplifiedAlbum } from './album.types';
 import { Artist } from './artist.types';
 import { SimplifiedPlaylist } from './playlist.types';
@@ -10,7 +9,7 @@ import { SimplifiedAudiobook } from './audiobook.types';
 
 export interface SearchOptionalParams extends PaginationParams {
   market?: string;
-  includeExternal?: string;
+  include_external?: string;
 }
 
 export interface SearchResponse {

@@ -24,19 +24,19 @@ describe('ReadOnlyBaseClient', () => {
     const mockData = { id: 1, name: 'Test' };
     const mockHeaders = new Headers({ 'Content-Type': 'application/json' });
 
-    it('should call RequestMaker.send with correct parameters', async () => {
-      mockRequestMaker.send.mockResolvedValue({ data: mockData, headers: mockHeaders });
+    it('should call RequestMaker.makeRequest with correct parameters', async () => {
+      mockRequestMaker.makeRequest.mockResolvedValue({ data: mockData, headers: mockHeaders });
 
       await client['get'](mockUrl, mockParams);
 
-      expect(mockRequestMaker.send).toHaveBeenCalledWith({
+      expect(mockRequestMaker.makeRequest).toHaveBeenCalledWith({
         method: 'get',
         url: `${mockUrl}?param1=value1`,
       });
     });
 
     it('should return only data when fullResponse is not set', async () => {
-      mockRequestMaker.send.mockResolvedValue({ data: mockData, headers: mockHeaders });
+      mockRequestMaker.makeRequest.mockResolvedValue({ data: mockData, headers: mockHeaders });
 
       const result = await client['get']<typeof mockData>(mockUrl);
 
@@ -44,7 +44,7 @@ describe('ReadOnlyBaseClient', () => {
     });
 
     it('should return full response when fullResponse is set to true', async () => {
-      mockRequestMaker.send.mockResolvedValue({ data: mockData, headers: mockHeaders });
+      mockRequestMaker.makeRequest.mockResolvedValue({ data: mockData, headers: mockHeaders });
 
       const requestArgs: Partial<RequestArgs> = { fullResponse: true };
       const result = await client['get']<typeof mockData>(mockUrl, undefined, requestArgs);
@@ -53,18 +53,18 @@ describe('ReadOnlyBaseClient', () => {
     });
 
     it('should construct URL without params when no params are provided', async () => {
-      mockRequestMaker.send.mockResolvedValue({ data: mockData, headers: mockHeaders });
+      mockRequestMaker.makeRequest.mockResolvedValue({ data: mockData, headers: mockHeaders });
 
       await client['get'](mockUrl);
 
-      expect(mockRequestMaker.send).toHaveBeenCalledWith({
+      expect(mockRequestMaker.makeRequest).toHaveBeenCalledWith({
         method: 'get',
         url: '/test',
       });
     });
 
     it('should construct URL with multiple params of different types', async () => {
-      mockRequestMaker.send.mockResolvedValue({ data: mockData, headers: mockHeaders });
+      mockRequestMaker.makeRequest.mockResolvedValue({ data: mockData, headers: mockHeaders });
 
       const mockQueryParams = {
         stringParam: 'value1',
@@ -74,14 +74,14 @@ describe('ReadOnlyBaseClient', () => {
       };
       await client['get'](mockUrl, mockQueryParams);
 
-      expect(mockRequestMaker.send).toHaveBeenCalledWith({
+      expect(mockRequestMaker.makeRequest).toHaveBeenCalledWith({
         method: 'get',
         url: '/test?stringParam=value1&numberParam=123&booleanParam=true&arrayParam=a%2Cb',
       });
     });
 
-    it('should pass additional request arguments to RequestMaker.send', async () => {
-      mockRequestMaker.send.mockResolvedValue({ data: mockData, headers: mockHeaders });
+    it('should pass additional request arguments to RequestMaker.makeRequest', async () => {
+      mockRequestMaker.makeRequest.mockResolvedValue({ data: mockData, headers: mockHeaders });
 
       const additionalArgs: Partial<RequestArgs> = {
         headers: { 'Custom-Header': 'Value' },
@@ -89,23 +89,23 @@ describe('ReadOnlyBaseClient', () => {
       };
       await client['get'](mockUrl, mockParams, additionalArgs);
 
-      expect(mockRequestMaker.send).toHaveBeenCalledWith({
+      expect(mockRequestMaker.makeRequest).toHaveBeenCalledWith({
         method: 'get',
         url: `${mockUrl}?param1=value1`,
         headers: { 'Custom-Header': 'Value' },
       });
     });
 
-    it('should handle errors thrown by RequestMaker.send', async () => {
+    it('should handle errors thrown by RequestMaker.makeRequest', async () => {
       const mockError = new Error('Request failed');
-      mockRequestMaker.send.mockRejectedValue(mockError);
+      mockRequestMaker.makeRequest.mockRejectedValue(mockError);
 
       await expect(client['get'](mockUrl)).rejects.toThrow('Request failed');
     });
 
     it('should return DataResponse when fullResponse is false', async () => {
       const mockDataResponse: DataResponse<typeof mockData> = { data: mockData };
-      mockRequestMaker.send.mockResolvedValue({ data: mockData, headers: mockHeaders });
+      mockRequestMaker.makeRequest.mockResolvedValue({ data: mockData, headers: mockHeaders });
 
       const result = await client['get']<typeof mockData>(mockUrl);
 
@@ -114,7 +114,7 @@ describe('ReadOnlyBaseClient', () => {
 
     it('should return SpotifiedResponse when fullResponse is true', async () => {
       const mockSpotifiedResponse: SpotifiedResponse<typeof mockData> = { data: mockData, headers: mockHeaders };
-      mockRequestMaker.send.mockResolvedValue(mockSpotifiedResponse);
+      mockRequestMaker.makeRequest.mockResolvedValue(mockSpotifiedResponse);
 
       const requestArgs: Partial<RequestArgs> = { fullResponse: true };
       const result = await client['get']<typeof mockData>(mockUrl, undefined, requestArgs);

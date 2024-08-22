@@ -5,10 +5,10 @@ import {
   Image,
   OptionalParams,
   PaginationParams,
+  PaginationResponseProps,
   Restrictions,
 } from './shared.types';
 import { SimplifiedArtist } from './artist.types';
-import { PaginationResponseProps } from './paginator.types';
 import { SimplifiedTrack } from './track.types';
 
 export interface SimplifiedAlbum {

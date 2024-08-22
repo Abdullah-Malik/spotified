@@ -1,5 +1,4 @@
-import { PaginationResponseProps } from './paginator.types';
-import { Image, PaginationParams } from './shared.types';
+import { Image, PaginationParams, PaginationResponseProps } from './shared.types';
 
 export interface GetSingleBrowseCategoryOptionalParams {
   locale: string;

@@ -30,7 +30,7 @@ export abstract class ReadOnlyBaseClient {
       ...rest,
     };
 
-    const res = await this._requestMaker.send<T>(options);
+    const res = await this._requestMaker.makeRequest<T>(options);
 
     return fullResponse ? { data: res.data, headers: res.headers } : res.data;
   }
