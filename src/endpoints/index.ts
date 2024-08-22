@@ -11,3 +11,4 @@ export * from './Search';
 export * from './Show';
 export * from './Album';
 export * from './Audiobook';
+export * from './Playlist';
