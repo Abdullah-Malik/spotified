@@ -15,7 +15,7 @@ export default class RequestMaker {
     this.bearerToken = bearerToken;
   }
 
-  async send<T = any>(requestParams: any): Promise<SpotifiedResponse<T>> {
+  async makeRequest<T = any>(requestParams: any): Promise<SpotifiedResponse<T>> {
     const defaultHeaders: Record<string, string | undefined> = {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${this.bearerToken}`,

@@ -29,7 +29,7 @@ describe('RequestMaker', () => {
       body: { message: 'success' },
     });
 
-    const response = await requestMaker.send({
+    const response = await requestMaker.makeRequest({
       url: '/test',
       method: 'GET',
     });
@@ -51,7 +51,7 @@ describe('RequestMaker', () => {
       body: { message: 'success' },
     });
 
-    const response = await requestMaker.send({
+    const response = await requestMaker.makeRequest({
       url: '/test',
       method: 'GET',
       headers: {
@@ -76,7 +76,7 @@ describe('RequestMaker', () => {
       body: { message: 'success' },
     });
 
-    const response = await requestMaker.send({
+    const response = await requestMaker.makeRequest({
       url: 'https://custom-url.com/api/endpoint',
       method: 'GET',
     });
@@ -95,7 +95,7 @@ describe('RequestMaker', () => {
     });
 
     await expect(
-      requestMaker.send({
+      requestMaker.makeRequest({
         url: '/test',
         method: 'GET',
       })
@@ -110,7 +110,7 @@ describe('RequestMaker', () => {
     });
 
     await expect(
-      requestMaker.send({
+      requestMaker.makeRequest({
         url: '/test',
         method: 'GET',
       })
