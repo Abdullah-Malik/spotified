@@ -1,4 +1,9 @@
-import { joinIdsArrayToString, generateQueryParametersString, encodeStringToBase64 } from '../src/utils';
+import {
+  joinIdsArrayToString,
+  generateQueryParametersString,
+  encodeStringToBase64,
+  getRequestBody,
+} from '../src/utils';
 
 describe('utils', () => {
   describe('joinIdsArrayToString', () => {
@@ -111,6 +116,38 @@ describe('utils', () => {
       const result = encodeStringToBase64(input);
 
       expect(result).toBe(expected);
+    });
+  });
+
+  describe('getRequestBody', () => {
+    it('should return undefined when data is null', () => {
+      expect(getRequestBody(null)).toBeUndefined();
+    });
+
+    it('should return undefined when data is undefined', () => {
+      expect(getRequestBody(undefined)).toBeUndefined();
+    });
+
+    it('should return the input string when data is a string', () => {
+      const inputString = 'test string';
+      expect(getRequestBody(inputString)).toBe(inputString);
+    });
+
+    it('should return JSON string when data is an object', () => {
+      const inputObject = { key: 'value', number: 42 };
+      expect(getRequestBody(inputObject)).toBe(JSON.stringify(inputObject));
+    });
+
+    it('should return JSON string for complex nested objects', () => {
+      const complexObject = {
+        name: 'Test',
+        numbers: [1, 2, 3],
+        nested: {
+          a: 'a',
+          b: 'b',
+        },
+      };
+      expect(getRequestBody(complexObject)).toBe(JSON.stringify(complexObject));
     });
   });
 });
