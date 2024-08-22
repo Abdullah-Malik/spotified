@@ -41,7 +41,7 @@ export interface UsersTopItems extends PaginationResponseProps {
 
 export interface FollowedArtistOptionalParams {
   after?: string;
-  limit?: string;
+  limit?: number;
 }
 
 interface Cursors {

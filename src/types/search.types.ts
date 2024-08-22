@@ -9,7 +9,7 @@ import { SimplifiedAudiobook } from './audiobook.types';
 
 export interface SearchOptionalParams extends PaginationParams {
   market?: string;
-  includeExternal?: string;
+  include_external?: string;
 }
 
 export interface SearchResponse {

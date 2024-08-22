@@ -2,6 +2,7 @@ import {
   ExternalUrls,
   Image,
   OptionalParams,
+  PaginationParams,
   PaginationResponseProps,
   Restrictions,
   ResumePoint,
@@ -49,6 +50,6 @@ export interface UserSavedEpisodes extends PaginationResponseProps {
 
 export type GetEpisodeParams = OptionalParams;
 
-export interface GetSavedEpisodeParams extends PaginationResponseProps {
+export interface GetSavedEpisodeParams extends PaginationParams {
   market?: string;
 }

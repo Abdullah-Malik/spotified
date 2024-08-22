@@ -26,7 +26,7 @@ export interface SimplifiedAudiobook {
   name: string;
   narrators: Narrator[];
   publisher: string;
-  type: string;
+  type: 'audiobook';
   uri: string;
   total_chapters: number;
 }
