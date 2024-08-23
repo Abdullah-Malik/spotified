@@ -1,4 +1,3 @@
-import { stringify } from 'querystring';
 import OAuth2Helper from '../client-helpers/OAuth2Helper.js';
 import { ImplicitGrantURLData, OAuth2AuthArgs } from '../types/index.js';
 import { AUTHORIZE_URL } from '../constants.js';
@@ -15,22 +14,22 @@ export class ImplicitGrant {
     const scope = options.scope ?? '';
     const showDialog = options.show_dialog ?? false;
 
-    const params: Record<string, string> = {
+    const params = new URLSearchParams({
       response_type: 'token',
       client_id: this.clientId as string,
       redirect_uri: redirectUri,
       state,
-    };
+    });
 
     if (scope) {
-      params.scope = Array.isArray(scope) ? scope.join(' ') : scope;
+      params.append('scope', Array.isArray(scope) ? scope.join(' ') : scope);
     }
 
     if (showDialog) {
-      params.show_dialog = showDialog.toString();
+      params.append('show_dialog', showDialog.toString());
     }
 
-    const url = `${AUTHORIZE_URL}?${stringify(params)}`;
+    const url = `${AUTHORIZE_URL}?${params.toString()}`;
 
     return {
       url,

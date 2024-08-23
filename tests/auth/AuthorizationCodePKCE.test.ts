@@ -1,11 +1,9 @@
-import { stringify } from 'querystring';
 import { AuthorizationCodePKCE } from '../../src/auth/AuthorizationCodePKCE';
 import OAuth2Helper from '../../src/client-helpers/OAuth2Helper';
 import { API_TOKEN_URL, AUTHORIZE_URL } from '../../src/constants';
 
 jest.mock('../../src/client/ReadWriteBaseClient');
 jest.mock('../../src/client-helpers/OAuth2Helper');
-jest.mock('querystring');
 
 describe('AuthorizationCodePKCE', () => {
   let authCodePKCE: AuthorizationCodePKCE;
@@ -26,23 +24,12 @@ describe('AuthorizationCodePKCE', () => {
       (OAuth2Helper.generateRandomString as jest.Mock).mockReturnValue(mockState);
       (OAuth2Helper.getCodeVerifier as jest.Mock).mockReturnValue(mockCodeVerifier);
       (OAuth2Helper.getCodeChallengeFromVerifier as jest.Mock).mockResolvedValue(mockCodeChallenge);
-      (stringify as jest.Mock).mockReturnValue(
-        'response_type=code&client_id=test-client-id&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fcallback&state=mock-state&code_challenge=mock-code-challenge&code_challenge_method=S256'
-      );
 
       const result = await authCodePKCE.generateAuthorizationURL('http://localhost:3000/callback');
 
       expect(OAuth2Helper.generateRandomString).toHaveBeenCalledWith(64);
       expect(OAuth2Helper.getCodeVerifier).toHaveBeenCalled();
       expect(OAuth2Helper.getCodeChallengeFromVerifier).toHaveBeenCalledWith(mockCodeVerifier);
-      expect(stringify).toHaveBeenCalledWith({
-        response_type: 'code',
-        client_id: 'test-client-id',
-        redirect_uri: 'http://localhost:3000/callback',
-        state: mockState,
-        code_challenge: mockCodeChallenge,
-        code_challenge_method: 'S256',
-      });
       expect(result.url).toBe(
         `${AUTHORIZE_URL}?response_type=code&client_id=test-client-id&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fcallback&state=mock-state&code_challenge=mock-code-challenge&code_challenge_method=S256`
       );
@@ -57,20 +44,13 @@ describe('AuthorizationCodePKCE', () => {
       const mockCodeChallenge = 'mock-code-challenge';
       (OAuth2Helper.getCodeVerifier as jest.Mock).mockReturnValue(mockCodeVerifier);
       (OAuth2Helper.getCodeChallengeFromVerifier as jest.Mock).mockResolvedValue(mockCodeChallenge);
-      (stringify as jest.Mock).mockReturnValue(
-        `response_type=code&client_id=test-client-id&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fcallback&state=${providedState}&code_challenge=mock-code-challenge&code_challenge_method=S256`
-      );
 
       const result = await authCodePKCE.generateAuthorizationURL('http://localhost:3000/callback', {
         state: providedState,
       });
 
       expect(OAuth2Helper.generateRandomString).not.toHaveBeenCalled();
-      expect(stringify).toHaveBeenCalledWith(
-        expect.objectContaining({
-          state: providedState,
-        })
-      );
+      expect(result.url).toContain(`state=${providedState}`);
       expect(result.state).toBe(providedState);
     });
 
@@ -81,20 +61,12 @@ describe('AuthorizationCodePKCE', () => {
       (OAuth2Helper.generateRandomString as jest.Mock).mockReturnValue(mockState);
       (OAuth2Helper.getCodeVerifier as jest.Mock).mockReturnValue(mockCodeVerifier);
       (OAuth2Helper.getCodeChallengeFromVerifier as jest.Mock).mockResolvedValue(mockCodeChallenge);
-      (stringify as jest.Mock).mockReturnValue(
-        'response_type=code&client_id=test-client-id&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fcallback&state=mock-state&code_challenge=mock-code-challenge&code_challenge_method=S256&scope=user-read-private%20user-read-email'
-      );
 
       const result = await authCodePKCE.generateAuthorizationURL('http://localhost:3000/callback', {
         scope: ['user-read-private', 'user-read-email'],
       });
 
-      expect(stringify).toHaveBeenCalledWith(
-        expect.objectContaining({
-          scope: 'user-read-private user-read-email',
-        })
-      );
-      expect(result.url).toContain('scope=user-read-private%20user-read-email');
+      expect(result.url).toContain('scope=user-read-private+user-read-email');
     });
 
     it('should include scope when provided as a string', async () => {
@@ -104,19 +76,11 @@ describe('AuthorizationCodePKCE', () => {
       (OAuth2Helper.generateRandomString as jest.Mock).mockReturnValue(mockState);
       (OAuth2Helper.getCodeVerifier as jest.Mock).mockReturnValue(mockCodeVerifier);
       (OAuth2Helper.getCodeChallengeFromVerifier as jest.Mock).mockResolvedValue(mockCodeChallenge);
-      (stringify as jest.Mock).mockReturnValue(
-        'response_type=code&client_id=test-client-id&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fcallback&state=mock-state&code_challenge=mock-code-challenge&code_challenge_method=S256&scope=user-read-private'
-      );
 
       const result = await authCodePKCE.generateAuthorizationURL('http://localhost:3000/callback', {
         scope: 'user-read-private',
       });
 
-      expect(stringify).toHaveBeenCalledWith(
-        expect.objectContaining({
-          scope: 'user-read-private',
-        })
-      );
       expect(result.url).toContain('scope=user-read-private');
     });
   });

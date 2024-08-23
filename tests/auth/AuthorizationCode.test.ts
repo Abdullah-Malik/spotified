@@ -24,18 +24,9 @@ describe('AuthorizationCode', () => {
     it('should generate a valid authorization URL with default parameters', () => {
       const mockState = 'mock-state';
       (OAuth2Helper.generateRandomString as jest.Mock).mockReturnValue(mockState);
-      (stringify as jest.Mock).mockReturnValue(
-        'response_type=code&client_id=test-client-id&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fcallback&state=mock-state'
-      );
 
       const result = authCode.generateAuthorizationURL('http://localhost:3000/callback');
 
-      expect(stringify).toHaveBeenCalledWith({
-        response_type: 'code',
-        client_id: 'test-client-id',
-        redirect_uri: 'http://localhost:3000/callback',
-        state: mockState,
-      });
       expect(result.url).toBe(
         `${AUTHORIZE_URL}?response_type=code&client_id=test-client-id&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fcallback&state=mock-state`
       );
@@ -44,77 +35,44 @@ describe('AuthorizationCode', () => {
 
     it('should use provided state if available', () => {
       const providedState = 'provided-state';
-      (stringify as jest.Mock).mockReturnValue(
-        `response_type=code&client_id=test-client-id&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fcallback&state=${providedState}`
-      );
 
       const result = authCode.generateAuthorizationURL('http://localhost:3000/callback', { state: providedState });
 
       expect(OAuth2Helper.generateRandomString).not.toHaveBeenCalled();
-      expect(stringify).toHaveBeenCalledWith(
-        expect.objectContaining({
-          state: providedState,
-        })
-      );
+      expect(result.url).toContain(`state=${providedState}`);
       expect(result.state).toBe(providedState);
     });
 
     it('should include show_dialog when provided', () => {
       const mockState = 'mock-state';
       (OAuth2Helper.generateRandomString as jest.Mock).mockReturnValue(mockState);
-      (stringify as jest.Mock).mockReturnValue(
-        'response_type=code&client_id=test-client-id&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fcallback&state=mock-state&show_dialog=true'
-      );
 
       const result = authCode.generateAuthorizationURL('http://localhost:3000/callback', {
         show_dialog: true,
       });
 
-      expect(stringify).toHaveBeenCalledWith({
-        response_type: 'code',
-        client_id: 'test-client-id',
-        redirect_uri: 'http://localhost:3000/callback',
-        state: mockState,
-        show_dialog: 'true',
-      });
       expect(result.url).toContain('show_dialog=true');
     });
 
     it('should include scope when provided as an array', () => {
       const mockState = 'mock-state';
       (OAuth2Helper.generateRandomString as jest.Mock).mockReturnValue(mockState);
-      (stringify as jest.Mock).mockReturnValue(
-        'response_type=code&client_id=test-client-id&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fcallback&state=mock-state&scope=user-read-private%20user-read-email'
-      );
 
       const result = authCode.generateAuthorizationURL('http://localhost:3000/callback', {
         scope: ['user-read-private', 'user-read-email'],
       });
 
-      expect(stringify).toHaveBeenCalledWith(
-        expect.objectContaining({
-          scope: 'user-read-private user-read-email',
-        })
-      );
-      expect(result.url).toContain('scope=user-read-private%20user-read-email');
+      expect(result.url).toContain('scope=user-read-private+user-read-email');
     });
 
     it('should include scope when provided as a string', () => {
       const mockState = 'mock-state';
       (OAuth2Helper.generateRandomString as jest.Mock).mockReturnValue(mockState);
-      (stringify as jest.Mock).mockReturnValue(
-        'response_type=code&client_id=test-client-id&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fcallback&state=mock-state&scope=user-read-private'
-      );
 
       const result = authCode.generateAuthorizationURL('http://localhost:3000/callback', {
         scope: 'user-read-private',
       });
 
-      expect(stringify).toHaveBeenCalledWith(
-        expect.objectContaining({
-          scope: 'user-read-private',
-        })
-      );
       expect(result.url).toContain('scope=user-read-private');
     });
   });
