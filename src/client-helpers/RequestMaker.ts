@@ -30,13 +30,21 @@ export default class RequestMaker {
 
     const finalHeaders = { ...defaultHeaders, ...requestParams.headers };
 
+    let body: string | URLSearchParams | undefined;
+
+    if (finalHeaders['Content-Type'] === 'application/x-www-form-urlencoded') {
+      body = new URLSearchParams(requestParams.data).toString();
+    } else {
+      body = requestParams.data ? JSON.stringify(requestParams.data) : undefined;
+    }
+
     try {
       const url = requestParams.url.startsWith('http') ? requestParams.url : `${SPOTIFY_API_URL}${requestParams.url}`;
 
       const res = await fetch(url, {
         method: requestParams.method,
         headers: finalHeaders,
-        body: getRequestBody(requestParams.data),
+        body,
       });
 
       if (!res.ok) {

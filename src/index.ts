@@ -1,6 +1,6 @@
 import { Spotified } from './client';
 
-export { Spotified } from './client';
+export { Spotified };
 export * from './types';
 export * from './errors';
 
