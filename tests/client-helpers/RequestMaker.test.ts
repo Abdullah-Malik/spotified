@@ -86,6 +86,89 @@ describe('RequestMaker', () => {
     expect(fetchMock.lastCall()?.[0]).toBe('https://custom-url.com/api/endpoint');
   });
 
+  it('should send application/x-www-form-urlencoded data correctly', async () => {
+    const requestMaker = new RequestMaker({ bearerToken: 'test_token' });
+
+    fetchMock.mock(`${SPOTIFY_API_URL}/test`, {
+      status: 200,
+      body: { message: 'success' },
+    });
+
+    await requestMaker.makeRequest({
+      url: '/test',
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      data: { key1: 'value1', key2: 'value2' },
+    });
+
+    const lastCall = fetchMock.lastCall();
+    expect(lastCall?.[1]?.body).toBe('key1=value1&key2=value2');
+    expect(lastCall?.[1]?.headers).toMatchObject({
+      'Content-Type': 'application/x-www-form-urlencoded',
+    });
+  });
+
+  it('should send application/json data correctly', async () => {
+    const requestMaker = new RequestMaker({ bearerToken: 'test_token' });
+
+    fetchMock.mock(`${SPOTIFY_API_URL}/test`, {
+      status: 200,
+      body: { message: 'success' },
+    });
+
+    await requestMaker.makeRequest({
+      url: '/test',
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      data: { key1: 'value1', key2: 'value2' },
+    });
+
+    const lastCall = fetchMock.lastCall();
+    expect(JSON.parse(lastCall?.[1]?.body as string)).toEqual({ key1: 'value1', key2: 'value2' });
+    expect(lastCall?.[1]?.headers).toMatchObject({
+      'Content-Type': 'application/json',
+    });
+  });
+
+  it('should use JSON.stringify by default if no Content-Type is specified', async () => {
+    const requestMaker = new RequestMaker({ bearerToken: 'test_token' });
+
+    fetchMock.mock(`${SPOTIFY_API_URL}/test`, {
+      status: 200,
+      body: { message: 'success' },
+    });
+
+    await requestMaker.makeRequest({
+      url: '/test',
+      method: 'POST',
+      data: { key1: 'value1', key2: 'value2' },
+    });
+
+    const lastCall = fetchMock.lastCall();
+    expect(JSON.parse(lastCall?.[1]?.body as string)).toEqual({ key1: 'value1', key2: 'value2' });
+    expect(lastCall?.[1]?.headers).toMatchObject({
+      'Content-Type': 'application/json',
+    });
+  });
+
+  it('should handle empty data', async () => {
+    const requestMaker = new RequestMaker({ bearerToken: 'test_token' });
+
+    fetchMock.mock(`${SPOTIFY_API_URL}/test`, {
+      status: 200,
+      body: { message: 'success' },
+    });
+
+    await requestMaker.makeRequest({
+      url: '/test',
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+    });
+
+    const lastCall = fetchMock.lastCall();
+    expect(lastCall?.[1]?.body).toBeUndefined();
+  });
+
   it('should throw SpotifyApiError on non-200 response', async () => {
     const requestMaker = new RequestMaker({ bearerToken: 'test_token' });
 
