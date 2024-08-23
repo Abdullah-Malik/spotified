@@ -13,11 +13,14 @@ export class AuthorizationCodePKCE extends ReadWriteBaseClient {
     this.clientId = clientId;
   }
 
-  generateAuthorizationURL(redirectUri: string, options: Partial<OAuth2AuthPCKEArgs> = {}): PCKEAuthURLData {
+  async generateAuthorizationURL(
+    redirectUri: string,
+    options: Partial<OAuth2AuthPCKEArgs> = {}
+  ): Promise<PCKEAuthURLData> {
     const state = options.state ?? OAuth2Helper.generateRandomString(64);
     const scope = options.scope ?? '';
     const codeVerifier = OAuth2Helper.getCodeVerifier();
-    const codeChallenge = OAuth2Helper.getCodeChallengeFromVerifier(codeVerifier);
+    const codeChallenge = await OAuth2Helper.getCodeChallengeFromVerifier(codeVerifier);
 
     const params: Record<string, string | boolean> = {
       response_type: 'code',

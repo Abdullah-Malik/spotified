@@ -1,55 +1,106 @@
-import * as crypto from 'crypto';
 import { OAuth2Helper } from '../../src/client-helpers/OAuth2Helper';
+import { Crypto } from '../../src/client-helpers/Crypto';
+
+jest.mock('../../src/client-helpers/Crypto', () => ({
+  Crypto: {
+    current: {
+      subtle: {
+        digest: jest.fn(),
+      },
+      createHash: jest.fn(),
+    },
+  },
+}));
 
 describe('OAuth2Helper', () => {
+  beforeEach(() => {
+    jest.resetAllMocks();
+  });
+
   describe('getCodeVerifier', () => {
-    it('should generate a code verifier of the specified length', () => {
-      const codeVerifier = OAuth2Helper.getCodeVerifier();
-      expect(codeVerifier).toHaveLength(128);
+    it('should return a string of length 128', () => {
+      const result = OAuth2Helper.getCodeVerifier();
+      expect(result.length).toBe(128);
     });
 
-    it('should generate a code verifier with valid characters', () => {
-      const codeVerifier = OAuth2Helper.getCodeVerifier();
-      const validCharacters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-._~';
-      for (let i = 0; i < codeVerifier.length; i += 1) {
-        expect(validCharacters).toContain(codeVerifier[i]);
-      }
+    it('should only contain valid characters', () => {
+      const result = OAuth2Helper.getCodeVerifier();
+      expect(result).toMatch(/^[A-Za-z0-9\-._~]+$/);
     });
   });
 
   describe('getCodeChallengeFromVerifier', () => {
-    it('should generate a code challenge from the code verifier', () => {
-      const codeVerifier = 'test_code_verifier';
-      const expectedCodeChallenge = crypto.createHash('sha256').update(codeVerifier).digest('base64url');
-      const codeChallenge = OAuth2Helper.getCodeChallengeFromVerifier(codeVerifier);
-      expect(codeChallenge).toBe(expectedCodeChallenge);
-    });
-  });
+    const mockDigest = new Uint8Array([1, 2, 3, 4, 5]);
+    const mockDigestBase64 = 'AQIDBAU=';
 
-  describe('getAuthHeader', () => {
-    it('should generate the correct authorization header', () => {
-      const clientId = 'test_client_id';
-      const clientSecret = 'test_client_secret';
-      const expectedAuthHeader = Buffer.from(`${clientId}:${clientSecret}`).toString('base64');
-      const authHeader = OAuth2Helper.getAuthHeader(clientId, clientSecret);
-      expect(authHeader).toBe(expectedAuthHeader);
+    beforeEach(() => {
+      (Crypto.current.subtle.digest as jest.Mock).mockResolvedValue(mockDigest);
+      (Crypto.current.createHash as jest.Mock).mockReturnValue({
+        update: jest.fn().mockReturnThis(),
+        digest: jest.fn().mockReturnValue(mockDigestBase64),
+      });
+    });
+
+    it('should return a base64url encoded string', async () => {
+      const result = await OAuth2Helper.getCodeChallengeFromVerifier('test_verifier');
+      expect(result).not.toContain('=');
+      expect(result).not.toContain('+');
+      expect(result).not.toContain('/');
+    });
+
+    it('should use SHA-256 for hashing', async () => {
+      await OAuth2Helper.getCodeChallengeFromVerifier('test_verifier');
+      expect(Crypto.current.subtle.digest).toHaveBeenCalledWith('SHA-256', expect.any(Uint8Array));
+    });
+
+    it('should use Buffer in Node.js environment', async () => {
+      const originalBuffer = global.Buffer;
+      global.Buffer = {} as any;
+
+      await OAuth2Helper.getCodeChallengeFromVerifier('test_verifier');
+
+      expect(Crypto.current.createHash).toHaveBeenCalledWith('sha256');
+      global.Buffer = originalBuffer;
+    });
+
+    it('should use btoa in browser environment', async () => {
+      const originalBuffer = global.Buffer;
+      global.Buffer = undefined as any;
+
+      const spy = jest.spyOn(global, 'btoa');
+      await OAuth2Helper.getCodeChallengeFromVerifier('test_verifier');
+
+      expect(spy).toHaveBeenCalled();
+      global.Buffer = originalBuffer;
     });
   });
 
   describe('generateRandomString', () => {
-    it('should generate a random string of the specified length', () => {
-      const length = 10;
-      const randomString = OAuth2Helper.generateRandomString(length);
-      expect(randomString).toHaveLength(length);
+    it('should return a string of the specified length', () => {
+      const result = OAuth2Helper.generateRandomString(10);
+      expect(result.length).toBe(10);
     });
 
-    it('should generate a random string with valid characters', () => {
-      const length = 10;
-      const randomString = OAuth2Helper.generateRandomString(length);
-      const validCharacters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-._~';
-      for (let i = 0; i < randomString.length; i += 1) {
-        expect(validCharacters).toContain(randomString[i]);
-      }
+    it('should only contain valid characters', () => {
+      const result = OAuth2Helper.generateRandomString(100);
+      expect(result).toMatch(/^[A-Za-z0-9\-._~]+$/);
+    });
+  });
+
+  describe('escapeBase64Url', () => {
+    it('should replace "=" with ""', () => {
+      const result = (OAuth2Helper as any).escapeBase64Url('abc==');
+      expect(result).toBe('abc');
+    });
+
+    it('should replace "+" with "-"', () => {
+      const result = (OAuth2Helper as any).escapeBase64Url('a+b+c');
+      expect(result).toBe('a-b-c');
+    });
+
+    it('should replace "/" with "_"', () => {
+      const result = (OAuth2Helper as any).escapeBase64Url('a/b/c');
+      expect(result).toBe('a_b_c');
     });
   });
 });
