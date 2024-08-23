@@ -1,14 +1,21 @@
 {
   "name": "spotified",
-  "version": "1.0.3",
-  "description": "Strongly typed Spotify Web API client for Node.js",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "version": "1.0.4",
+  "description": "A strongly typed Spotify Web API sdk for Browser and Node.js",
+  "main": "dist/cjs/index.js",
+  "module": "dist/mjs/index.js",
+  "types": "dist/mjs/index.d.ts",
   "scripts": {
-    "build": "tsc",
+    "build": "npm run build:cjs && npm run build:mjs",
+    "build:mjs": "tsc --project tsconfig.mjs.json && cp package-configs/package.mjs.json dist/mjs/package.json",
+    "build:cjs": "tsc --project tsconfig.cjs.json && cp package-configs/package.cjs.json dist/cjs/package.json",
     "start": "npm run build && node ./dist/index.js",
     "test": "jest",
     "prepare": "husky install"
+  },
+  "exports": {
+    "import": "./dist/mjs/index.js",
+    "require": "./dist/cjs/index.js"
   },
   "lint-staged": {
     "*.ts": [
@@ -22,9 +29,14 @@
   },
   "keywords": [
     "spotify",
-    "api",
-    "client"
+    "spotify api",
+    "client",
+    "sdk",
+    "web api"
   ],
+  "publishConfig": {
+    "access": "public"
+  },
   "author": "Abdullah Malik",
   "license": "ISC",
   "bugs": {
