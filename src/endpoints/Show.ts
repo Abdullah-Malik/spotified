@@ -1,5 +1,5 @@
-import joinIdsArrayToString, { generateQueryParametersString } from '../utils';
-import { ReadWriteBaseClient } from '../client/ReadWriteBaseClient';
+import joinIdsArrayToString, { generateQueryParametersString } from '../utils.js';
+import { ReadWriteBaseClient } from '../client/ReadWriteBaseClient.js';
 import {
   GetShowParams,
   Show as ShowDetail,
@@ -9,7 +9,7 @@ import {
   GetShowEpisodesOptionalParams,
   GetUsersSavedShowsOptionalParams,
   RemoveUsersShowsOptionalParams,
-} from '../types';
+} from '../types/index.js';
 
 export class Show extends ReadWriteBaseClient {
   /**

@@ -1,5 +1,5 @@
-import { SimplifiedAlbum } from './album.types';
-import { SimplifiedArtist } from './artist.types';
+import { SimplifiedAlbum } from './album.types.js';
+import { SimplifiedArtist } from './artist.types.js';
 import {
   Restrictions,
   ExternalUrls,
@@ -7,7 +7,7 @@ import {
   PaginationParams,
   OptionalParams,
   PaginationResponseProps,
-} from './shared.types';
+} from './shared.types.js';
 
 export type GetTrackParams = OptionalParams;
 

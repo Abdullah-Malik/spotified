@@ -1,4 +1,4 @@
-import { ReadWriteBaseClient } from '../client/ReadWriteBaseClient';
+import { ReadWriteBaseClient } from '../client/ReadWriteBaseClient.js';
 import {
   Artist as ArtistProfile,
   Artists as ArtistsProfile,
@@ -6,8 +6,8 @@ import {
   GetTrackParams as GetMarketParams,
   OptionalArtistAlbumParams,
   ArtistAlbumResult,
-} from '../types';
-import { joinIdsArrayToString } from '../utils';
+} from '../types/index.js';
+import { joinIdsArrayToString } from '../utils.js';
 
 export class Artist extends ReadWriteBaseClient {
   /**

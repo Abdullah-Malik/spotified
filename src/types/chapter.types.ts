@@ -1,5 +1,5 @@
-import { SimplifiedAudiobook } from './audiobook.types';
-import { ExternalUrls, Image, OptionalParams, Restrictions, ResumePoint } from './shared.types';
+import { SimplifiedAudiobook } from './audiobook.types.js';
+import { ExternalUrls, Image, OptionalParams, Restrictions, ResumePoint } from './shared.types.js';
 
 export interface SimplifiedChapter {
   audio_preview_url: string | null;

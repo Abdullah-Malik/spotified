@@ -1,9 +1,9 @@
-import RequestMaker from '../client-helpers/RequestMaker';
-import { OAuth2Credentials } from '../types';
-import AuthorizationCode from './AuthorizationCode';
-import AuthorizationCodePKCE from './AuthorizationCodePKCE';
-import ClientCredentials from './ClientCredentials';
-import { ImplicitGrant } from './ImplicitGrant';
+import RequestMaker from '../client-helpers/RequestMaker.js';
+import { OAuth2Credentials } from '../types/index.js';
+import AuthorizationCode from './AuthorizationCode.js';
+import AuthorizationCodePKCE from './AuthorizationCodePKCE.js';
+import ClientCredentials from './ClientCredentials.js';
+import { ImplicitGrant } from './ImplicitGrant.js';
 
 export class Auth {
   protected _authorizationCode: AuthorizationCode;

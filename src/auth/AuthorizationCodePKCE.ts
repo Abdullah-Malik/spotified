@@ -1,9 +1,9 @@
 import { stringify } from 'querystring';
-import { API_TOKEN_URL, AUTHORIZE_URL } from '../constants';
-import { ReadWriteBaseClient } from '../client/ReadWriteBaseClient';
-import { OAuth2AccessTokenResponse, OAuth2AuthPCKEArgs, PCKEAuthURLData } from '../types';
-import RequestMaker from '../client-helpers/RequestMaker';
-import OAuth2Helper from '../client-helpers/OAuth2Helper';
+import { API_TOKEN_URL, AUTHORIZE_URL } from '../constants.js';
+import { ReadWriteBaseClient } from '../client/ReadWriteBaseClient.js';
+import { OAuth2AccessTokenResponse, OAuth2AuthPCKEArgs, PCKEAuthURLData } from '../types/index.js';
+import RequestMaker from '../client-helpers/RequestMaker.js';
+import OAuth2Helper from '../client-helpers/OAuth2Helper.js';
 
 export class AuthorizationCodePKCE extends ReadWriteBaseClient {
   protected clientId?: string;

@@ -1,11 +1,11 @@
-import { Track } from './track.types';
-import { PaginationParams, PaginationResponseProps } from './shared.types';
-import { SimplifiedAlbum } from './album.types';
-import { Artist } from './artist.types';
-import { SimplifiedPlaylist } from './playlist.types';
-import { SimplifiedShow } from './show.types';
-import { SimplifiedEpisode } from './episode.types';
-import { SimplifiedAudiobook } from './audiobook.types';
+import { Track } from './track.types.js';
+import { PaginationParams, PaginationResponseProps } from './shared.types.js';
+import { SimplifiedAlbum } from './album.types.js';
+import { Artist } from './artist.types.js';
+import { SimplifiedPlaylist } from './playlist.types.js';
+import { SimplifiedShow } from './show.types.js';
+import { SimplifiedEpisode } from './episode.types.js';
+import { SimplifiedAudiobook } from './audiobook.types.js';
 
 export interface SearchOptionalParams extends PaginationParams {
   market?: string;

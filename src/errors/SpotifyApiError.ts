@@ -1,4 +1,4 @@
-import { SpotifyApiErrorProps } from '../types';
+import { SpotifyApiErrorProps } from '../types/index.js';
 
 export class SpotifyApiError extends Error implements SpotifyApiErrorProps {
   constructor(

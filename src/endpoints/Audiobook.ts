@@ -1,4 +1,4 @@
-import { ReadWriteBaseClient } from '../client/ReadWriteBaseClient';
+import { ReadWriteBaseClient } from '../client/ReadWriteBaseClient.js';
 import {
   Audiobook as AudiobookDetail,
   AudiobookChapters,
@@ -6,8 +6,8 @@ import {
   GetUsersSavedAudiobooksOptionalParams as GetUserSavedAudiobooksOptionalParams,
   GetAudiobookOptionalParams,
   GetAudiobookChaptersOptionalParams,
-} from '../types';
-import joinIdsArrayToString, { generateQueryParametersString } from '../utils';
+} from '../types/index.js';
+import joinIdsArrayToString, { generateQueryParametersString } from '../utils.js';
 
 export class Audiobook extends ReadWriteBaseClient {
   /**

@@ -1,4 +1,4 @@
-import { SimplifiedEpisode } from './episode.types';
+import { SimplifiedEpisode } from './episode.types.js';
 import {
   Copyright,
   ExternalUrls,
@@ -6,7 +6,7 @@ import {
   OptionalParams,
   PaginationParams,
   PaginationResponseProps,
-} from './shared.types';
+} from './shared.types.js';
 
 export interface SimplifiedShow {
   available_markets: string[];

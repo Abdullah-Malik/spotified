@@ -1,6 +1,6 @@
-import { ExternalUrls, CursorProps } from './shared.types';
-import { Track } from './track.types';
-import { Episode } from './episode.types';
+import { ExternalUrls, CursorProps } from './shared.types.js';
+import { Track } from './track.types.js';
+import { Episode } from './episode.types.js';
 
 interface Device {
   id: string | null;

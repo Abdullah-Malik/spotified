@@ -1,5 +1,5 @@
-import { ReadWriteBaseClient } from './ReadWriteBaseClient';
-import { OAuth2Credentials } from '../types';
+import { ReadWriteBaseClient } from './ReadWriteBaseClient.js';
+import { OAuth2Credentials } from '../types/index.js';
 import {
   User,
   Artist,
@@ -15,9 +15,9 @@ import {
   Chapter,
   Album,
   Audiobook,
-} from '../endpoints';
-import RequestMaker from '../client-helpers/RequestMaker';
-import Auth from '../auth/Auth';
+} from '../endpoints/index.js';
+import RequestMaker from '../client-helpers/RequestMaker.js';
+import Auth from '../auth/Auth.js';
 
 export class Spotified extends ReadWriteBaseClient {
   protected _auth: Auth;

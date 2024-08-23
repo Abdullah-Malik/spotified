@@ -1,2 +1,2 @@
-export * from './SpotifyApiError';
-export * from './NetworkError';
+export * from './SpotifyApiError.js';
+export * from './NetworkError.js';

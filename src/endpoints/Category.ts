@@ -1,10 +1,10 @@
-import { ReadWriteBaseClient } from '../client/ReadWriteBaseClient';
+import { ReadWriteBaseClient } from '../client/ReadWriteBaseClient.js';
 import {
   Category as SingleBrowseCategory,
   GetSingleBrowseCategoryOptionalParams,
   CategoryList,
   GetSeveralBrowseCategoryParams,
-} from '../types';
+} from '../types/index.js';
 
 export class Category extends ReadWriteBaseClient {
   /**

@@ -1,4 +1,4 @@
-import { ReadWriteBaseClient } from '../client/ReadWriteBaseClient';
+import { ReadWriteBaseClient } from '../client/ReadWriteBaseClient.js';
 import {
   Album as AlbumDetail,
   AlbumTracks,
@@ -8,8 +8,8 @@ import {
   PagedAlbums,
   UserSavedAlbum,
   GetNewReleasesOptionalParams,
-} from '../types';
-import { joinIdsArrayToString } from '../utils';
+} from '../types/index.js';
+import { joinIdsArrayToString } from '../utils.js';
 
 export class Album extends ReadWriteBaseClient {
   /**

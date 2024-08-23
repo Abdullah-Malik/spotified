@@ -1,6 +1,6 @@
-import { Artists } from './artist.types';
-import { ExternalUrls, Followers, Image, PaginationParams, PaginationResponseProps } from './shared.types';
-import { Tracks } from './track.types';
+import { Artists } from './artist.types.js';
+import { ExternalUrls, Followers, Image, PaginationParams, PaginationResponseProps } from './shared.types.js';
+import { Tracks } from './track.types.js';
 
 interface ExplicitContent {
   filter_enabled: boolean;
