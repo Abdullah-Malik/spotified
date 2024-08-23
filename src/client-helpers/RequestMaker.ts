@@ -1,6 +1,6 @@
-import { getRequestBody } from '../utils';
-import { SpotifyApiError, NetworkError } from '../errors';
-import { BearerToken, SpotifiedResponse } from '../types';
+import { getRequestBody } from '../utils.js';
+import { SpotifyApiError, NetworkError } from '../errors/index.js';
+import { BearerToken, SpotifiedResponse } from '../types/index.js';
 
 const SPOTIFY_API_URL = 'https://api.spotify.com/v1';
 

@@ -8,9 +8,9 @@ import {
   OAuth2AccessTokenResponse,
   OAuth2AuthArgs,
   OAuth2Credentials,
-} from '../types';
-import { API_TOKEN_URL, AUTHORIZE_URL } from '../constants';
-import { encodeStringToBase64 } from '../utils';
+} from '../types/index.js';
+import { API_TOKEN_URL, AUTHORIZE_URL } from '../constants.js';
+import { encodeStringToBase64 } from '../utils.js';
 
 export class AuthorizationCode extends ReadWriteBaseClient {
   protected clientId?: string;
@@ -28,22 +28,22 @@ export class AuthorizationCode extends ReadWriteBaseClient {
     const scope = options.scope ?? '';
     const showDialog = options.show_dialog ?? false;
 
-    const params: Record<string, string | boolean> = {
+    const params = new URLSearchParams({
       response_type: 'code',
       client_id: this.clientId as string,
       redirect_uri: redirectUri,
       state,
-    };
+    });
 
     if (showDialog) {
-      params.show_dialog = showDialog.toString();
+      params.append('show_dialog', showDialog.toString());
     }
 
     if (scope) {
-      params.scope = Array.isArray(scope) ? scope.join(' ') : scope;
+      params.append('scope', Array.isArray(scope) ? scope.join(' ') : scope);
     }
 
-    const url = `${AUTHORIZE_URL}?${stringify(params)}`;
+    const url = `${AUTHORIZE_URL}?${params.toString()}`;
 
     return {
       url,
