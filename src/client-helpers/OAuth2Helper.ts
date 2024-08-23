@@ -1,17 +1,22 @@
-import * as crypto from 'crypto';
+import { Crypto } from './Crypto';
 
 export class OAuth2Helper {
   static getCodeVerifier() {
     return this.generateRandomString(128);
   }
 
-  static getCodeChallengeFromVerifier(verifier: string) {
-    return this.escapeBase64Url(crypto.createHash('sha256').update(verifier).digest('base64'));
-  }
+  static async getCodeChallengeFromVerifier(codeVerifier: string) {
+    const data = new TextEncoder().encode(codeVerifier);
+    const digest = await Crypto.current.subtle.digest('SHA-256', data);
 
-  static getAuthHeader(clientId: string, clientSecret: string) {
-    const key = `${encodeURIComponent(clientId)}:${encodeURIComponent(clientSecret)}`;
-    return Buffer.from(key).toString('base64');
+    const digestBytes = [...new Uint8Array(digest)];
+
+    const digestAsBase64 =
+      typeof Buffer !== 'undefined'
+        ? Crypto.current.createHash('sha256').update(codeVerifier).digest('base64')
+        : btoa(String.fromCharCode.apply(null, digestBytes));
+
+    return this.escapeBase64Url(digestAsBase64);
   }
 
   static generateRandomString(length: number) {
