@@ -1,6 +1,11 @@
-import { ReadWriteBaseClient } from '../client/ReadWriteBaseClient';
-import { GetEpisodeParams, GetSavedEpisodeParams, Episode as EpisodeDetail, UserSavedEpisodes } from '../types';
-import joinIdsArrayToString from '../utils';
+import { ReadWriteBaseClient } from '../client/ReadWriteBaseClient.js';
+import {
+  GetEpisodeParams,
+  GetSavedEpisodeParams,
+  Episode as EpisodeDetail,
+  UserSavedEpisodes,
+} from '../types/index.js';
+import joinIdsArrayToString from '../utils.js';
 
 export class Episode extends ReadWriteBaseClient {
   /**

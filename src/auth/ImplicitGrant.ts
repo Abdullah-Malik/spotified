@@ -1,7 +1,7 @@
 import { stringify } from 'querystring';
-import OAuth2Helper from '../client-helpers/OAuth2Helper';
-import { ImplicitGrantURLData, OAuth2AuthArgs } from '../types';
-import { AUTHORIZE_URL } from '../constants';
+import OAuth2Helper from '../client-helpers/OAuth2Helper.js';
+import { ImplicitGrantURLData, OAuth2AuthArgs } from '../types/index.js';
+import { AUTHORIZE_URL } from '../constants.js';
 
 export class ImplicitGrant {
   protected clientId?: string;

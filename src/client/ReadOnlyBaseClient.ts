@@ -1,6 +1,6 @@
-import RequestMaker from '../client-helpers/RequestMaker';
-import { RequestArgs, SpotifiedResponse } from '../types';
-import { generateQueryParametersString } from '../utils';
+import RequestMaker from '../client-helpers/RequestMaker.js';
+import { RequestArgs, SpotifiedResponse } from '../types/index.js';
+import { generateQueryParametersString } from '../utils.js';
 
 export abstract class ReadOnlyBaseClient {
   protected _requestMaker: RequestMaker;

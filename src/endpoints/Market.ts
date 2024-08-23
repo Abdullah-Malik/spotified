@@ -1,4 +1,4 @@
-import { ReadWriteBaseClient } from '../client/ReadWriteBaseClient';
+import { ReadWriteBaseClient } from '../client/ReadWriteBaseClient.js';
 
 export class Market extends ReadWriteBaseClient {
   /**

@@ -1,5 +1,5 @@
-import { joinIdsArrayToString, generateQueryParametersString } from '../utils';
-import { ReadWriteBaseClient } from '../client/ReadWriteBaseClient';
+import { joinIdsArrayToString, generateQueryParametersString } from '../utils.js';
+import { ReadWriteBaseClient } from '../client/ReadWriteBaseClient.js';
 import {
   CurrentUserProfile,
   FollowedArtist,
@@ -10,7 +10,7 @@ import {
   UserProfile,
   UsersTopItems,
   UsersTopItemsType,
-} from '../types';
+} from '../types/index.js';
 
 export class User extends ReadWriteBaseClient {
   /**

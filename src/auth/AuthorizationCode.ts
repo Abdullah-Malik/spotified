@@ -1,7 +1,7 @@
 import { stringify } from 'querystring';
-import OAuth2Helper from '../client-helpers/OAuth2Helper';
-import { ReadWriteBaseClient } from '../client/ReadWriteBaseClient';
-import RequestMaker from '../client-helpers/RequestMaker';
+import OAuth2Helper from '../client-helpers/OAuth2Helper.js';
+import { ReadWriteBaseClient } from '../client/ReadWriteBaseClient.js';
+import RequestMaker from '../client-helpers/RequestMaker.js';
 import {
   AuthURLData,
   OAuth2AccessTokenArgs,

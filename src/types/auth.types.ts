@@ -1,4 +1,4 @@
-import { TypeOrArrayOf } from './shared.types';
+import { TypeOrArrayOf } from './shared.types.js';
 
 export type OAuth2Scope =
   | 'ugc-image-upload'

@@ -1,6 +1,6 @@
-import { ReadWriteBaseClient } from '../client/ReadWriteBaseClient';
-import { GetChapterOptionalParams, Chapter as ChapterDetail } from '../types';
-import joinIdsArrayToString from '../utils';
+import { ReadWriteBaseClient } from '../client/ReadWriteBaseClient.js';
+import { GetChapterOptionalParams, Chapter as ChapterDetail } from '../types/index.js';
+import joinIdsArrayToString from '../utils.js';
 
 export class Chapter extends ReadWriteBaseClient {
   /**

@@ -1,5 +1,5 @@
-import { RequestArgs } from '../types';
-import ReadOnlyBaseClient from './ReadOnlyBaseClient';
+import { RequestArgs } from '../types/index.js';
+import ReadOnlyBaseClient from './ReadOnlyBaseClient.js';
 
 export abstract class ReadWriteBaseClient extends ReadOnlyBaseClient {
   protected async post<T>(url: string, data?: Record<string, any>, requestArgs?: Partial<RequestArgs>): Promise<T> {

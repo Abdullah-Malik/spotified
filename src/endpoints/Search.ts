@@ -1,6 +1,6 @@
-import { ReadWriteBaseClient } from '../client/ReadWriteBaseClient';
-import { SearchOptionalParams, SearchResponse } from '../types';
-import joinIdsArrayToString from '../utils';
+import { ReadWriteBaseClient } from '../client/ReadWriteBaseClient.js';
+import { SearchOptionalParams, SearchResponse } from '../types/index.js';
+import joinIdsArrayToString from '../utils.js';
 
 export class Search extends ReadWriteBaseClient {
   /**

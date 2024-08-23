@@ -18,8 +18,8 @@ import {
   CreatePlaylistOptionalParams,
   GetCategoryPlaylistOptionalParams,
   CategoryPlaylist,
-} from '../types';
-import { ReadWriteBaseClient } from '../client/ReadWriteBaseClient';
+} from '../types/index.js';
+import { ReadWriteBaseClient } from '../client/ReadWriteBaseClient.js';
 
 export class Playlist extends ReadWriteBaseClient {
   /**

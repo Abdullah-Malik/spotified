@@ -35,7 +35,7 @@ export default class RequestMaker {
     if (finalHeaders['Content-Type'] === 'application/x-www-form-urlencoded') {
       body = new URLSearchParams(requestParams.data).toString();
     } else {
-      body = requestParams.data ? JSON.stringify(requestParams.data) : undefined;
+      body = getRequestBody(requestParams.data);
     }
 
     try {

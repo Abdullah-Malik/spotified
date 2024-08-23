@@ -1,5 +1,5 @@
-import { SimplifiedChapter } from './chapter.types';
-import { Copyright, ExternalUrls, Image, PaginationParams, PaginationResponseProps } from './shared.types';
+import { SimplifiedChapter } from './chapter.types.js';
+import { Copyright, ExternalUrls, Image, PaginationParams, PaginationResponseProps } from './shared.types.js';
 
 interface Author {
   name?: string;

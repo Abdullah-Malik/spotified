@@ -1,4 +1,4 @@
-import { ReadWriteBaseClient } from '../client/ReadWriteBaseClient';
+import { ReadWriteBaseClient } from '../client/ReadWriteBaseClient.js';
 import {
   AudioAnalysis,
   AudioFeatures,
@@ -11,8 +11,8 @@ import {
   Track as TrackDetail,
   Tracks as TracksDetail,
   UserSavedTracks,
-} from '../types';
-import { joinIdsArrayToString } from '../utils';
+} from '../types/index.js';
+import { joinIdsArrayToString } from '../utils.js';
 
 export class Track extends ReadWriteBaseClient {
   /**

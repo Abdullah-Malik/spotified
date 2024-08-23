@@ -1,6 +1,6 @@
-import { Track } from './track.types';
-import { ExternalUrls, Followers, Image, PaginationParams, PaginationResponseProps } from './shared.types';
-import { Episode } from './episode.types';
+import { Track } from './track.types.js';
+import { ExternalUrls, Followers, Image, PaginationParams, PaginationResponseProps } from './shared.types.js';
+import { Episode } from './episode.types.js';
 
 interface Owner {
   external_urls?: ExternalUrls;

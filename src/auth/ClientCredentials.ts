@@ -1,8 +1,8 @@
-import { ClientCredentialsFlowResponse, OAuth2Credentials } from '../types';
-import { ReadWriteBaseClient } from '../client/ReadWriteBaseClient';
-import RequestMaker from '../client-helpers/RequestMaker';
-import { API_TOKEN_URL } from '../constants';
-import { encodeStringToBase64 } from '../utils';
+import { ClientCredentialsFlowResponse, OAuth2Credentials } from '../types/index.js';
+import { ReadWriteBaseClient } from '../client/ReadWriteBaseClient.js';
+import RequestMaker from '../client-helpers/RequestMaker.js';
+import { API_TOKEN_URL } from '../constants.js';
+import { encodeStringToBase64 } from '../utils.js';
 
 export class ClientCredentials extends ReadWriteBaseClient {
   protected clientId?: string;

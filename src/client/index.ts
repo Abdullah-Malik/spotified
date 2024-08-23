@@ -1,3 +1,3 @@
-export * from './Spotified';
-export * from './ReadWriteBaseClient';
-export * from './ReadOnlyBaseClient';
+export * from './Spotified.js';
+export * from './ReadWriteBaseClient.js';
+export * from './ReadOnlyBaseClient.js';

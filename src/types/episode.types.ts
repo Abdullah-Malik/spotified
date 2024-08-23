@@ -6,8 +6,8 @@ import {
   PaginationResponseProps,
   Restrictions,
   ResumePoint,
-} from './shared.types';
-import { SimplifiedShow } from './show.types';
+} from './shared.types.js';
+import { SimplifiedShow } from './show.types.js';
 
 export interface SimplifiedEpisode {
   audio_preview_url: string | null;

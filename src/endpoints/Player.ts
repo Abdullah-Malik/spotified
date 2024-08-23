@@ -1,4 +1,4 @@
-import { ReadWriteBaseClient } from '../client/ReadWriteBaseClient';
+import { ReadWriteBaseClient } from '../client/ReadWriteBaseClient.js';
 import {
   AddItemToPlaybackQueueOptionalParams,
   CurrentlyPlayingTrack,
@@ -16,8 +16,8 @@ import {
   TogglePlaybackShuffleOptionalParams,
   TransferPlaybackOptionalParams,
   UserTrackEpisodeQueue,
-} from '../types';
-import { generateQueryParametersString } from '../utils';
+} from '../types/index.js';
+import { generateQueryParametersString } from '../utils.js';
 
 export class Player extends ReadWriteBaseClient {
   /**

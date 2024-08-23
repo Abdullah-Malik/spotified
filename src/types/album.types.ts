@@ -7,9 +7,9 @@ import {
   PaginationParams,
   PaginationResponseProps,
   Restrictions,
-} from './shared.types';
-import { SimplifiedArtist } from './artist.types';
-import { SimplifiedTrack } from './track.types';
+} from './shared.types.js';
+import { SimplifiedArtist } from './artist.types.js';
+import { SimplifiedTrack } from './track.types.js';
 
 export interface SimplifiedAlbum {
   album_type: string;

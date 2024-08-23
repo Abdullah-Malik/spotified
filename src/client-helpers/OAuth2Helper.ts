@@ -1,4 +1,4 @@
-import { Crypto } from './Crypto';
+import { Crypto } from './Crypto.js';
 
 export class OAuth2Helper {
   static getCodeVerifier() {
