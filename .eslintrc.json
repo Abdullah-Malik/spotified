@@ -17,7 +17,8 @@
     "import/resolver": {
       "node": {
         "extensions": [".ts", ".js", ".json"]
-      }
+      },
+      "typescript": {}
     },
     "react": {
       "pragma": "React",
