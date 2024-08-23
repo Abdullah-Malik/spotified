@@ -1,4 +1,4 @@
-import { ReadWriteBaseClient } from '../client';
+import { ReadWriteBaseClient } from '../client/ReadWriteBaseClient';
 import {
   Category as SingleBrowseCategory,
   GetSingleBrowseCategoryOptionalParams,
