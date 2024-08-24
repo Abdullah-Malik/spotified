@@ -294,11 +294,18 @@ This method is used to get a list of Spotify featured playlists (shown, for exam
   - `limit`: The maximum number of items to return.
   - `offset`: The index of the first item to return.
 
-#### Returns: ``
+#### Returns: `FeaturedPlaylist`
+
+The `FeaturedPlaylist` object contains a message and a `UserPlaylist` object.
 
 #### Example
-
-
+```typescript
+const featuredPlaylists = await spotified.playlist.getFeaturedPlaylist({ limit: 10, country: 'US' });
+console.log(featuredPlaylists.message);
+featuredPlaylists.playlists.items.forEach(playlist => {
+  console.log(`${playlist.name} (${playlist.tracks.total} tracks)`);
+});
+```
 
 ### getCategoryPlaylist(categoryId: string, optionalParams?: GetCategoryPlaylistOptionalParams)
 
@@ -325,8 +332,6 @@ featuredPlaylists.playlists.items.forEach(playlist => {
 });
 ```
 
-
-
 ### getPlaylistCoverImage(playlistId: string)
 
 This method is used to get the current image associated with a specific playlist.
@@ -345,8 +350,6 @@ An array of `Image` objects.
 const coverImages = await spotified.playlist.getPlaylistCoverImage('playlistId');
 console.log(`Playlist cover image URL: ${coverImages[0].url}`);
 ```
-
-
 
 ### addCustomPlaylistCoverImage(playlistId: string, base64EncodedJpeg: string)
 
