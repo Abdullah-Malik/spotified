@@ -1,6 +1,6 @@
 # Spotified
 
-Spotified is a strongly typed Spotify Web API SDK for both Browser and Node.js environments. It provides an easy-to-use interface for interacting with the Spotify API, supporting various authorization flows and API endpoints.
+Spotified is a strongly typed Spotify Web API SDK for both browser and Node.js environments. It provides an easy-to-use interface for interacting with the Spotify API, supporting all authorization flows and API endpoints.
 
 ## Table of Contents
 
