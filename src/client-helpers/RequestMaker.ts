@@ -1,8 +1,11 @@
 import { getRequestBody } from '../utils.js';
 import { SpotifyApiError, NetworkError } from '../errors/index.js';
 import { BearerToken, SpotifiedResponse } from '../types/index.js';
+import { SPOTIFY_API_URL } from '../constants.js';
 
-const SPOTIFY_API_URL = 'https://api.spotify.com/v1';
+function isFormUrlEncoded(contentType: string | undefined): boolean {
+  return contentType === 'application/x-www-form-urlencoded';
+}
 
 export default class RequestMaker {
   protected bearerToken?: string;
@@ -15,35 +18,45 @@ export default class RequestMaker {
     this.bearerToken = bearerToken;
   }
 
-  async makeRequest<T = any>(requestParams: any): Promise<SpotifiedResponse<T>> {
-    const defaultHeaders: Record<string, string | undefined> = {
+  private prepareHeadersAndBody(requestParams: { headers?: Record<string, string>; data?: any }): {
+    finalHeaders: Record<string, string>;
+    body: string | URLSearchParams | undefined;
+  } {
+    const { headers: customHeaders = {}, data } = requestParams;
+
+    const defaultHeaders: Record<string, string> = {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${this.bearerToken}`,
     };
 
-    if (requestParams.headers && requestParams.headers['Content-Type']) {
+    if (customHeaders['Content-Type']) {
       delete defaultHeaders['Content-Type'];
     }
-    if (requestParams.headers && requestParams.headers.Authorization) {
+    if (customHeaders.Authorization || isFormUrlEncoded(customHeaders['Content-Type'])) {
       delete defaultHeaders.Authorization;
     }
 
-    const finalHeaders = { ...defaultHeaders, ...requestParams.headers };
+    const finalHeaders = { ...defaultHeaders, ...customHeaders };
 
     let body: string | URLSearchParams | undefined;
-
-    if (finalHeaders['Content-Type'] === 'application/x-www-form-urlencoded') {
-      body = new URLSearchParams(requestParams.data).toString();
+    if (isFormUrlEncoded(finalHeaders['Content-Type'])) {
+      body = new URLSearchParams(data).toString();
     } else {
-      body = getRequestBody(requestParams.data);
+      body = getRequestBody(data);
     }
+
+    return { finalHeaders, body };
+  }
+
+  async makeRequest<T = any>(requestParams: any): Promise<SpotifiedResponse<T>> {
+    const { finalHeaders, body } = this.prepareHeadersAndBody(requestParams);
 
     try {
       const url = requestParams.url.startsWith('http') ? requestParams.url : `${SPOTIFY_API_URL}${requestParams.url}`;
 
       const res = await fetch(url, {
         method: requestParams.method,
-        headers: finalHeaders,
+        headers: finalHeaders as any,
         body,
       });
 
