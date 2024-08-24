@@ -1,7 +1,7 @@
 {
   "name": "spotified",
-  "version": "1.0.4",
-  "description": "A strongly typed Spotify Web API sdk for Browser and Node.js",
+  "version": "1.0.5",
+  "description": "A strongly typed Spotify Web API SDK for browser and Node.js",
   "main": "dist/cjs/index.js",
   "module": "dist/mjs/index.js",
   "types": "dist/mjs/index.d.ts",
