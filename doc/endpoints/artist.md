@@ -31,7 +31,7 @@ The `ArtistProfile` Object contains the following properties:
 #### Example
 
 ```typescript
-const artist = await client.artist.getArtist('ArtistId');
+const artist = await spotified.artist.getArtist('ArtistId');
 console.log(artist.name);
 console.log(artist.genres[0]);
 ```
@@ -54,7 +54,7 @@ The `ArtistsProfile` object contains:
 #### Example
 
 ```typescript
-const artists = await client.artist.getartists(['artistId1', 'artistId2']);
+const artists = await spotified.artist.getartists(['artistId1', 'artistId2']);
 artists.artists.forEach(artist => {
     console.log(`${artist.name} with the genre: ${artist.genres[0]}`);
 });
@@ -104,7 +104,7 @@ The `ArtistAlbumResult` object extends `PaginationResponseProps` and contains:
 #### Example
 
 ```typescript
-const artist = await client.artist.getArtistAlbums('ArtistId', );
+const artist = await spotified.artist.getArtistAlbums('ArtistId', );
 console.log(artist.name);
 console.log(artist.genres[0]);
 ```
@@ -129,7 +129,7 @@ The `Tracks` object contains:
 #### Example
 
 ```typescript
-const artist = await client.track.getTrack('artistId');
+const artist = await spotified.track.getTrack('artistId');
 console.log(track);
 ```
 
@@ -152,7 +152,7 @@ The `ArtistsProfile` object contains:
 #### Example
 
 ```typescript
-const artists = await client.artist.getartists('artistId1');
+const artists = await spotified.artist.getartists('artistId1');
 artists.artists.forEach(artist => {
     console.log(`${artist.name} with the genre: ${artist.genres[0]}`);
 });

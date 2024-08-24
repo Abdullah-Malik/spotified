@@ -29,7 +29,7 @@ The `CurrentUserProfile` interface extends `UserProfile` and contains the follow
 #### Example
 
 ```typescript
-const userProfile = await client.user.getCurrentUserProfile();
+const userProfile = await spotified.user.getCurrentUserProfile();
 console.log(`Username: ${userProfile.display_name}`);
 console.log(`Email: ${userProfile.email}`);
 console.log(`Product: ${userProfile.product}`);
@@ -62,7 +62,7 @@ The `UsersTopItems` interface extends `PaginationResponseProps` and contains:
 #### Example
 
 ```typescript
-const topArtists = await client.user.getUsersTopItems('artists', { limit: 10, time_range: 'medium_term' });
+const topArtists = await spotified.user.getUsersTopItems('artists', { limit: 10, time_range: 'medium_term' });
 topArtists.items.forEach(artist => {
     console.log(`${artist.name} - Popularity: ${artist.popularity}`);
 });
@@ -93,7 +93,7 @@ The `UserProfile` interface contains the following properties:
 #### Example
 
 ```typescript
-const userProfile = await client.user.getUserProfile('userId');
+const userProfile = await spotified.user.getUserProfile('userId');
 console.log(`Display name: ${userProfile.display_name}`);
 console.log(`Followers: ${userProfile.followers.total}`);
 ```
@@ -115,7 +115,7 @@ This method is used to add the current user as a follower of a playlist.
 #### Example
 
 ```typescript
-await client.user.followPlaylist('playlistId', { public: true });
+await spotified.user.followPlaylist('playlistId', { public: true });
 console.log('Playlist followed successfully');
 ```
 
@@ -134,7 +134,7 @@ This method is used to remove the current user as a follower of a playlist.
 #### Example
 
 ```typescript
-await client.user.unfollowPlaylist('playlistId');
+await spotified.user.unfollowPlaylist('playlistId');
 console.log('Playlist unfollowed successfully');
 ```
 
@@ -165,7 +165,7 @@ The `FollowedArtist` interface contains:
 #### Example
 
 ```typescript
-const followedArtists = await client.user.getFollowedArtists('artist', { limit: '20' });
+const followedArtists = await spotified.user.getFollowedArtists('artist', { limit: '20' });
 followedArtists.artists.items?.forEach(artist => {
     console.log(`${artist.name} - Followers: ${artist.followers.total}`);
 });
@@ -187,7 +187,7 @@ This method is used to add the current user as a follower of one or more artists
 #### Example
 
 ```typescript
-await client.user.followArtistsUsers('artist', ['artistId1', 'artistId2']);
+await spotified.user.followArtistsUsers('artist', ['artistId1', 'artistId2']);
 console.log('Artists followed successfully');
 ```
 
@@ -207,7 +207,7 @@ This method is used to remove the current user as a follower of one or more arti
 #### Example
 
 ```typescript
-await client.user.unfollowArtistsUsers('artist', ['artistId1', 'artistId2']);
+await spotified.user.unfollowArtistsUsers('artist', ['artistId1', 'artistId2']);
 console.log('Artists unfollowed successfully');
 ```
 
@@ -229,7 +229,7 @@ Each boolean in the array corresponds to the entity ID in the same position in t
 #### Example
 
 ```typescript
-const followStatus = await client.user.checkIfUserFollows('artist', ['artistId1', 'artistId2']);
+const followStatus = await spotified.user.checkIfUserFollows('artist', ['artistId1', 'artistId2']);
 followStatus.forEach((isFollowed, index) => {
     console.log(`Artist ${index + 1} is followed: ${isFollowed}`);
 });
@@ -253,6 +253,6 @@ The array will contain a single boolean value indicating whether the current use
 #### Example
 
 ```typescript
-const isFollowed = await client.user.checkIfCurrentUserFollowsPlaylist('playlistId', 'currentUserId');
+const isFollowed = await spotified.user.checkIfCurrentUserFollowsPlaylist('playlistId', 'currentUserId');
 console.log(`Current user is following the playlist: ${isFollowed[0]}`);
 ```

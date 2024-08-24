@@ -51,7 +51,7 @@ The `AudiobookDetail` Object contains the following properties:
 #### Example
 
 ```typescript
-const audiobook = await client.audiobook.getAudiobook('audiobookId');
+const audiobook = await spotified.audiobook.getAudiobook('audiobookId');
 console.log(audiobook.name);
 console.log(audiobook.publisher);
 ```
@@ -75,7 +75,7 @@ The `AudiobookDetail[]` Object contains an array of `AudiobookDetail` objects.
 #### Example
 
 ```typescript
-const audiobooks = await client.audiobook.getSeveralAudiobooks(['audiobookId1', 'audiobookId2'], { market: 'US' });
+const audiobooks = await spotified.audiobook.getSeveralAudiobooks(['audiobookId1', 'audiobookId2'], { market: 'US' });
 audiobooks.authors.forEach(authors => {
     console.log(`${authors.name}`);
 });
@@ -109,7 +109,7 @@ The `AudiobookChapters` Object extends `PaginationResponseProps` and contains:
 #### Example
 
 ```typescript
-const audiobookChapters = await client.audiobook.getAudiobookChapters('audiobookId1', { limit: 50, offset: 0 });
+const audiobookChapters = await spotified.audiobook.getAudiobookChapters('audiobookId1', { limit: 50, offset: 0 });
 console.log(`Total saved chapters: ${audiobookChapters.total}`);
 audiobookChapters.items.forEach(item => {
     console.log(`${item.name} is available in languages ${item.languages}`);
@@ -141,7 +141,7 @@ The `UserSavedAudiobooks` Object extends `PaginationResponseProps` and contains:
 #### Example
 
 ```typescript
-const audiobook = await client.audiobook.getUserSavedAudiobook({ limit: 50, offset: 0 });
+const audiobook = await spotified.audiobook.getUserSavedAudiobook({ limit: 50, offset: 0 });
 console.log(`Total saved audiobooks: ${audiobook.total}`);
 audiobook.items.forEach(item => {
     console.log(`${item.name} is available in languages ${item.languages}`);
@@ -163,7 +163,7 @@ This method is used to save one or more audiobooks to the current Spotify user's
 #### Example
 
 ```typescript
-await client.audiobook.saveAudiobooksforCurrentUser(['audiobookId1', 'audiobookId2']);
+await spotified.audiobook.saveAudiobooksforCurrentUser(['audiobookId1', 'audiobookId2']);
 console.log('audiobooks saved successfully');
 ```
 
@@ -183,7 +183,7 @@ This method is used to remove one or more audiobooks from the Spotify user's lib
 #### Example
 
 ```typescript
-await client.audiobook.removeAudiobooksforCurrentUser(['audiobookId1', 'audiobookId2']);
+await spotified.audiobook.removeAudiobooksforCurrentUser(['audiobookId1', 'audiobookId2']);
 console.log('audiobooks removed successfully');
 ```
 
