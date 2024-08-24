@@ -204,7 +204,9 @@ This method is used to get a list of the playlists owned or followed by the curr
   - `limit`: The maximum number of items to return.
   - `offset`: The index of the first item to return.
 
-#### Returns: ``
+#### Returns: `UserPlaylist`
+
+The `UserPlaylist` object extends `PaginationResponseProps` and contains an array of simplified playlist objects.
 
 #### Example
 
@@ -229,7 +231,16 @@ This method is used to get a list of the playlists owned or followed by a Spotif
   - `limit`: The maximum number of items to return.
   - `offset`: The index of the first item to return.
 
-#### Returns: ``
+#### Returns: `UserPlaylist`
+
+The `UserPlaylist` object extends `PaginationResponseProps` and contains :
+- `href`: A string URL
+- `limit`: A number
+- `next`: A string URL
+- `offset`: A number
+- `previous`: A string URL
+- `total`: A number representing the total number of saved playlist
+- `items`: Array of `SimplifiedEpisode` objects
 
 #### Example
 
@@ -256,7 +267,9 @@ This method is used to create a playlist for a Spotify user.
   - `collaborative`: A boolean indicating whether the playlist should be collaborative.
   - `description`: A string representing the description of the playlist.
 
-#### Returns: ``
+#### Returns: `Playlist`
+
+The `Playlist` object contains information about the newly created playlist.
 
 #### Example
 
@@ -299,9 +312,18 @@ This method is used to get a list of Spotify playlists tagged with a particular 
   - `limit`: The maximum number of items to return.
   - `offset`: The index of the first item to return.
 
-#### Returns: ``
+#### Returns: `FeaturedPlaylist`
+
+The `FeaturedPlaylist` object contains a message and a `UserPlaylist` object.
 
 #### Example
+```typescript
+const featuredPlaylists = await spotified.playlist.getFeaturedPlaylist({ limit: 10, country: 'US' });
+console.log(featuredPlaylists.message);
+featuredPlaylists.playlists.items.forEach(playlist => {
+  console.log(`${playlist.name} (${playlist.tracks.total} tracks)`);
+});
+```
 
 
 
@@ -314,9 +336,15 @@ This method is used to get the current image associated with a specific playlist
 #### Parameters:
 - `playlistId` (required): A string representing the Spotify ID of the playlist.
 
-#### Returns: ``
+#### Returns: `Image[]`
+
+An array of `Image` objects.
 
 #### Example
+```typescript
+const coverImages = await spotified.playlist.getPlaylistCoverImage('playlistId');
+console.log(`Playlist cover image URL: ${coverImages[0].url}`);
+```
 
 
 
@@ -330,6 +358,10 @@ This method is used to replace the image used to represent a specific playlist w
 - `playlistId` (required): A string representing the Spotify ID of the playlist.
 - `base64EncodedJpeg` (required): A string containing the base64-encoded JPEG image data.
 
-#### Returns: ``
+#### Returns: This endpoint doesn't return any data.
 
 #### Example
+```typescript
+await spotified.playlist.addCustomPlaylistCoverImage('playlistId', 'base64EncodedImageData');
+console.log('Playlist cover image updated successfully');
+```
