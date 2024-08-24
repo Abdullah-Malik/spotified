@@ -41,7 +41,7 @@ The `Show` interface extends `SimplifiedShow` and contains the following additio
 #### Example
 
 ```typescript
-const show = await client.show.getShow('showId', { market: 'US' });
+const show = await spotified.show.getShow('showId', { market: 'US' });
 console.log(show.name);
 console.log(`Total episodes: ${show.total_episodes}`);
 ```
@@ -63,7 +63,7 @@ This method is used to get Spotify catalog information for several shows based o
 #### Example
 
 ```typescript
-const shows = await client.show.getSeveralShows(['showId1', 'showId2'], { market: 'US' });
+const shows = await spotified.show.getSeveralShows(['showId1', 'showId2'], { market: 'US' });
 shows.forEach(show => {
     console.log(`${show.name} - Total episodes: ${show.total_episodes}`);
 });
@@ -97,7 +97,7 @@ The `ShowEpisodes` interface extends `PaginationResponseProps` and contains:
 #### Example
 
 ```typescript
-const showEpisodes = await client.show.getShowsEpisodes('showId', { limit: 20, offset: 0, market: 'US' });
+const showEpisodes = await spotified.show.getShowsEpisodes('showId', { limit: 20, offset: 0, market: 'US' });
 console.log(`Total episodes: ${showEpisodes.total}`);
 showEpisodes.items.forEach(episode => {
     console.log(`${episode.name} - Duration: ${episode.duration_ms}ms`);
@@ -132,7 +132,7 @@ The `UserSavedShows` interface extends `PaginationResponseProps` and contains:
 #### Example
 
 ```typescript
-const savedShows = await client.show.getUsersSavedShows({ limit: 20, offset: 0 });
+const savedShows = await spotified.show.getUsersSavedShows({ limit: 20, offset: 0 });
 console.log(`Total saved shows: ${savedShows.total}`);
 savedShows.items.forEach(item => {
     console.log(`${item.show.name} saved on ${item.added_at}`);
@@ -154,7 +154,7 @@ This method is used to save one or more shows to the current Spotify user's libr
 #### Example
 
 ```typescript
-await client.show.saveShowsForUser(['showId1', 'showId2']);
+await spotified.show.saveShowsForUser(['showId1', 'showId2']);
 console.log('Shows saved successfully');
 ```
 
@@ -175,7 +175,7 @@ This method is used to delete one or more shows from the current Spotify user's 
 #### Example
 
 ```typescript
-await client.show.removeUsersShows(['showId1', 'showId2'], { market: 'US' });
+await spotified.show.removeUsersShows(['showId1', 'showId2'], { market: 'US' });
 console.log('Shows removed successfully');
 ```
 
@@ -196,7 +196,7 @@ Each boolean in the array corresponds to the show ID in the same position in the
 #### Example
 
 ```typescript
-const savedStatus = await client.show.checkUsersSavedShows(['showId1', 'showId2']);
+const savedStatus = await spotified.show.checkUsersSavedShows(['showId1', 'showId2']);
 savedStatus.forEach((isSaved, index) => {
     console.log(`Show ${index + 1} is saved: ${isSaved}`);
 });

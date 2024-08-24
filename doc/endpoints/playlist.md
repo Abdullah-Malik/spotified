@@ -38,7 +38,7 @@ The `Playlist` interface extends `SimplifiedPlaylist` and is defined as follows:
 #### Example
 
 ```typescript
-const playlist = await client.playlist.getPlaylist('playlistId', { market: 'US', fields: 'name,owner,tracks.total' });
+const playlist = await spotified.playlist.getPlaylist('playlistId', { market: 'US', fields: 'name,owner,tracks.total' });
 console.log(playlist.name);
 console.log(playlist.owner.display_name);
 console.log(`Total tracks: ${playlist.tracks.total}`);
@@ -64,7 +64,7 @@ This method is used to change a playlist's name and public/private state. The us
 #### Example
 
 ```typescript
-await client.playlist.changePlaylistDetails('playlistId', { name: 'New Playlist Name', public: false });
+await spotified.playlist.changePlaylistDetails('playlistId', { name: 'New Playlist Name', public: false });
 console.log('Playlist details updated successfully');
 ```
 
@@ -97,7 +97,7 @@ The `PlaylistItems` interface extends `PaginationResponseProps` and is defined a
 #### Example
 
 ```typescript
-const playlistItems = await client.playlist.getPlaylistItems('playlistId', { limit: 50, offset: 0 });
+const playlistItems = await spotified.playlist.getPlaylistItems('playlistId', { limit: 50, offset: 0 });
 console.log(`Total tracks: ${playlistItems.total}`);
 playlistItems.items.forEach(item => {
     console.log(`${item.track?.name} added by ${item.added_by?.display_name}`);
@@ -129,7 +129,7 @@ The `UpdatePlaylistItemsResponse` interface is defined as follows:
 #### Example
 
 ```typescript
-const response = await client.playlist.updatePlaylistItems('playlistId', {
+const response = await spotified.playlist.updatePlaylistItems('playlistId', {
   uris: ['spotify:track:4iV5W9uYEdYUVa79Axb7Rh'],
   range_start: 0,
   insert_before: 5,
@@ -159,7 +159,7 @@ The `AddItemsToPlaylistResponse` interface is defined as follows:
 #### Example
 
 ```typescript
-const response = await client.playlist.addItemsToPlaylist('playlistId', {
+const response = await spotified.playlist.addItemsToPlaylist('playlistId', {
   uris: ['spotify:track:4iV5W9uYEdYUVa79Axb7Rh'],
   position: 0,
 });
@@ -186,7 +186,7 @@ The `RemovePlaylistItemsResponse` interface is defined as follows:
 #### Example
 
 ```typescript
-const response = await client.playlist.removePlaylistItems('playlistId', {
+const response = await spotified.playlist.removePlaylistItems('playlistId', {
   tracks: [{ uri: 'spotify:track:4iV5W9uYEdYUVa79Axb7Rh' }],
   snapshot_id: 'abc123',
 });
@@ -209,7 +209,7 @@ This method is used to get a list of the playlists owned or followed by the curr
 #### Example
 
 ```typescript
-const userPlaylists = await client.playlist.getCurrentUserPlaylists({ limit: 50, offset: 0 });
+const userPlaylists = await spotified.playlist.getCurrentUserPlaylists({ limit: 50, offset: 0 });
 console.log(`Total playlists: ${userPlaylists.total}`);
 userPlaylists.items.forEach(playlist => {
     console.log(`${playlist.name} by ${playlist.owner.display_name}`);
@@ -234,7 +234,7 @@ This method is used to get a list of the playlists owned or followed by a Spotif
 #### Example
 
 ```typescript
-const userPlaylists = await client.playlist.getUserPlaylists('userId', { limit: 50, offset: 0 });
+const userPlaylists = await spotified.playlist.getUserPlaylists('userId', { limit: 50, offset: 0 });
 console.log(`Total playlists: ${userPlaylists.total}`);
 userPlaylists.items.forEach(playlist => {
     console.log(`${playlist.name} by ${playlist.owner.display_name}`);
@@ -261,7 +261,7 @@ This method is used to create a playlist for a Spotify user.
 #### Example
 
 ```typescript
-const newPlaylist = await client.playlist.createPlaylist('userId', 'New Playlist', {
+const newPlaylist = await spotified.playlist.createPlaylist('userId', 'New Playlist', {
   public: false,
   collaborative: true,
   description: 'A new collaborative playlist',

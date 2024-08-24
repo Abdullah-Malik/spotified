@@ -43,7 +43,7 @@ The `Episode` interface extends `SimplifiedEpisode` and contains the following :
 #### Example
 
 ```typescript
-const episode = await client.episode.getEpisode('episodeId', { market: 'US' });
+const episode = await spotified.episode.getEpisode('episodeId', { market: 'US' });
 console.log(episode.name);
 console.log(episode.show.name);
 ```
@@ -65,7 +65,7 @@ This method is used to get Spotify catalog information for several episodes base
 #### Example
 
 ```typescript
-const episodes = await client.episode.getSeveralEpisodes(['episodeId1', 'episodeId2'], { market: 'US' });
+const episodes = await spotified.episode.getSeveralEpisodes(['episodeId1', 'episodeId2'], { market: 'US' });
 episodes.forEach(episode => {
     console.log(`${episode.name} from ${episode.show.name}`);
     console.log(`Duration: ${episode.duration_ms}ms`);
@@ -95,7 +95,7 @@ The `UserSavedEpisodes` interface extends `PaginationResponseProps` and contains
 #### Example
 
 ```typescript
-const savedEpisodes = await client.episode.getUsersSavedEpisodes({ limit: 50, offset: 0, market: 'US' });
+const savedEpisodes = await spotified.episode.getUsersSavedEpisodes({ limit: 50, offset: 0, market: 'US' });
 console.log(`Total saved episodes: ${savedEpisodes.total}`);
 savedEpisodes.items.forEach(item => {
     console.log(`${item.episode.name} saved on ${item.added_at}`);
@@ -117,7 +117,7 @@ This method is used to save one or more episodes to the current user's library.
 #### Example
 
 ```typescript
-await client.episode.saveEpisodesForUser(['episodeId1', 'episodeId2']);
+await spotified.episode.saveEpisodesForUser(['episodeId1', 'episodeId2']);
 console.log('Episodes saved successfully');
 ```
 
@@ -136,7 +136,7 @@ This method is used to remove one or more episodes from the current user's libra
 #### Example
 
 ```typescript
-await client.episode.removeUsersEpisodes(['episodeId1', 'episodeId2']);
+await spotified.episode.removeUsersEpisodes(['episodeId1', 'episodeId2']);
 console.log('Episodes removed successfully');
 ```
 
@@ -157,7 +157,7 @@ Each boolean in the array corresponds to the episode ID in the same position in 
 #### Example
 
 ```typescript
-const savedStatus = await client.episode.checkUsersSavedEpisodes(['episodeId1', 'episodeId2']);
+const savedStatus = await spotified.episode.checkUsersSavedEpisodes(['episodeId1', 'episodeId2']);
 savedStatus.forEach((isSaved, index) => {
     console.log(`Episode ${index + 1} is saved: ${isSaved}`);
 });

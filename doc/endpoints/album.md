@@ -65,7 +65,7 @@ This method is used to get Spotify catalog information for multiple albums ident
 #### Example
 
 ```typescript
-const albums = await client.album.getSeveralAlbums(['albumId1', 'albumId2'], { market: 'US' });
+const albums = await spotified.album.getSeveralAlbums(['albumId1', 'albumId2'], { market: 'US' });
 albums.forEach(album => {
     console.log(`${album.name} by ${album.artists[0].name}`);
 });
@@ -99,7 +99,7 @@ The `AlbumTracks` object extends `PaginationResponseProps` and contains:
 #### Example
 
 ```typescript
-const tracks = await client.album.getAlbumTracks('albumId', { limit: 50, offset: 0 });
+const tracks = await spotified.album.getAlbumTracks('albumId', { limit: 50, offset: 0 });
 console.log(`Total tracks: ${tracks.total}`);
 tracks.items.forEach(track => {
     console.log(`${track.name} - Track number: ${track.track_number}`);
@@ -135,7 +135,7 @@ The `UserSavedAlbum` object extends `PaginationResponseProps` and contains:
 #### Example
 
 ```typescript
-const savedAlbums = await client.album.getUserSavedAlbum({ limit: 50, offset: 0 });
+const savedAlbums = await spotified.album.getUserSavedAlbum({ limit: 50, offset: 0 });
 console.log(`Total saved albums: ${savedAlbums.total}`);
 savedAlbums.items.forEach(item => {
     console.log(`${item.album.name} saved on ${item.added_at}`);
@@ -157,7 +157,7 @@ This method is used to save one or more albums to the current user's 'Your Music
 #### Example
 
 ```typescript
-await client.album.saveAlbumsforCurrentUser(['albumId1', 'albumId2']);
+await spotified.album.saveAlbumsforCurrentUser(['albumId1', 'albumId2']);
 console.log('Albums saved successfully');
 ```
 
@@ -176,7 +176,7 @@ This method is used to remove one or more albums from the current user's 'Your M
 #### Example
 
 ```typescript
-await client.album.removeUsersSavedAlbum(['albumId1', 'albumId2']);
+await spotified.album.removeUsersSavedAlbum(['albumId1', 'albumId2']);
 console.log('Albums removed successfully');
 ```
 
@@ -197,7 +197,7 @@ Each boolean in the array corresponds to the album ID in the same position in th
 #### Example
 
 ```typescript
-const results = await client.album.checkUsersSavedAlbums(['albumId1', 'albumId2']);
+const results = await spotified.album.checkUsersSavedAlbums(['albumId1', 'albumId2']);
 results.forEach((isSaved, index) => {
     console.log(`Album ${index + 1} is saved: ${isSaved}`);
 });
@@ -229,7 +229,7 @@ The `PagedAlbums` object extends `PaginationResponseProps` and contains:
 #### Example
 
 ```typescript
-const newReleases = await client.album.getNewReleases({ limit: 20, offset: 0 });
+const newReleases = await spotified.album.getNewReleases({ limit: 20, offset: 0 });
 console.log(`Total new releases: ${newReleases.total}`);
 newReleases.items.forEach(album => {
     console.log(`${album.name} by ${album.artists[0].name}`);
