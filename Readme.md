@@ -74,7 +74,7 @@ const SpotifyAuth = () => {
   }, []);
 
   const handleAuth = async () => {
-    const authData = await spotified.auth.AuthorizationCode.generateAuthorizationURL(
+    const authData = spotified.auth.AuthorizationCode.generateAuthorizationURL(
       'http://localhost:3000/callback',
       {
         scope: ['user-read-private', 'user-read-email'],
