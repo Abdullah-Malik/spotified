@@ -164,13 +164,13 @@ describe('Show', () => {
     });
   });
 
-  describe('saveShowsForUser', () => {
+  describe('saveShowsForCurrentUser', () => {
     it('should call put method with correct params', async () => {
       const mockIds = ['show123', 'show456'];
       (joinIdsArrayToString as jest.Mock).mockReturnValue('show123,show456');
       (generateQueryParametersString as jest.Mock).mockReturnValue('?ids=show123,show456');
 
-      await show.saveShowsForUser(mockIds);
+      await show.saveShowsForCurrentUser(mockIds);
 
       expect(joinIdsArrayToString).toHaveBeenCalledWith(mockIds);
       expect(generateQueryParametersString).toHaveBeenCalledWith({ ids: 'show123,show456' });
@@ -178,14 +178,14 @@ describe('Show', () => {
     });
   });
 
-  describe('removeUsersShows', () => {
+  describe('removeUserSavedShows', () => {
     it('should call delete method with correct params', async () => {
       const mockIds = ['show123', 'show456'];
       const mockParams: RemoveUsersShowsOptionalParams = { market: 'US' };
       (joinIdsArrayToString as jest.Mock).mockReturnValue('show123,show456');
       (generateQueryParametersString as jest.Mock).mockReturnValue('?ids=show123,show456&market=US');
 
-      await show.removeUsersShows(mockIds, mockParams);
+      await show.removeUserSavedShows(mockIds, mockParams);
 
       expect(joinIdsArrayToString).toHaveBeenCalledWith(mockIds);
       expect(generateQueryParametersString).toHaveBeenCalledWith({ ids: 'show123,show456', ...mockParams });
@@ -193,14 +193,14 @@ describe('Show', () => {
     });
   });
 
-  describe('checkUsersSavedShows', () => {
+  describe('checkUserSavedShows', () => {
     it('should call get method with correct params and return expected result', async () => {
       const mockIds = ['show123', 'show456'];
       const mockResponse = [true, false];
       (joinIdsArrayToString as jest.Mock).mockReturnValue('show123,show456');
       (show['get'] as jest.Mock).mockResolvedValue(mockResponse);
 
-      const result = await show.checkUsersSavedShows(mockIds);
+      const result = await show.checkUserSavedShows(mockIds);
 
       expect(joinIdsArrayToString).toHaveBeenCalledWith(mockIds);
       expect(show['get']).toHaveBeenCalledWith('/me/shows/contains', { ids: 'show123,show456' });

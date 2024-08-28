@@ -50,7 +50,7 @@ export class Show extends ReadWriteBaseClient {
    * Save one or more shows to current Spotify user's library.
    * https://developer.spotify.com/documentation/web-api/reference/save-shows-user
    */
-  saveShowsForUser(ids: string[]) {
+  saveShowsForCurrentUser(ids: string[]) {
     return this.put(`/me/shows${generateQueryParametersString({ ids: joinIdsArrayToString(ids) })}`);
   }
 
@@ -58,7 +58,7 @@ export class Show extends ReadWriteBaseClient {
    * Delete one or more shows from current Spotify user's library.
    * https://developer.spotify.com/documentation/web-api/reference/remove-shows-user
    */
-  removeUsersShows(ids: string[], optionalParams: RemoveUsersShowsOptionalParams) {
+  removeUserSavedShows(ids: string[], optionalParams: RemoveUsersShowsOptionalParams) {
     return this.delete(
       `/me/shows${generateQueryParametersString({ ids: joinIdsArrayToString(ids), ...optionalParams })}`
     );
@@ -68,7 +68,7 @@ export class Show extends ReadWriteBaseClient {
    * Check if one or more shows is already saved in the current Spotify user's library.
    * https://developer.spotify.com/documentation/web-api/reference/check-users-saved-shows
    */
-  checkUsersSavedShows(ids: string[]) {
+  checkUserSavedShows(ids: string[]) {
     return this.get<Array<boolean>>(`/me/shows/contains`, { ids: joinIdsArrayToString(ids) });
   }
 }

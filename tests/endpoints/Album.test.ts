@@ -141,24 +141,24 @@ describe('Album', () => {
     });
   });
 
-  describe('removeUsersSavedAlbum', () => {
+  describe('removeUserSavedAlbum', () => {
     it('should call delete method with correct params', async () => {
       const mockIds = ['album123', 'album456'];
 
-      await album.removeUsersSavedAlbum(mockIds);
+      await album.removeUserSavedAlbum(mockIds);
 
       expect(album['delete']).toHaveBeenCalledWith('/me/albums', { ids: mockIds });
     });
   });
 
-  describe('checkUsersSavedAlbums', () => {
+  describe('checkUserSavedAlbums', () => {
     it('should call get method with correct params and return expected result', async () => {
       const mockIds = ['album123', 'album456'];
       const mockResponse = [true, false];
       (joinIdsArrayToString as jest.Mock).mockReturnValue('album123,album456');
       (album['get'] as jest.Mock).mockResolvedValue(mockResponse);
 
-      const result = await album.checkUsersSavedAlbums(mockIds);
+      const result = await album.checkUserSavedAlbums(mockIds);
 
       expect(joinIdsArrayToString).toHaveBeenCalledWith(mockIds);
       expect(album['get']).toHaveBeenCalledWith('/me/albums/contains', { ids: 'album123,album456' });

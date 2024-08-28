@@ -129,7 +129,7 @@ The `Tracks` object contains:
 #### Example
 
 ```typescript
-const artist = await client.track.getTrack('artistId');
+const artist = await spotified.track.getTrack('artistId');
 console.log(track);
 ```
 

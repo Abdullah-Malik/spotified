@@ -48,7 +48,7 @@ describe('User', () => {
     });
   });
 
-  describe('getUsersTopItems', () => {
+  describe('getUserTopItems', () => {
     it('should call get method with correct params and return expected result', async () => {
       const mockType: UsersTopItemsType = 'tracks';
       const mockParams: TopItemsOptionalParams = { time_range: 'medium_term', limit: 10 };
@@ -63,7 +63,7 @@ describe('User', () => {
       };
       (user['get'] as jest.Mock).mockResolvedValue(mockResponse);
 
-      const result = await user.getUsersTopItems(mockType, mockParams);
+      const result = await user.getUserTopItems(mockType, mockParams);
 
       expect(user['get']).toHaveBeenCalledWith(`/me/top/${mockType}`, mockParams);
       expect(result).toEqual(mockResponse);
@@ -136,13 +136,13 @@ describe('User', () => {
     });
   });
 
-  describe('followArtistsUsers', () => {
+  describe('followArtistsOrUsers', () => {
     it('should call put method with correct params', async () => {
       const mockType: ArtistsUsersType = 'artist';
       const mockIds = ['artist1', 'artist2'];
       (generateQueryParametersString as jest.Mock).mockReturnValue('?type=artist');
 
-      await user.followArtistsUsers(mockType, mockIds);
+      await user.followArtistsOrUsers(mockType, mockIds);
 
       expect(generateQueryParametersString).toHaveBeenCalledWith({ type: mockType });
       expect(user['put']).toHaveBeenCalledWith('/me/following?type=artist', { ids: mockIds });
@@ -162,7 +162,7 @@ describe('User', () => {
     });
   });
 
-  describe('checkIfUserFollows', () => {
+  describe('checkIfUserFollowsArtistsOrUsers', () => {
     it('should call get method with correct params and return expected result', async () => {
       const mockType: ArtistsUsersType = 'artist';
       const mockIds = ['artist1', 'artist2'];
@@ -170,7 +170,7 @@ describe('User', () => {
       (joinIdsArrayToString as jest.Mock).mockReturnValue('artist1,artist2');
       (user['get'] as jest.Mock).mockResolvedValue(mockResponse);
 
-      const result = await user.checkIfUserFollows(mockType, mockIds);
+      const result = await user.checkIfUserFollowsArtistsOrUsers(mockType, mockIds);
 
       expect(joinIdsArrayToString).toHaveBeenCalledWith(mockIds);
       expect(user['get']).toHaveBeenCalledWith('/me/following/contains', { type: mockType, ids: 'artist1,artist2' });

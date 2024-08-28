@@ -76,7 +76,7 @@ describe('Episode', () => {
     });
   });
 
-  describe('getUsersSavedEpisodes', () => {
+  describe('getUserSavedEpisodes', () => {
     it('should call get method with correct params and return expected result', async () => {
       const mockParams: GetSavedEpisodeParams = { limit: 20, offset: 0, market: 'US' };
       const mockResponse: UserSavedEpisodes = {
@@ -90,41 +90,41 @@ describe('Episode', () => {
       };
       (episode['get'] as jest.Mock).mockResolvedValue(mockResponse);
 
-      const result = await episode.getUsersSavedEpisodes(mockParams);
+      const result = await episode.getUserSavedEpisodes(mockParams);
 
       expect(episode['get']).toHaveBeenCalledWith('/me/episodes', mockParams);
       expect(result).toEqual(mockResponse);
     });
   });
 
-  describe('saveEpisodesForUser', () => {
+  describe('saveEpisodesForCurrentUser', () => {
     it('should call put method with correct params', async () => {
       const mockIds = ['episode123', 'episode456'];
 
-      await episode.saveEpisodesForUser(mockIds);
+      await episode.saveEpisodesForCurrentUser(mockIds);
 
       expect(episode['put']).toHaveBeenCalledWith('/me/episodes', { ids: mockIds });
     });
   });
 
-  describe('removeUsersEpisodes', () => {
+  describe('removeUserSavedEpisodes', () => {
     it('should call delete method with correct params', async () => {
       const mockIds = ['episode123', 'episode456'];
 
-      await episode.removeUsersEpisodes(mockIds);
+      await episode.removeUserSavedEpisodes(mockIds);
 
       expect(episode['delete']).toHaveBeenCalledWith('/me/episodes', { ids: mockIds });
     });
   });
 
-  describe('checkUsersSavedEpisodes', () => {
+  describe('checkUserSavedEpisodes', () => {
     it('should call get method with correct params and return expected result', async () => {
       const mockIds = ['episode123', 'episode456'];
       const mockResponse = [true, false];
       (joinIdsArrayToString as jest.Mock).mockReturnValue('episode123,episode456');
       (episode['get'] as jest.Mock).mockResolvedValue(mockResponse);
 
-      const result = await episode.checkUsersSavedEpisodes(mockIds);
+      const result = await episode.checkUserSavedEpisodes(mockIds);
 
       expect(joinIdsArrayToString).toHaveBeenCalledWith(mockIds);
       expect(episode['get']).toHaveBeenCalledWith('/me/episodes/contains', { ids: 'episode123,episode456' });
