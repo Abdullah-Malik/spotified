@@ -17,7 +17,7 @@ This method searches the Spotify catalog for items that match a keyword string.
   - `market`: An ISO 3166-1 alpha-2 country code or the string "from_token".
   - `limit`: The maximum number of results to return. Default: 20. Minimum: 1. Maximum: 50.
   - `offset`: The index of the first result to return. Default: 0 (the first object).
-  - `includeExternal`: If `audio` is specified, the response will include any relevant audio content that is hosted externally.
+  - `include_external`: If `audio` is specified, the response will include any relevant audio content that is hosted externally.
 
 #### Returns:  `SearchResponse`
 
