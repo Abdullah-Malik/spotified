@@ -112,7 +112,6 @@ This method is used to either reorder or replace items in a playlist depending o
 
 #### Parameters:
 - `playlistId` (required): A string representing the Spotify ID of the playlist.
-- `uris` (optional): A array of strings of Spotify URIs to set, can be track or episode URIs
 - `optionalParams` (optional): An object containing optional parameters:
   - `uris`: An array of strings representing the URIs of the items to include in the playlist.
   - `range_start`: The position of the first item to be reordered.

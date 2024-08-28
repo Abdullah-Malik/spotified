@@ -72,7 +72,7 @@ episodes.forEach(episode => {
 });
 ```
 
-### getUsersSavedEpisodes(optionalParams?: GetSavedEpisodeParams)
+### getUserSavedEpisodes(optionalParams?: GetSavedEpisodeParams)
 
 This method is used to get a list of the episodes saved in the current Spotify user's library.
 
@@ -95,14 +95,14 @@ The `UserSavedEpisodes` interface extends `PaginationResponseProps` and contains
 #### Example
 
 ```typescript
-const savedEpisodes = await spotified.episode.getUsersSavedEpisodes({ limit: 50, offset: 0, market: 'US' });
+const savedEpisodes = await spotified.episode.getUserSavedEpisodes({ limit: 50, offset: 0, market: 'US' });
 console.log(`Total saved episodes: ${savedEpisodes.total}`);
 savedEpisodes.items.forEach(item => {
     console.log(`${item.episode.name} saved on ${item.added_at}`);
 });
 ```
 
-### saveEpisodesForUser(ids: string[])
+### saveEpisodesForCurrentUser(ids: string[])
 
 This method is used to save one or more episodes to the current user's library.
 
@@ -117,11 +117,11 @@ This method is used to save one or more episodes to the current user's library.
 #### Example
 
 ```typescript
-await spotified.episode.saveEpisodesForUser(['episodeId1', 'episodeId2']);
+await spotified.episode.saveEpisodesForCurrentUser(['episodeId1', 'episodeId2']);
 console.log('Episodes saved successfully');
 ```
 
-### removeUsersEpisodes(ids: string[])
+### removeUserSavedEpisodes(ids: string[])
 
 This method is used to remove one or more episodes from the current user's library.
 
@@ -136,11 +136,11 @@ This method is used to remove one or more episodes from the current user's libra
 #### Example
 
 ```typescript
-await spotified.episode.removeUsersEpisodes(['episodeId1', 'episodeId2']);
+await spotified.episode.removeUserSavedEpisodes(['episodeId1', 'episodeId2']);
 console.log('Episodes removed successfully');
 ```
 
-### checkUsersSavedEpisodes(ids: string[])
+### checkUserSavedEpisodes(ids: string[])
 
 This method is used to check if one or more episodes is already saved in the current Spotify user's 'Your Episodes' library.
 
@@ -157,7 +157,7 @@ Each boolean in the array corresponds to the episode ID in the same position in 
 #### Example
 
 ```typescript
-const savedStatus = await spotified.episode.checkUsersSavedEpisodes(['episodeId1', 'episodeId2']);
+const savedStatus = await spotified.episode.checkUserSavedEpisodes(['episodeId1', 'episodeId2']);
 savedStatus.forEach((isSaved, index) => {
     console.log(`Episode ${index + 1} is saved: ${isSaved}`);
 });

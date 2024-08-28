@@ -139,7 +139,7 @@ savedShows.items.forEach(item => {
 });
 ```
 
-### saveShowsForUser(ids: string[])
+### saveShowsForCurrentUser(ids: string[])
 
 This method is used to save one or more shows to the current Spotify user's library.
 
@@ -154,11 +154,11 @@ This method is used to save one or more shows to the current Spotify user's libr
 #### Example
 
 ```typescript
-await spotified.show.saveShowsForUser(['showId1', 'showId2']);
+await spotified.show.saveShowsForCurrentUser(['showId1', 'showId2']);
 console.log('Shows saved successfully');
 ```
 
-### removeUsersShows(ids: string[], optionalParams: RemoveUsersShowsOptionalParams)
+### removeUserSavedShows(ids: string[], optionalParams: RemoveUsersShowsOptionalParams)
 
 This method is used to delete one or more shows from the current Spotify user's library.
 
@@ -175,11 +175,11 @@ This method is used to delete one or more shows from the current Spotify user's 
 #### Example
 
 ```typescript
-await spotified.show.removeUsersShows(['showId1', 'showId2'], { market: 'US' });
+await spotified.show.removeUserSavedShows(['showId1', 'showId2'], { market: 'US' });
 console.log('Shows removed successfully');
 ```
 
-### checkUsersSavedShows(ids: string[])
+### checkUserSavedShows(ids: string[])
 
 This method is used to check if one or more shows is already saved in the current Spotify user's library.
 
@@ -196,7 +196,7 @@ Each boolean in the array corresponds to the show ID in the same position in the
 #### Example
 
 ```typescript
-const savedStatus = await spotified.show.checkUsersSavedShows(['showId1', 'showId2']);
+const savedStatus = await spotified.show.checkUserSavedShows(['showId1', 'showId2']);
 savedStatus.forEach((isSaved, index) => {
     console.log(`Show ${index + 1} is saved: ${isSaved}`);
 });

@@ -57,7 +57,7 @@ export class Album extends ReadWriteBaseClient {
    * Remove one or more albums from the current user's 'Your Music' library.
    * https://developer.spotify.com/documentation/web-api/reference/remove-albums-user
    */
-  removeUsersSavedAlbum(ids: string[]) {
+  removeUserSavedAlbum(ids: string[]) {
     return this.delete(`/me/albums`, { ids });
   }
 
@@ -65,7 +65,7 @@ export class Album extends ReadWriteBaseClient {
    * Check if one or more albums is already saved in the current Spotify user's 'Your Music' library.
    * https://developer.spotify.com/documentation/web-api/reference/check-users-saved-albums
    */
-  checkUsersSavedAlbums(ids: string[]) {
+  checkUserSavedAlbums(ids: string[]) {
     return this.get<Array<boolean>>(`/me/albums/contains`, { ids: joinIdsArrayToString(ids) });
   }
 

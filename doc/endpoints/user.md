@@ -35,7 +35,7 @@ console.log(`Email: ${userProfile.email}`);
 console.log(`Product: ${userProfile.product}`);
 ```
 
-### getUsersTopItems(type: UsersTopItemsType, optionalParams?: TopItemsOptionalParams)
+### getUserTopItems(type: UsersTopItemsType, optionalParams?: TopItemsOptionalParams)
 
 This method is used to get the current user's top artists or tracks based on calculated affinity.
 
@@ -62,7 +62,7 @@ The `UsersTopItems` interface extends `PaginationResponseProps` and contains:
 #### Example
 
 ```typescript
-const topArtists = await spotified.user.getUsersTopItems('artists', { limit: 10, time_range: 'medium_term' });
+const topArtists = await spotified.user.getUserTopItems('artists', { limit: 10, time_range: 'medium_term' });
 topArtists.items.forEach(artist => {
     console.log(`${artist.name} - Popularity: ${artist.popularity}`);
 });
@@ -171,7 +171,7 @@ followedArtists.artists.items?.forEach(artist => {
 });
 ```
 
-### followArtistsUsers(type: ArtistsUsersType, ids: string[])
+### followArtistsOrUsers(type: ArtistsUsersType, ids: string[])
 
 This method is used to add the current user as a follower of one or more artists or other Spotify users.
 
@@ -187,7 +187,7 @@ This method is used to add the current user as a follower of one or more artists
 #### Example
 
 ```typescript
-await spotified.user.followArtistsUsers('artist', ['artistId1', 'artistId2']);
+await spotified.user.followArtistsOrUsers('artist', ['artistId1', 'artistId2']);
 console.log('Artists followed successfully');
 ```
 
@@ -211,7 +211,7 @@ await spotified.user.unfollowArtistsUsers('artist', ['artistId1', 'artistId2']);
 console.log('Artists unfollowed successfully');
 ```
 
-### checkIfUserFollows(type: ArtistsUsersType, ids: string[])
+### checkIfUserFollowsArtistsOrUsers(type: ArtistsUsersType, ids: string[])
 
 This method is used to check if the current user is following one or more artists or other Spotify users.
 
@@ -229,7 +229,7 @@ Each boolean in the array corresponds to the entity ID in the same position in t
 #### Example
 
 ```typescript
-const followStatus = await spotified.user.checkIfUserFollows('artist', ['artistId1', 'artistId2']);
+const followStatus = await spotified.user.checkIfUserFollowsArtistsOrUsers('artist', ['artistId1', 'artistId2']);
 followStatus.forEach((isFollowed, index) => {
     console.log(`Artist ${index + 1} is followed: ${isFollowed}`);
 });

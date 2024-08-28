@@ -267,7 +267,7 @@ const artist = await spotified.artist.getArtist('0TnOYISbd1XYRBk9myaseg');
 console.log(artist);
 
 // Get a user's top tracks
-const topTracks = await spotified.user.getUsersTopItems('tracks', { time_range: 'medium_term', limit: 10 });
+const topTracks = await spotified.user.getUserTopItems('tracks', { time_range: 'medium_term', limit: 10 });
 console.log(topTracks);
 ```
 

@@ -28,7 +28,7 @@ export class Episode extends ReadWriteBaseClient {
    * Get a list of the episodes saved in the current Spotify user's library
    * https://developer.spotify.com/documentation/web-api/reference/get-users-saved-episodes
    */
-  getUsersSavedEpisodes(optionalParams?: GetSavedEpisodeParams) {
+  getUserSavedEpisodes(optionalParams?: GetSavedEpisodeParams) {
     return this.get<UserSavedEpisodes>(`/me/episodes`, optionalParams);
   }
 
@@ -36,7 +36,7 @@ export class Episode extends ReadWriteBaseClient {
    * Save one or more episodes to the current user's library
    * https://developer.spotify.com/documentation/web-api/reference/save-episodes-user
    */
-  saveEpisodesForUser(ids: string[]) {
+  saveEpisodesForCurrentUser(ids: string[]) {
     return this.put(`/me/episodes`, { ids });
   }
 
@@ -44,7 +44,7 @@ export class Episode extends ReadWriteBaseClient {
    * Remove one or more episodes from the current user's library
    * https://developer.spotify.com/documentation/web-api/reference/remove-episodes-user
    */
-  removeUsersEpisodes(ids: string[]) {
+  removeUserSavedEpisodes(ids: string[]) {
     return this.delete(`/me/episodes`, { ids });
   }
 
@@ -52,7 +52,7 @@ export class Episode extends ReadWriteBaseClient {
    * Check if one or more episodes is already saved in the current Spotify user's 'Your Episodes' library
    * https://developer.spotify.com/documentation/web-api/reference/check-users-saved-episodes
    */
-  checkUsersSavedEpisodes(ids: string[]) {
+  checkUserSavedEpisodes(ids: string[]) {
     return this.get<Array<boolean>>(`/me/episodes/contains`, { ids: joinIdsArrayToString(ids) });
   }
 }

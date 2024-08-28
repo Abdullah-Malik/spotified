@@ -161,7 +161,7 @@ await spotified.album.saveAlbumsforCurrentUser(['albumId1', 'albumId2']);
 console.log('Albums saved successfully');
 ```
 
-### removeUsersSavedAlbum(ids: string[])
+### removeUserSavedAlbum(ids: string[])
 
 This method is used to remove one or more albums from the current user's 'Your Music' library.
 
@@ -176,11 +176,11 @@ This method is used to remove one or more albums from the current user's 'Your M
 #### Example
 
 ```typescript
-await spotified.album.removeUsersSavedAlbum(['albumId1', 'albumId2']);
+await spotified.album.removeUserSavedAlbum(['albumId1', 'albumId2']);
 console.log('Albums removed successfully');
 ```
 
-### checkUsersSavedAlbums(ids: string[])
+### checkUserSavedAlbums(ids: string[])
 
 This method is used to check if one or more albums is already saved in the current Spotify user's 'Your Music' library.
 
@@ -197,7 +197,7 @@ Each boolean in the array corresponds to the album ID in the same position in th
 #### Example
 
 ```typescript
-const results = await spotified.album.checkUsersSavedAlbums(['albumId1', 'albumId2']);
+const results = await spotified.album.checkUserSavedAlbums(['albumId1', 'albumId2']);
 results.forEach((isSaved, index) => {
     console.log(`Album ${index + 1} is saved: ${isSaved}`);
 });

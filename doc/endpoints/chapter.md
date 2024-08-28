@@ -46,7 +46,7 @@ console.log(chapter.name);
 console.log(chapter.description);
 ```
 
-### 
+### getSeveralChapters(ids: string[], optionalParams?: GetChapterOptionalParams)
 
 #### Endpoint: [/chapters](https://developer.spotify.com/documentation/web-api/reference/get-several-chapters)
 

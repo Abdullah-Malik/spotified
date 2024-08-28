@@ -25,7 +25,7 @@ export class User extends ReadWriteBaseClient {
    * Get the current user's top artists or tracks based on calculated affinity.
    * https://developer.spotify.com/documentation/web-api/reference/get-users-top-artists-and-tracks
    */
-  getUsersTopItems(type: UsersTopItemsType, optionalParams?: TopItemsOptionalParams) {
+  getUserTopItems(type: UsersTopItemsType, optionalParams?: TopItemsOptionalParams) {
     return this.get<UsersTopItems>(`/me/top/${type}`, optionalParams);
   }
 
@@ -65,7 +65,7 @@ export class User extends ReadWriteBaseClient {
    * Add the current user as a follower of one or more artists or other Spotify users.
    * https://developer.spotify.com/documentation/web-api/reference/follow-artists-users
    */
-  followArtistsUsers(type: ArtistsUsersType, ids: string[]) {
+  followArtistsOrUsers(type: ArtistsUsersType, ids: string[]) {
     return this.put(`/me/following${generateQueryParametersString({ type })}`, { ids });
   }
 
@@ -81,7 +81,7 @@ export class User extends ReadWriteBaseClient {
    * Check to see if the current user is following one or more artists or other Spotify users.
    * https://developer.spotify.com/documentation/web-api/reference/check-current-user-follows
    */
-  checkIfUserFollows(type: ArtistsUsersType, ids: string[]) {
+  checkIfUserFollowsArtistsOrUsers(type: ArtistsUsersType, ids: string[]) {
     return this.get<Array<boolean>>('/me/following/contains', { type, ids: joinIdsArrayToString(ids) });
   }
 
