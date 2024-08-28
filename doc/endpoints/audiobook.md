@@ -16,9 +16,9 @@ This method is used to get Spotify catalog information for a single audiobook. A
 - `optionalParams` (optional): An object containing optional parameters:
   - `market`: An ISO 3166-1 alpha-2 country code.
 
-#### Return: `AudiobookDetail`
+#### Return: `Audiobook`
 
-The `AudiobookDetail` Object contains the following properties:
+The `Audiobook` Object contains the following properties:
 - `authors`: (Required) An array of `Author` objects
 - `available_markets`: (Required) An array of strings
 - `copyrights`: (Required) An array of `Copyright` object
@@ -68,9 +68,9 @@ This method is used to get Spotify catalog information for several audiobooks id
 - `optionalParams` (optional): An object containing optional parameters:
   - `market`: An ISO 3166-1 alpha-2 country code.
 
-#### Return: `AudiobookDetail[]`
+#### Return: `Audiobook[]`
 
-The `AudiobookDetail[]` Object contains an array of `AudiobookDetail` objects.
+The `Audiobook[]` Object contains an array of `AudiobookDetail` objects.
 
 #### Example
 
