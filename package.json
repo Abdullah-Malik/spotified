@@ -32,7 +32,8 @@
     "spotify api",
     "client",
     "sdk",
-    "web api"
+    "web api",
+    "music"
   ],
   "publishConfig": {
     "access": "public"
