@@ -273,7 +273,7 @@ console.log(topTracks);
 
 ## API Reference
 
-For a complete list of available methods and their parameters, please refer to the [API documentation](link-to-your-api-docs).
+For a complete list of available methods and their parameters, please refer to the [API documentation](/docs/).
 
 ## Contributing
 
