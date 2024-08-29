@@ -1,6 +1,8 @@
 # Spotified
 
-Spotified is a strongly typed Spotify Web API SDK for both browser and Node.js environments. It provides an easy-to-use interface for interacting with the Spotify API, supporting all authorization flows and API endpoints.
+Spotified is a strongly typed Spotify Web API SDK designed for both the Browser and Node environments. It offers a user-friendly interface for interacting with the Spotify API, supporting all authorization flows and API endpoints. 
+
+Spotified requires Node.js 18.0.0 or higher and a modern browser as it uses `fetch` for making HTTP requests in the Browser and Node. The SDK includes both ESM and CommonJS builds, ensuring that it can be used in the Browser and Node.
 
 ## Table of Contents
 
@@ -274,6 +276,10 @@ console.log(topTracks);
 ## API Reference
 
 For a complete list of available methods and their parameters, please refer to the [API documentation](/docs/).
+
+## Test Coverage
+
+Spotified maintains a high level of test coverage, currently at 98%. This ensures the reliability and stability of the SDK.
 
 ## Contributing
 
