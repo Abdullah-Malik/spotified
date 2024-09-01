@@ -253,24 +253,40 @@ export default SpotifyImplicitGrant;
 
 ### Making API Calls
 
-Once authenticated, you can make API calls using the various endpoints provided by Spotified:
+Once authenticated, you can make API calls using the various endpoints provided by Spotified. It's recommended to use try-catch blocks to handle potential errors, including `SpotifyApiError` for Spotify-specific errors:
 
 ```typescript
-// Search for tracks
-const searchResults = await spotified.search.searchForItem('Bohemian Rhapsody', ['track'], { limit: 5 });
-console.log(searchResults.tracks.items);
+import { SpotifyApiError } from 'spotified';
 
-// Get a user's profile
-const userProfile = await spotified.user.getCurrentUserProfile();
-console.log(userProfile);
+async function fetchSpotifyData() {
+  try {
+    // Search for tracks
+    const searchResults = await spotified.search.searchForItem('Bohemian Rhapsody', ['track'], { limit: 5 });
+    console.log(searchResults.tracks.items);
 
-// Get an artist
-const artist = await spotified.artist.getArtist('0TnOYISbd1XYRBk9myaseg');
-console.log(artist);
+    // Get a user's profile
+    const userProfile = await spotified.user.getCurrentUserProfile();
+    console.log(userProfile);
 
-// Get a user's top tracks
-const topTracks = await spotified.user.getUserTopItems('tracks', { time_range: 'medium_term', limit: 10 });
-console.log(topTracks);
+    // Get an artist
+    const artist = await spotified.artist.getArtist('0TnOYISbd1XYRBk9myaseg');
+    console.log(artist);
+
+    // Get a user's top tracks
+    const topTracks = await spotified.user.getUsersTopItems('tracks', { time_range: 'medium_term', limit: 10 });
+    console.log(topTracks);
+  } catch (error) {
+    if (error instanceof SpotifyApiError) {
+      console.error('Error message:', error.message);
+      console.error('Status:', error.status);
+      console.error('Details:', error.details);
+    } else {
+      console.error('An unexpected error occurred:', error);
+    }
+  }
+}
+
+fetchSpotifyData();
 ```
 
 ## API Reference
