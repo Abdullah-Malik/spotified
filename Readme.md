@@ -10,12 +10,10 @@ Spotified requires Node.js 18.0.0 or higher and a modern browser as it uses `fet
 - [Usage](#usage)
   - [Initialization](#initialization)
   - [Authorization Flows](#authorization-flows)
-    - [Authorization Code Flow](#authorization-code-flow)
-    - [Authorization Code Flow with PKCE](#authorization-code-flow-with-pkce)
-    - [Client Credentials Flow](#client-credentials-flow)
-    - [Implicit Grant Flow](#implicit-grant-flow)
   - [Making API Calls](#making-api-calls)
+- [Examples](#examples)
 - [API Reference](#api-reference)
+- [Test Coverage](#test-coverage)
 - [Contributing](#contributing)
 - [License](#license)
 
@@ -50,208 +48,21 @@ const spotified = new Spotified({
 
 ### Authorization Flows
 
-Spotified supports various authorization flows. Choose the one that best fits your application's needs.
+Spotified supports various authorization flows. Choose the one that best fits your application's needs:
 
-#### Authorization Code Flow
+1. Authorization Code Flow: Best for long-running applications in secure environments, such as web apps running on a server.
 
-This flow is suitable for long-running applications where a user grants permission only once.
+2. Authorization Code Flow with PKCE (Proof Key for Code Exchange): Ideal for mobile and desktop applications, or any scenario where the client secret can't be safely stored.
 
-```typescript
-import React, { useEffect, useState } from 'react';
-import Spotified from 'spotified';
+3. Client Credentials Flow: Suitable for server-to-server authentication where your application needs to access its own data rather than a user's data.
 
-const SpotifyAuth = () => {
-  const [spotified] = useState(new Spotified({
-    clientId: 'YOUR_CLIENT_ID',
-    clientSecret: 'YOUR_CLIENT_SECRET',
-  }));
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+4. Implicit Grant Flow: Best for client-side applications that need short-lived access tokens and can't securely store a client secret.
 
-  useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const code = urlParams.get('code');
-    if (code) {
-      handleCallback(code);
-    }
-  }, []);
-
-  const handleAuth = async () => {
-    const authData = spotified.auth.AuthorizationCode.generateAuthorizationURL(
-      'http://localhost:3000/callback',
-      {
-        scope: ['user-read-private', 'user-read-email'],
-      }
-    );
-    window.location.href = authData.url;
-  };
-
-  const handleCallback = async (code) => {
-    try {
-      const tokenResponse = await spotified.auth.AuthorizationCode.requestAccessToken({
-        code,
-        redirectUri: 'http://localhost:3000/callback',
-      });
-      spotified.setBearerToken(tokenResponse.access_token);
-      setIsAuthenticated(true);
-    } catch (error) {
-      console.error('Authentication failed:', error);
-    }
-  };
-
-  return (
-    <div>
-      {!isAuthenticated ? (
-        <button onClick={handleAuth}>Authenticate with Spotify</button>
-      ) : (
-        <p>Authenticated successfully!</p>
-      )}
-    </div>
-  );
-};
-
-export default SpotifyAuth;
-```
-
-#### Authorization Code Flow with PKCE
-
-This flow is recommended for mobile and desktop applications where the client secret can't be safely stored.
-
-```javascript
-import React, { useEffect, useState } from 'react';
-import Spotified from 'spotified';
-
-const SpotifyAuthPKCE = () => {
-  const [spotified] = useState(new Spotified({ clientId: 'YOUR_CLIENT_ID' }));
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-
-  useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const code = urlParams.get('code');
-    if (code) {
-      handleCallback(code);
-    }
-  }, []);
-
-  const handleAuth = async () => {
-    const authData = await spotified.auth.AuthorizationCodePKCE.generateAuthorizationURL(
-      'http://localhost:3000/callback',
-      {
-        scope: ['user-read-private', 'user-read-email'],
-      }
-    );
-    localStorage.setItem('codeVerifier', authData.codeVerifier);
-    window.location.href = authData.url;
-  };
-
-  const handleCallback = async (code) => {
-    const codeVerifier = localStorage.getItem('codeVerifier');
-    try {
-      const tokenResponse = await spotified.auth.AuthorizationCodePKCE.requestAccessToken(
-        code,
-        codeVerifier,
-        'http://localhost:3000/callback'
-      );
-      spotified.setBearerToken(tokenResponse.access_token);
-      setIsAuthenticated(true);
-    } catch (error) {
-      console.error('Authentication failed:', error);
-    }
-  };
-
-  return (
-    <div>
-      {!isAuthenticated ? (
-        <button onClick={handleAuth}>Authenticate with Spotify</button>
-      ) : (
-        <p>Authenticated successfully!</p>
-      )}
-    </div>
-  );
-};
-
-export default SpotifyAuthPKCE;
-```
-
-#### Client Credentials Flow
-
-This flow is suitable for server-to-server authentication where user authorization isn't required.
-
-```typescript
-import Spotified from 'spotified';
-
-const spotified = new Spotified({
-  clientId: 'YOUR_CLIENT_ID',
-  clientSecret: 'YOUR_CLIENT_SECRET',
-});
-
-async function authenticateAndSearch() {
-  try {
-    const tokenResponse = await spotified.auth.ClientCredentials.requestAccessToken();
-    spotified.setBearerToken(tokenResponse.access_token);
-    
-    const searchResults = await spotified.search.searchForItem('Bohemian Rhapsody', ['track'], { limit: 5 });
-    console.log(searchResults.tracks.items);
-  } catch (error) {
-    console.error('Error:', error);
-  }
-}
-
-authenticateAndSearch();
-```
-
-#### Implicit Grant Flow
-
-This flow is suitable for client-side applications where the access token is returned directly to the client.
-
-```typescript
-import React, { useEffect, useState } from 'react';
-import Spotified from 'spotified';
-
-const SpotifyImplicitGrant = () => {
-  const [spotified] = useState(new Spotified({ clientId: 'YOUR_CLIENT_ID' }));
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-
-  useEffect(() => {
-    const hash = window.location.hash.substring(1);
-    if (hash) {
-      handleCallback(hash);
-    }
-  }, []);
-
-  const handleAuth = () => {
-    const authData = spotified.auth.ImplicitGrant.generateAuthorizationURL(
-      'http://localhost:3000/callback',
-      {
-        scope: ['user-read-private', 'user-read-email'],
-      }
-    );
-    window.location.href = authData.url;
-  };
-
-  const handleCallback = (hash) => {
-    const params = new URLSearchParams(hash);
-    const accessToken = params.get('access_token');
-    if (accessToken) {
-      spotified.setBearerToken(accessToken);
-      setIsAuthenticated(true);
-    }
-  };
-
-  return (
-    <div>
-      {!isAuthenticated ? (
-        <button onClick={handleAuth}>Authenticate with Spotify</button>
-      ) : (
-        <p>Authenticated successfully!</p>
-      )}
-    </div>
-  );
-};
-
-export default SpotifyImplicitGrant;
-```
+For detailed implementation of these flows, please refer to the examples and API documentation.
 
 ### Making API Calls
+
+Before making any calls to endpoints other than auth ones, don't forget to call the `spotified.setBearerToken()` function with the obtained access token. This sets up the necessary authentication for subsequent API calls.
 
 Once authenticated, you can make API calls using the various endpoints provided by Spotified. It's recommended to use try-catch blocks to handle potential errors, including `SpotifyApiError` for Spotify-specific errors:
 
@@ -260,6 +71,9 @@ import { SpotifyApiError } from 'spotified';
 
 async function fetchSpotifyData() {
   try {
+    // Ensure you've set the bearer token before making API calls
+    // spotified.setBearerToken(accessToken);
+
     // Search for tracks
     const searchResults = await spotified.search.searchForItem('Bohemian Rhapsody', ['track'], { limit: 5 });
     console.log(searchResults.tracks.items);
@@ -288,6 +102,40 @@ async function fetchSpotifyData() {
 
 fetchSpotifyData();
 ```
+
+## Examples
+
+You can find Node.js and React examples in the `/examples/` directory:
+
+- Node.js example: `/examples/node-example/`
+- React example: `/examples/react-example/`
+
+### Running the Node.js Example
+
+To run the Node.js example:
+
+1. Navigate to the `/examples/node-example/` directory.
+2. Create a `.env` file in this directory with your Spotify API credentials:
+   ```
+   client_id=your_client_id
+   client_secret=your_client_secret
+   ```
+3. Run `npm build` to build the project.
+4. Run `npm run start` to start the example.
+
+### Running the React Example
+
+To run the React example:
+
+1. Navigate to the `/examples/react-example/` directory.
+2. Create a `.env` file in this directory with your Spotify API client ID:
+   ```
+   REACT_APP_SPOTIFY_CLIENT_ID=your_client_id
+   ```
+3. Run `npm start` to start the React development server.
+4. The app will run on `localhost:3000`.
+
+Make sure you have added the appropriate callback URL (`http://localhost:3000/callback`) to your Spotify Developer Dashboard for the React example to work correctly.
 
 ## API Reference
 
