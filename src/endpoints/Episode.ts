@@ -3,6 +3,7 @@ import {
   GetEpisodeParams,
   GetSavedEpisodeParams,
   Episode as EpisodeDetail,
+  Episodes,
   UserSavedEpisodes,
 } from '../types/index.js';
 import joinIdsArrayToString from '../utils.js';
@@ -21,7 +22,7 @@ export class Episode extends ReadWriteBaseClient {
    * https://developer.spotify.com/documentation/web-api/reference/get-multiple-episodes
    */
   getSeveralEpisodes(ids: string[], optionalParams?: GetEpisodeParams) {
-    return this.get<EpisodeDetail[]>(`/episodes`, { ids: joinIdsArrayToString(ids), ...optionalParams });
+    return this.get<Episodes>(`/episodes`, { ids: joinIdsArrayToString(ids), ...optionalParams });
   }
 
   /**

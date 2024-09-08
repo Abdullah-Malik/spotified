@@ -1,5 +1,5 @@
 import { ReadWriteBaseClient } from '../client/ReadWriteBaseClient.js';
-import { GetChapterOptionalParams, Chapter as ChapterDetail } from '../types/index.js';
+import { GetChapterOptionalParams, Chapter as ChapterDetail, Chapters } from '../types/index.js';
 import joinIdsArrayToString from '../utils.js';
 
 export class Chapter extends ReadWriteBaseClient {
@@ -18,7 +18,7 @@ export class Chapter extends ReadWriteBaseClient {
    * https://developer.spotify.com/documentation/web-api/reference/get-several-chapters
    */
   getSeveralChapters(ids: string[], optionalParams?: GetChapterOptionalParams) {
-    return this.get<ChapterDetail[]>(`/chapters`, { ids: joinIdsArrayToString(ids), ...optionalParams });
+    return this.get<Chapters>(`/chapters`, { ids: joinIdsArrayToString(ids), ...optionalParams });
   }
 }
 

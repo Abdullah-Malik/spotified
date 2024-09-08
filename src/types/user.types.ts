@@ -1,6 +1,6 @@
-import { Artists } from './artist.types.js';
+import { Artist } from './artist.types.js';
 import { ExternalUrls, Followers, Image, PaginationParams, PaginationResponseProps } from './shared.types.js';
-import { Tracks } from './track.types.js';
+import { Track } from './track.types.js';
 
 interface ExplicitContent {
   filter_enabled: boolean;
@@ -36,7 +36,7 @@ export interface TopItemsOptionalParams extends PaginationParams {
 }
 
 export interface UsersTopItems extends PaginationResponseProps {
-  items: Artists | Tracks;
+  items: Artist[] | Track[];
 }
 
 export interface FollowedArtistOptionalParams {
@@ -56,6 +56,6 @@ export interface FollowedArtist {
     next?: string;
     cursors?: Cursors;
     total?: number;
-    items?: Artists;
+    items?: Artist[];
   };
 }

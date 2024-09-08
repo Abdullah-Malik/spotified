@@ -28,6 +28,8 @@ export interface Chapter extends SimplifiedChapter {
   audiobook: SimplifiedAudiobook;
 }
 
-export type Chapters = Chapter[];
+export interface Chapters {
+  chapters: Chapter[];
+}
 
 export type GetChapterOptionalParams = OptionalParams;

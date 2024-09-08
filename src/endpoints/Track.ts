@@ -9,7 +9,7 @@ import {
   RecommendationSeedParams,
   Recommendations,
   Track as TrackDetail,
-  Tracks as TracksDetail,
+  Tracks,
   UserSavedTracks,
 } from '../types/index.js';
 import { joinIdsArrayToString } from '../utils.js';
@@ -28,7 +28,7 @@ export class Track extends ReadWriteBaseClient {
    * https://developer.spotify.com/documentation/web-api/reference/get-several-tracks
    */
   getSeveralTracks(ids: string[], optionalParams?: GetTrackParams) {
-    return this.get<TracksDetail>(`/tracks`, { ids: joinIdsArrayToString(ids), ...optionalParams });
+    return this.get<Tracks>(`/tracks`, { ids: joinIdsArrayToString(ids), ...optionalParams });
   }
 
   /**

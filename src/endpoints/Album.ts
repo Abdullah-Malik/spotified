@@ -1,6 +1,7 @@
 import { ReadWriteBaseClient } from '../client/ReadWriteBaseClient.js';
 import {
   Album as AlbumDetail,
+  Albums,
   AlbumTracks,
   GetAlbumOptionalParams,
   GetUserSavedAlbumsOptionalParams,
@@ -25,7 +26,7 @@ export class Album extends ReadWriteBaseClient {
    * https://developer.spotify.com/documentation/web-api/reference/get-multiple-albums
    */
   getSeveralAlbums(ids: string[], optionalParams?: GetAlbumOptionalParams) {
-    return this.get<AlbumDetail[]>(`/albums`, { ids: joinIdsArrayToString(ids), ...optionalParams });
+    return this.get<Albums>(`/albums`, { ids: joinIdsArrayToString(ids), ...optionalParams });
   }
 
   /**

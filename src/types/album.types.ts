@@ -41,6 +41,10 @@ export interface Album extends SimplifiedAlbum {
   popularity: number;
 }
 
+export interface Albums {
+  albums: SimplifiedAlbum[];
+}
+
 export type GetAlbumOptionalParams = OptionalParams;
 
 export interface GetAlbumTracksOptionalParams extends PaginationParams {
