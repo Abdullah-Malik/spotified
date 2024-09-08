@@ -1,0 +1,81 @@
+.spotify-wrapped {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  background-color: #181818;
+  color: #ffffff;
+  min-height: 100vh;
+}
+
+.header {
+  background-color: #1db954;
+  padding: 20px;
+  text-align: center;
+}
+
+.title {
+  font-size: 32px;
+  margin: 0;
+}
+
+.content {
+  padding: 20px;
+}
+
+.auth-button {
+  background-color: #1db954;
+  color: #ffffff;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.auth-button:hover {
+  background-color: #1ed760;
+}
+
+.section {
+  margin-bottom: 30px;
+}
+
+.section-title {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-gap: 20px;
+}
+
+.grid-item {
+  background-color: #282828;
+  padding: 20px;
+  border-radius: 4px;
+  text-align: center;
+}
+
+.track-image img,
+.artist-image img {
+  width: 100%;
+  height: auto;
+  border-radius: 50%;
+  margin-bottom: 10px;
+}
+
+.track-name,
+.artist-name {
+  font-size: 18px;
+  margin-bottom: 5px;
+}
+
+.track-artist {
+  font-size: 14px;
+  color: #b3b3b3;
+}
+
+.error-message {
+  color: #ff0000;
+  margin-top: 20px;
+}
