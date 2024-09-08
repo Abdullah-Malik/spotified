@@ -1,3 +1,6 @@
 /node_modules
 /dist
 /coverage
+/examples/node/node_modules
+/examples/node/dist
+/examples/node/.env
