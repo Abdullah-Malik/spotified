@@ -4,11 +4,11 @@ import {
   GetShowParams,
   Show as ShowDetail,
   ShowEpisodes,
-  SimplifiedShow,
   UserSavedShows,
   GetShowEpisodesOptionalParams,
   GetUsersSavedShowsOptionalParams,
   RemoveUsersShowsOptionalParams,
+  Shows,
 } from '../types/index.js';
 
 export class Show extends ReadWriteBaseClient {
@@ -25,7 +25,7 @@ export class Show extends ReadWriteBaseClient {
    * https://developer.spotify.com/documentation/web-api/reference/get-multiple-shows
    */
   getSeveralShows(ids: string[], optionalParams?: GetShowParams) {
-    return this.get<SimplifiedShow[]>(`/shows`, { ids: joinIdsArrayToString(ids), ...optionalParams });
+    return this.get<Shows>(`/shows`, { ids: joinIdsArrayToString(ids), ...optionalParams });
   }
 
   /**

@@ -1,7 +1,7 @@
 import { ReadWriteBaseClient } from '../client/ReadWriteBaseClient.js';
 import {
   Artist as ArtistProfile,
-  Artists as ArtistsProfile,
+  Artists,
   Tracks,
   GetTrackParams as GetMarketParams,
   OptionalArtistAlbumParams,
@@ -23,7 +23,7 @@ export class Artist extends ReadWriteBaseClient {
    * https://developer.spotify.com/documentation/web-api/reference/get-multiple-artists
    */
   getArtists(ids: string[]) {
-    return this.get<ArtistsProfile>(`/artists`, { ids: joinIdsArrayToString(ids) });
+    return this.get<Artists>(`/artists`, { ids: joinIdsArrayToString(ids) });
   }
 
   /**
@@ -47,7 +47,7 @@ export class Artist extends ReadWriteBaseClient {
    * https://developer.spotify.com/documentation/web-api/reference/get-an-artists-related-artists
    */
   getRelatedArtists(id: string) {
-    return this.get<ArtistsProfile>(`/artists/${id}/related-artists`);
+    return this.get<{ artists: ArtistProfile }>(`/artists/${id}/related-artists`);
   }
 }
 

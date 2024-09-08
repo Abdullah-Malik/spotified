@@ -6,6 +6,7 @@ import {
   GetUsersSavedAudiobooksOptionalParams as GetUserSavedAudiobooksOptionalParams,
   GetAudiobookOptionalParams,
   GetAudiobookChaptersOptionalParams,
+  Audiobooks,
 } from '../types/index.js';
 import joinIdsArrayToString, { generateQueryParametersString } from '../utils.js';
 
@@ -25,7 +26,7 @@ export class Audiobook extends ReadWriteBaseClient {
    * https://developer.spotify.com/documentation/web-api/reference/get-multiple-audiobooks
    */
   getSeveralAudiobooks(ids: string[], optionalParams?: GetAudiobookOptionalParams) {
-    return this.get<AudiobookDetail[]>(`/audiobooks`, { ids: joinIdsArrayToString(ids), ...optionalParams });
+    return this.get<Audiobooks>(`/audiobooks`, { ids: joinIdsArrayToString(ids), ...optionalParams });
   }
 
   /**
