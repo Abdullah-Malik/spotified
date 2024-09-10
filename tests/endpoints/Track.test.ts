@@ -70,7 +70,7 @@ describe('Track', () => {
 
       const result = await track.getUsersSavedTracks(mockParams);
 
-      expect(track['get']).toHaveBeenCalledWith('/tracks', mockParams);
+      expect(track['get']).toHaveBeenCalledWith('/me/tracks', mockParams);
       expect(result).toEqual(mockResponse);
     });
   });

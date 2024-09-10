@@ -36,7 +36,7 @@ export class Track extends ReadWriteBaseClient {
    * https://developer.spotify.com/documentation/web-api/reference/get-users-saved-tracks
    */
   getUsersSavedTracks(optionalParams?: OptionalUserSavedTrackParams) {
-    return this.get<UserSavedTracks>(`/tracks`, optionalParams);
+    return this.get<UserSavedTracks>(`/me/tracks`, optionalParams);
   }
 
   /**
