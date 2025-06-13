@@ -88,7 +88,7 @@ describe('Artist', () => {
 
       const result = await artist.getArtistTopTracks(mockArtistId, mockOptionalParams);
 
-      expect(artist['get']).toHaveBeenCalledWith('/artist/1234/top-tracks', mockOptionalParams);
+      expect(artist['get']).toHaveBeenCalledWith('/artists/1234/top-tracks', mockOptionalParams);
       expect(result).toEqual(mockResponse);
     });
   });
